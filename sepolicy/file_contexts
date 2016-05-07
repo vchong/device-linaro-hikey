@@ -7,3 +7,9 @@
 /dev/ttyAMA1           u:object_r:hci_attach_dev:s0
 /system/vendor/bin/uim u:object_r:hci_attach_exec:s0
 /system/vendor/bin/hw/android\.hardware\.bluetooth@1\.0-service\.hikey      u:object_r:hal_bluetooth_hikey_exec:s0
+
+# optee files
+/system/bin/tee-supplicant  u:object_r:tee_exec:s0
+/dev/teepriv[0-9]*     u:object_r:tee_device:s0
+/dev/tee[0-9]*         u:object_r:tee_device:s0
+/data/tee(/.*)?        u:object_r:tee_data_file:s0

@@ -1,0 +1,3 @@
+# permissive tee;
+allow tee tee_data_file:dir { create rmdir };
+allow tee system_data_file:dir { write remove_name };
