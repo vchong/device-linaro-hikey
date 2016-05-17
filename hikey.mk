@@ -1,3 +1,4 @@
+ifneq ($(TARGET_BUILD_KERNEL), true)
 ifndef TARGET_KERNEL_USE
 TARGET_KERNEL_USE=4.9
 endif
@@ -6,6 +7,11 @@ TARGET_PREBUILT_DTB := device/linaro/hikey-kernel/hi6220-hikey.dtb-$(TARGET_KERN
 ifeq ($(TARGET_KERNEL_USE), 4.1)
 TARGET_FSTAB := fstab.hikey-$(TARGET_KERNEL_USE)
 else
+TARGET_FSTAB := fstab.hikey
+endif
+else
+TARGET_PREBUILT_KERNEL :=
+TARGET_PREBUILT_DTB :=
 TARGET_FSTAB := fstab.hikey
 endif
 

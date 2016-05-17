@@ -13,9 +13,13 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-
+ifneq ($(TARGET_BUILD_KERNEL), true)
 PRODUCT_COPY_FILES +=   $(TARGET_PREBUILT_KERNEL):kernel \
                         $(TARGET_PREBUILT_DTB):hi6220-hikey.dtb \
+
+endif
+
+PRODUCT_COPY_FILES +=   \
 			$(LOCAL_PATH)/$(TARGET_FSTAB):root/fstab.hikey \
 			device/linaro/hikey/init.common.rc:root/init.hikey.rc \
 			device/linaro/hikey/init.common.usb.rc:root/init.hikey.usb.rc \
