@@ -1,3 +1,4 @@
+ifneq ($(TARGET_BUILD_KERNEL), true)
 ifndef TARGET_KERNEL_USE
 TARGET_KERNEL_USE=4.9
 endif
@@ -14,6 +15,11 @@ else
     HIKEY_USE_LEGACY_TI_BLUETOOTH := false
   endif
   TARGET_FSTAB := fstab.hikey
+endif
+else
+TARGET_PREBUILT_KERNEL :=
+TARGET_PREBUILT_DTB :=
+TARGET_FSTAB := fstab.hikey
 endif
 
 #
