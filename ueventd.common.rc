@@ -9,3 +9,6 @@ subsystem usbmisc
 /dev/nanohub              0660   system     system
 /dev/nanohub_comms        0660   system     system
 /dev/hifi_misc   0666 system audio
+
+/dev/tee0        0660   shell     shell
+/dev/teepriv0    0660   shell     shell
