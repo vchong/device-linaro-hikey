@@ -7,3 +7,6 @@ subsystem usbmisc
 /dev/mali        0666 system graphics
 /dev/mali0       0666 system graphics
 /dev/hifi_misc   0666 system audio
+
+/dev/tee0        0660   shell     shell
+/dev/teepriv0    0660   shell     shell
