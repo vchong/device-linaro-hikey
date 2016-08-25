@@ -278,3 +278,5 @@ PRODUCT_PACKAGES += \
     libunwindstack.vndk-sp\
     liblzma.vndk-sp\
     libion.vndk-sp\
+
+$(call inherit-product-if-exists, device/linaro/build/common-device.mk)
