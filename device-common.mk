@@ -30,6 +30,8 @@ else
 $(call inherit-product, frameworks/native/build/tablet-10in-xhdpi-2048-dalvik-heap.mk)
 endif
 
+$(call inherit-product-if-exists, device/linaro/build/common-device.mk)
+
 # Set vendor kernel path
 PRODUCT_VENDOR_KERNEL_HEADERS := device/linaro/hikey/kernel-headers
 
