@@ -9,6 +9,11 @@ else
 TARGET_FSTAB := fstab.hikey
 endif
 
+ifeq ($(TARGET_BUILD_FOR_TV), true)
+PRODUCT_CHARACTERISTICS := tv
+$(call inherit-product, device/google/atv/products/atv_base.mk)
+endif
+
 #
 # Inherit the full_base and device configurations
 $(call inherit-product, device/linaro/hikey/hikey/device-hikey.mk)
