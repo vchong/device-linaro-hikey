@@ -3,6 +3,12 @@ Running Android on hikey board:
 * Compiling userspace:
 Pull AOSP source:
 $ repo init -u https://android.googlesource.com/platform/manifest -b master & repo sync -j24
+# repo init -u /home/ubuntu/aosp-mirror/platform/manifest.git -p linux --depth=1 & repo sync -j24
+
+Add the OP-TEE overlay:
+$ cd .repo
+$ git clone https://github.com/vchong/optee_android_manifest.git -b hikey local_manifests
+$ cd ..
 
 Download and extract HDMI binaries:
 $ wget https://dl.google.com/dl/android/aosp/linaro-hikey-20160226-67c37b1a.tgz
@@ -11,6 +17,8 @@ $ ./extract-linaro-hikey.sh
 
 Install mcopy utility:
 $ apt-get install mtools
+
+Build kernel first (might be necessary) per insn below.
 
 Build:
 $ . ./build/envsetup.sh
@@ -42,9 +50,40 @@ $ cd hikey-linaro
 $ git checkout -b android-hikey-linaro-4.9 origin/android-hikey-linaro-4.9
 $ make ARCH=arm64 hikey_defconfig
 $ make ARCH=arm64 CROSS_COMPILE=aarch64-linux-android- -j24
-Output: arch/arm64/boot/Image & arch/arm64/boot/dts/hisilicon/hi6220-hikey.dtb
+Output: arch/arm64/boot/Image-dtb & arch/arm64/boot/dts/hisilicon/hi6220-hikey.dtb
    copy Image-dtb and hi6220-hikey.dtb to hikey-kernel directory to files
-        Image-dtb-4.9 and hi6220-hikey.dtb-4.9
+	Image-dtb-4.9 and hi6220-hikey.dtb-4.9
+   cd to main build dir, e.g. optee_android_manifest/
+   make the boot image:
+$ make bootimage -j24
+Output: $(PRODUCT_OUT)/boot.img or out/target/product/hikey/boot.img
+   to make the boot fat image, rerun make as it is built from
+   build/tasks/boot_fat.mk and not part of the makefile
+   i.e. build/make/core/main.mk and build/make/core/Makefile
+   also, if you changed anything under bootloader/, delete ramdisk.img
+   under $(PRODUCT_OUT)/ or out/target/product/hikey/ before running
+   make below, else the changes will not take effect
+$ make -j32 [TARGET_USERDATAIMAGE_4GB=true]
+Output: $(PRODUCT_OUT)/boot_fat.uefi.img or out/target/product/hikey/boot_fat.uefi.img
+
+Bootloader is build with ArmTF and UEFI from sources located at:
+  device/linaro/bootloader
+To build fip.bin and l-loader.bin do:
+  $ cd device/linaro/hikey/bootloader
+  $ make
+Results will be in out/dist
+
+To build a bootloader with OPTEE support enabled set the TARGET_TEE_IS_OPTEE
+make flag:
+  $ make TARGET_TEE_IS_OPTEE=true
+
+We can also generate ptable (needs root privilege) with below commands:
+  $ cd device/linaro/hikey/l-loader/
+  $ make ptable.img
+  $ cp ptable.img ../installer/ptable-aosp-8g.img #or ptable-aosp-4g.img
+
+* To disable selinux
+$ echo 0 > /sys/fs/selinux/enforce
 
 * Setting monitor resolution
 Add to BOARD_KERNEL_CMDLINE in BoardConfig.mk or

@@ -71,10 +71,14 @@ else
         fastboot oem serialno
     fi
 fi
+#Revert flashing script to use FAT image
+#The Optee firmware doesn't yet support booting from the abootimg
+#image.  Although the device configuration can enable that, we need to
+#also modify the flash script to flash the FAT image.
 fastboot flash ptable "${INSTALLER_DIR}"/"${PTABLE}"
 fastboot flash fastboot "${FIRMWARE_DIR}"/fip.bin
 fastboot flash nvme "${INSTALLER_DIR}"/nvme.img
-fastboot flash boot "${OUT_IMGDIR}"/boot.img
+fastboot flash boot "${OUT_IMGDIR}"/boot_fat.uefi.img
 fastboot flash system "${OUT_IMGDIR}"/system.img
 fastboot flash cache "${OUT_IMGDIR}"/cache.img
 fastboot flash userdata "${OUT_IMGDIR}"/userdata.img
