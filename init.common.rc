@@ -24,7 +24,8 @@ on post-fs-data
     # https://github.com/liuyq/device-linaro-hikey
     # commit: 048c3be1e420c0bc4314e1c62392ae5d1d0e824f
     # create for OP-TEE test
-    mkdir /data/tee 0755 shell shell
+    mkdir /data/tee 0777 shell shell
+    mkdir /data/tee/optee_armtz 0777 shell shell
     restorecon_recursive /data/tee
 
 on post-fs
@@ -102,7 +103,7 @@ service uim /vendor/bin/uim
 
 service tee_supplicant /system/bin/tee-supplicant
     class main
-    user root
+    user shell
     group shell
     oneshot
 

@@ -16,14 +16,10 @@ endif
 BOARD_CACHEIMAGE_PARTITION_SIZE := 268435456
 BOARD_FLASH_BLOCK_SIZE := 131072
 
-BOARD_SEPOLICY_UNION += \
-    file_contexts \
-    init.te \
-    sepolicy.te
-
 #Force FAT images for now
 #Currently, OP-TEE depends on a version of EDK2 that doesn't support
 #the abootimg-format boot images.  To make this work, force the build
 #to use the old format.  This can be fixed when these patches are
 #merged into the EDK2 version used by OP-TEE.
 TARGET_BOOTIMAGE_USE_FAT := true
+TARGET_TEE_IS_OPTEE := true

@@ -55,9 +55,9 @@ OPTEE_OS_DIR ?= device/linaro/bootloader/optee_os
 BUILD_OPTEE_MK := $(OPTEE_OS_DIR)/mk/aosp_optee.mk
 
 PRODUCT_PACKAGES += libteec \
-					tee-supplicant \
-					tee_helloworld \
-					xtest
+			tee-supplicant \
+			tee_helloworld \
+			xtest
 
 # OP TEE Hello world TA
 PRODUCT_PACKAGES += 8aaaf200-2450-11e4-abe2-0002a5d5c51b.ta
