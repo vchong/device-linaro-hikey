@@ -68,9 +68,8 @@ PRODUCT_PACKAGES += tee_helloworld \
                      xtest \
 
 # Hello world trusted app
-PRODUCT_PACKAGES += 8aaaf200-2450-11e4-abe20002a5d5c51b.ta
+PRODUCT_PACKAGES += 8aaaf200-2450-11e4-abe2-0002a5d5c51b.ta
 # OPTEE XTEST suite trusted appplications
-PRODUCT_PACKAGES += e626662e-c0e2-485c-b8c8-09fbce6edf3d.ta
 PRODUCT_PACKAGES += e13010e0-2ae1-11e5-896a-0002a5d5c51b.ta
 PRODUCT_PACKAGES += e626662e-c0e2-485c-b8c8-09fbce6edf3d.ta
 PRODUCT_PACKAGES += 5ce0c432-0ab0-40e5-a056-782ca0e6aba2.ta
