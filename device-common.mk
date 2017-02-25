@@ -58,7 +58,7 @@ PRODUCT_COPY_FILES += \
 
 # OPTEE user space
 PRODUCT_PACKAGES += libteec \
-                    tee-supplicant \
+                    tee-supplicant
 
 BOARD_SEPOLICY_UNION += init_optee.te
 
