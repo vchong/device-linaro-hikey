@@ -1,6 +1,10 @@
 # init.hikey.usb.rc writes to /config/* to set up USB
 allow init configfs:dir create_dir_perms;
-allow init configfs:file write;
+allow init configfs:file { write create };
 allow init configfs:lnk_file { create unlink };
 # for symlink /sdcard /mnt/sdcard
 allow init tmpfs:lnk_file create;
+
+allow init sysfs:dir { add_name write };
+allow init sysfs:file { create };
+allow init cgroup:file { create };

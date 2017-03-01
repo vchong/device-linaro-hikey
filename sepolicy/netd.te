@@ -1,2 +1,5 @@
+allow netd proc_net:dir { add_name write };
+allow netd proc_net:file { create rw_file_perms };
+
 # Triggers a sys_module denial, but kernel has CONFIG_MODULES=n.
 dontaudit netd self:capability sys_module;
