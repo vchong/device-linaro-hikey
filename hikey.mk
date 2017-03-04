@@ -1,3 +1,4 @@
+# TARGET_PREBUILT_KERNEL defined here!
 ifndef TARGET_KERNEL_USE
 TARGET_KERNEL_USE=4.9
 endif
