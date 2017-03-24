@@ -92,9 +92,6 @@ on post-fs
 # enable test harness
     setprop ro.test_harness true
 
-on boot
-    setprop persist.adb.tcp.port 5555
-
 on property:usb_speed.switch=high
     write /sys/kernel/debug/f72c0000.usb/config "0"
 
