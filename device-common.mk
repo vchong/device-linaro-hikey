@@ -68,9 +68,6 @@ PRODUCT_COPY_FILES +=  \
 # Include BT modules
 $(call inherit-product-if-exists, device/linaro/hikey/wpan/ti-wpan-products.mk)
 
-# Include OP-TEE packages
-$(call inherit-product-if-exists, device/linaro/hikey/optee-packages.mk)
-
 PRODUCT_COPY_FILES += \
         frameworks/native/data/etc/android.hardware.wifi.xml:system/etc/permissions/android.hardware.wifi.xml \
         frameworks/native/data/etc/android.hardware.bluetooth.xml:system/etc/permissions/android.hardware.bluetooth.xml \
