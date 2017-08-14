@@ -3,3 +3,6 @@
 /dev/ttyAMA4     0660 bluetooth bluetooth
 /dev/mali        0666 system graphics
 /dev/mali0       0666 system graphics
+
+/dev/tee0        0666   shell     shell
+/dev/teepriv0    0666   shell     shell
