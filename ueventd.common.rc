@@ -16,3 +16,12 @@ subsystem usbmisc
 
 /sys/devices/platform/ddr_devfreq/devfreq/ddr_devfreq		min_freq	0644	system	system
 /sys/devices/platform/e82c0000.mali/devfreq/e82c0000.mali	min_freq	0644	system	system
+
+/dev/tee0        0660   shell     shell
+/dev/teepriv0    0660   shell     shell
+/dev/block/mmcblk0rpmb 0660 shell  shell
+/dev/block/mmcblk1rpmb 0660 shell  shell
+/dev/mmcblk0rpmb 0660 shell  shell
+/dev/mmcblk1rpmb 0660 shell  shell
+/dev/block/mmcblk0 0660 shell  shell
+/dev/block/mmcblk1 0660 shell  shell
