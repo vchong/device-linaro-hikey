@@ -1,0 +1,3 @@
+device/linaro/hikey/installer/hikey960/hisi-sec_usb_xloader.img 0x00020000
+device/linaro/hikey/installer/hikey960/hisi-sec_uce_boot.img 0x6A908000
+device/linaro/hikey/installer/hikey960/recovery.bin 0x1AC00000
