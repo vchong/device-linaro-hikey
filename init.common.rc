@@ -89,3 +89,14 @@ service wpa_supplicant /system/vendor/bin/hw/wpa_supplicant \
      class main
      disabled
      oneshot
+
+on post-fs-data
+    # create for OP-TEE test
+    mkdir /data/tee 0775 shell shell
+    mkdir /data/tee/optee_armtz 0775 shell shell
+    restorecon_recursive /data/tee
+
+service tee-supplicant /system/bin/tee-supplicant
+    class main
+    user root
+    oneshot
