@@ -2,6 +2,21 @@
 /dev/ttyAMA3           u:object_r:console_device:s0
 /dev/ttyAMA5           u:object_r:console_device:s0
 /dev/ttyFIQ0           u:object_r:console_device:s0
+
+# optee files
+# link to files in vendor partition if there is vendor partition
+# link to files in system partition when no vendor partition
+/(vendor|system/vendor)/bin/tee-supplicant  u:object_r:tee_exec:s0
+/(vendor|system/vendor)/bin/xtest  u:object_r:tee_exec:s0
+/dev/teepriv[0-9]*     u:object_r:tee_device:s0
+/dev/tee[0-9]*         u:object_r:tee_device:s0
+/data/vendor/tee(/.*)?        u:object_r:tee_data_file:s0
+
+# mmc rpmb
+/dev/block/mmcblk[0-9]rpmb     u:object_r:mmc_rpmb_block_device:s0
+/dev/mmcblk[0-9]rpmb           u:object_r:mmc_rpmb_char_device:s0
+/dev/block/mmcblk[0-9]         u:object_r:mmc_block_device:s0
+
 /dev/mali              u:object_r:gpu_device:s0
 /dev/mali0             u:object_r:gpu_device:s0
 /dev/nanohub           u:object_r:sensors_device:s0
