@@ -10,6 +10,9 @@ else
   HIKEY_USE_LEGACY_TI_BLUETOOTH := false
 endif
 
+PRODUCT_CHARACTERISTICS := tv
+$(call inherit-product, device/google/atv/products/atv_base.mk)
+
 #
 # Inherit the full_base and device configurations
 $(call inherit-product, $(SRC_TARGET_DIR)/product/core_64_bit.mk)
