@@ -1,9 +1,10 @@
 AARCH64_TOOLCHAIN=GCC49
 EDK2_DIR=$(ANDROID_BUILD_TOP)/device/linaro/bootloader/edk2
 UEFI_TOOLS_DIR=$(ANDROID_BUILD_TOP)/device/linaro/hikey/uefi-tools
+INSTALLER_DIR=$(ANDROID_BUILD_TOP)/device/linaro/hikey/installer/hikey960
 ATF_DIR=$(ANDROID_BUILD_TOP)/device/linaro/bootloader/arm-trusted-firmware
 OPTEE_OS_DIR=$(ANDROID_BUILD_TOP)/optee/optee_os
-PRODUCT_OUT?=out/target/product/hikey
+PRODUCT_OUT?=out/target/product/hikey960
 DIST_DIR?=$(ANDROID_BUILD_TOP)/out/dist
 UEFI_BUILD_EXTRA_ARGS =
 ifdef DEBUG
@@ -17,10 +18,10 @@ CMD_RM_FIP_BIN = true
 ifeq ($(TARGET_TEE_IS_OPTEE), true)
 	UEFI_BUILD_EXTRA_ARGS+=-s $(OPTEE_OS_DIR)
 	CMD_RM_OPTEE_OS_OUT = rm -fr $(OPTEE_OS_DIR)/out
-	CMD_RM_FIP_BIN = rm -f $(EDK2_DIR)/Build/HiKey/$(TARGET)_GCC49/FV/fip.bin $(DIST_DIR)/fip.bin
+	CMD_RM_FIP_BIN = rm -f $(EDK2_DIR)/Build/HiKey960/$(TARGET)_GCC49/FV/fip.bin $(DIST_DIR)/fip.bin
 endif
 
-all: $(DIST_DIR)/fip.bin $(DIST_DIR)/l-loader.bin
+all: $(DIST_DIR)/fip.bin $(DIST_DIR)/l-loader.bin $(DIST_DIR)/prm_ptable.img
 
 $(DIST_DIR)/fip.bin:
 	cd $(EDK2_DIR) && \
@@ -35,16 +36,25 @@ $(DIST_DIR)/fip.bin:
 	mkdir -p $(EDK2_DIR)/Build/ && \
 	mkdir -p $(DIST_DIR) && \
 	mkdir -p $(ANDROID_BUILD_TOP)/$(PRODUCT_OUT)/obj/uefi && \
-	ln -sf $(ANDROID_BUILD_TOP)/$(PRODUCT_OUT)/obj/uefi $(EDK2_DIR)/Build/HiKey && \
-	$(UEFI_TOOLS_DIR)/uefi-build.sh -b $(TARGET) -D EDK2_OUT_DIR=$(ANDROID_BUILD_TOP)/$(PRODUCT_OUT)/obj/uefi -a $(ATF_DIR) $(UEFI_BUILD_EXTRA_ARGS) hikey && \
-	cp $(EDK2_DIR)/Build/HiKey/$(TARGET)_GCC49/FV/fip.bin $(DIST_DIR)/
+	ln -sf $(ANDROID_BUILD_TOP)/$(PRODUCT_OUT)/obj/uefi $(EDK2_DIR)/Build/HiKey960 && \
+	$(UEFI_TOOLS_DIR)/uefi-build.sh -b $(TARGET) -D EDK2_OUT_DIR=$(ANDROID_BUILD_TOP)/$(PRODUCT_OUT)/obj/uefi -a $(ATF_DIR) $(UEFI_BUILD_EXTRA_ARGS) hikey960 && \
+	cp $(EDK2_DIR)/Build/HiKey960/$(TARGET)_GCC49/FV/fip.bin $(DIST_DIR)/ && \
+	cp $(EDK2_DIR)/Build/HiKey960/$(TARGET)_GCC49/FV/fip.bin $(INSTALLER_DIR)/
 
 $(DIST_DIR)/l-loader.bin: $(DIST_DIR)/fip.bin
-	cd $(ANDROID_BUILD_TOP)/device/linaro/hikey/l-loader && \
-	ln -sf $(EDK2_DIR)/Build/HiKey/$(TARGET)_GCC49/FV//bl1.bin && \
-	make CROSS_COMPILE=arm-linux-androideabi- hikey && \
-	mv l-loader.bin $(DIST_DIR)/
+	cd $(ANDROID_BUILD_TOP)/device/linaro/l-loader && \
+	ln -sf $(EDK2_DIR)/Build/HiKey960/$(TARGET)_GCC49/FV/bl1.bin && \
+	ln -sf $(EDK2_DIR)/Build/HiKey960/$(TARGET)_GCC49/FV/BL33_AP_UEFI.fd && \
+	make CROSS_COMPILE=arm-linux-androideabi- hikey960 && \
+	cp l-loader.bin $(DIST_DIR)/ && \
+	cp l-loader.bin $(INSTALLER_DIR)/
+
+$(DIST_DIR)/prm_ptable.img:
+	cd $(ANDROID_BUILD_TOP)/device/linaro/l-loader && \
+	PTABLE=linux-32g SECTOR_SIZE=4096 SGDISK=./sgdisk bash -x generate_ptable.sh && \
+	cp prm_ptable.img $(DIST_DIR)/ && \
+	cp prm_ptable.img $(INSTALLER_DIR)/
 
 clean:
-	rm -rf $(DIST_DIR)/fip.bin $(DIST_DIR)/l-loader.bin $(ANDROID_BUILD_TOP)/$(PRODUCT_OUT)/obj/uefi $(EDK2_DIR)/Build/HiKey
+	rm -rf $(DIST_DIR)/fip.bin $(INSTALLER_DIR)/fip.bin $(DIST_DIR)/l-loader.bin $(INSTALLER_DIR)/l-loader.bin $(DIST_DIR)/prm_ptable.img $(INSTALLER_DIR)/prm_ptable.img $(ANDROID_BUILD_TOP)/$(PRODUCT_OUT)/obj/uefi $(EDK2_DIR)/Build/HiKey960
 	cd $(EDK2_DIR)/BaseTools && make clean

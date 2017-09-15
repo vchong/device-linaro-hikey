@@ -1,7 +1,9 @@
 OPTEE_PLATFORM ?= hikey
+OPTEE_PLATFORM_FLAVOR ?= hikey960
 OPTEE_CFG_ARM64_CORE ?= y
 OPTEE_TA_TARGETS ?= ta_arm64
 OPTEE_OS_DIR ?= optee/optee_os
+OPTEE_EXTRA_FLAGS ?= CFG_TEE_CORE_LOG_LEVEL=3 CFG_TEE_TA_LOG_LEVEL=3 DEBUG=1
 BUILD_OPTEE_MK := $(OPTEE_OS_DIR)/mk/aosp_optee.mk
 
 # OP TEE client library and service
@@ -38,3 +40,9 @@ PRODUCT_PACKAGES += f157cda0-550c-11e5-a6fa-0002a5d5c51b.ta
 PRODUCT_PACKAGES += 873bcd08-c2c3-11e6-a937-d0bf9c45c61c.ta
 # sdp-basic - atm default disabled for hikey
 PRODUCT_PACKAGES += 12345678-5b69-11e4-9dbb-101f74f00099.ta
+
+# optee examples
+PRODUCT_PACKAGES += tee_example_helloworld
+PRODUCT_PACKAGES += 8aaaf200-2450-11e4-abe2-0002a5d5c51b.ta
+PRODUCT_PACKAGES += tee_example_random
+PRODUCT_PACKAGES += b6c53aba-9669-4668-a7f2-205629d00f86.ta
