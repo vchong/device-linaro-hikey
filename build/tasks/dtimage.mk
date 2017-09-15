@@ -1,4 +1,4 @@
-ifneq ($(filter hikey%, $(TARGET_DEVICE)),)
+ifneq ($(filter hikey960%, $(TARGET_DEVICE)),)
 ifneq ($(TARGET_NO_DTIMAGE), true)
 
 MKDTIMG := device/linaro/hikey/installer/hikey960/mkdtimg
@@ -9,7 +9,7 @@ $(PRODUCT_OUT)/dt.img: $(DTB)
 
 droidcore: $(PRODUCT_OUT)/dt.img
 
-# Images will be packed into target_files zip, and hikey-img.zip.
+# Images will be packed into target_files zip, and hikey960-img.zip.
 INSTALLED_RADIOIMAGE_TARGET += $(PRODUCT_OUT)/dt.img
 BOARD_PACK_RADIOIMAGES += dt.img
 
