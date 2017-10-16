@@ -27,6 +27,8 @@ PRODUCT_COPY_FILES +=   \
 			device/linaro/hikey/ueventd.common.rc:root/ueventd.hikey.rc \
 			device/linaro/hikey/common.kl:system/usr/keylayout/hikey.kl
 
+PRODUCT_COPY_FILES += device/linaro/hikey/setcpugovernor.sh:system/bin/setcpugovernor.sh
+
 # Build HiKey HDMI audio HAL
 PRODUCT_PACKAGES += audio.primary.hikey
 
