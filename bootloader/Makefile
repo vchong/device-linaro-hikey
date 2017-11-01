@@ -1,8 +1,8 @@
 AARCH64_TOOLCHAIN=GCC49
-EDK2_DIR=$(ANDROID_BUILD_TOP)/device/linaro/bootloader/edk2
+EDK2_DIR=$(ANDROID_BUILD_TOP)/device/linaro/edk2
 UEFI_TOOLS_DIR=$(ANDROID_BUILD_TOP)/device/linaro/uefi-tools
 INSTALLER_DIR=$(ANDROID_BUILD_TOP)/device/linaro/hikey/installer/hikey960
-ATF_DIR=$(ANDROID_BUILD_TOP)/device/linaro/bootloader/arm-trusted-firmware
+ATF_DIR=$(ANDROID_BUILD_TOP)/device/linaro/arm-trusted-firmware
 OPTEE_OS_DIR=$(ANDROID_BUILD_TOP)/optee/optee_os
 PRODUCT_OUT?=out/target/product/hikey960
 DIST_DIR?=$(ANDROID_BUILD_TOP)/out/dist
