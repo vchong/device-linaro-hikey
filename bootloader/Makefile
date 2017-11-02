@@ -1,4 +1,5 @@
-AARCH64_TOOLCHAIN=GCC49
+AARCH64_TOOLCHAIN=GCC5
+DL_DIR=$(ANDROID_BUILD_TOP)/device/linaro
 EDK2_DIR=$(ANDROID_BUILD_TOP)/device/linaro/edk2
 UEFI_TOOLS_DIR=$(ANDROID_BUILD_TOP)/device/linaro/uefi-tools
 INSTALLER_DIR=$(ANDROID_BUILD_TOP)/device/linaro/hikey/installer/hikey960
@@ -23,11 +24,28 @@ endif
 
 all: $(DIST_DIR)/fip.bin $(DIST_DIR)/l-loader.bin $(DIST_DIR)/prm_ptable.img
 
-$(DIST_DIR)/fip.bin:
+$(DL_DIR)/gcc-linaro-5.4.1-2017.05-x86_64_aarch64-linux-gnu:
+ifeq ("$(wildcard $@)","")
+	cd $(DL_DIR) && \
+	wget http://releases.linaro.org/components/toolchain/binaries/5.4-2017.05/aarch64-linux-gnu/gcc-linaro-5.4.1-2017.05-x86_64_aarch64-linux-gnu.tar.xz && \
+	tar xf gcc-linaro-5.4.1-2017.05-x86_64_aarch64-linux-gnu.tar.xz
+endif
+
+$(DL_DIR)/gcc-linaro-5.4.1-2017.05-x86_64_arm-linux-gnueabihf:
+ifeq ("$(wildcard $@)","")
+	cd $(DL_DIR) && \
+	wget http://releases.linaro.org/components/toolchain/binaries/5.4-2017.05/arm-linux-gnueabihf/gcc-linaro-5.4.1-2017.05-x86_64_arm-linux-gnueabihf.tar.xz && \
+	tar xf gcc-linaro-5.4.1-2017.05-x86_64_arm-linux-gnueabihf.tar.xz
+endif
+
+# @ build root
+# make -j24 TARGET_BUILD_UEFI=true TARGET_TEE_IS_OPTEE=true fip.bin
+
+$(DIST_DIR)/fip.bin: $(DL_DIR)/gcc-linaro-5.4.1-2017.05-x86_64_aarch64-linux-gnu $(DL_DIR)/gcc-linaro-5.4.1-2017.05-x86_64_arm-linux-gnueabihf
 	cd $(EDK2_DIR) && \
 	rm -rf Conf/tools_def.txt Conf/BuildEnv.sh  Conf/build_rule.txt Conf/target.txt  Conf/tools_def.txt && \
-	export CROSS_COMPILE_32=arm-linux-androideabi- && \
-	export CROSS_COMPILE_64=aarch64-linux-android- && \
+	export CROSS_COMPILE_32=$(DL_DIR)/gcc-linaro-5.4.1-2017.05-x86_64_arm-linux-gnueabihf/bin/arm-linux-gnueabihf- && \
+	export CROSS_COMPILE_64=$(DL_DIR)/gcc-linaro-5.4.1-2017.05-x86_64_aarch64-linux-gnu/bin/aarch64-linux-gnu- && \
 	rm -rf OpenPlatformPkg && \
 	ln -sf  $(EDK2_DIR)/../OpenPlatformPkg OpenPlatformPkg && \
 	rm -rf $(EDK2_DIR)/Build/  && \
@@ -38,8 +56,10 @@ $(DIST_DIR)/fip.bin:
 	mkdir -p $(ANDROID_BUILD_TOP)/$(PRODUCT_OUT)/obj/uefi && \
 	ln -sf $(ANDROID_BUILD_TOP)/$(PRODUCT_OUT)/obj/uefi $(EDK2_DIR)/Build/HiKey960 && \
 	$(UEFI_TOOLS_DIR)/uefi-build.sh -b $(TARGET) -D EDK2_OUT_DIR=$(ANDROID_BUILD_TOP)/$(PRODUCT_OUT)/obj/uefi -a $(ATF_DIR) $(UEFI_BUILD_EXTRA_ARGS) hikey960 && \
-	cp $(EDK2_DIR)/Build/HiKey960/$(TARGET)_GCC49/FV/fip.bin $(DIST_DIR)/ && \
-	cp $(EDK2_DIR)/Build/HiKey960/$(TARGET)_GCC49/FV/fip.bin $(INSTALLER_DIR)/
+	cp $(EDK2_DIR)/Build/HiKey960/$(TARGET)_$(AARCH64_TOOLCHAIN)/FV/fip.bin $(DIST_DIR)/ && \
+	cp $(EDK2_DIR)/Build/HiKey960/$(TARGET)_$(AARCH64_TOOLCHAIN)/FV/fip.bin $(INSTALLER_DIR)/
+
+tst_fipbin_bld: $(DIST_DIR)/fip.bin
 
 $(DIST_DIR)/l-loader.bin: $(DIST_DIR)/fip.bin
 	cd $(ANDROID_BUILD_TOP)/device/linaro/l-loader && \
