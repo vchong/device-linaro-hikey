@@ -15,3 +15,5 @@ droidcore: $(PRODUCT_OUT)/boot_fat.uefi.img
 endif
 
 endif
+
+boot_fat: $(PRODUCT_OUT)/boot_fat.uefi.img
