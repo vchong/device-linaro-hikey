@@ -24,7 +24,7 @@ endif
 
 all: $(DIST_DIR)/fip.bin $(DIST_DIR)/l-loader.bin $(DIST_DIR)/prm_ptable.img
 
-TC64_URL=http://releases.linaro.org/components/toolchain/binaries/7.1-2017.08/aarch64-linux-gnu/gcc-linaro-7.1.1-2017.08-x86_64_aarch64-linux-gnu.tar.x
+TC64_URL=http://releases.linaro.org/components/toolchain/binaries/7.1-2017.08/aarch64-linux-gnu/gcc-linaro-7.1.1-2017.08-x86_64_aarch64-linux-gnu.tar.xz
 TC64 ?= gcc-linaro-7.1.1-2017.08-x86_64_aarch64-linux-gnu
 TC32_URL=http://releases.linaro.org/components/toolchain/binaries/7.1-2017.08/arm-linux-gnueabihf/gcc-linaro-7.1.1-2017.08-x86_64_arm-linux-gnueabihf.tar.xz
 TC32 ?= gcc-linaro-7.1.1-2017.08-x86_64_arm-linux-gnueabihf
