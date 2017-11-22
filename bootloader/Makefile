@@ -66,6 +66,8 @@ $(DIST_DIR)/fip.bin: $(DL_DIR)/$(TC64) $(DL_DIR)/$(TC32)
 
 tst_fipbin_bld: $(DIST_DIR)/fip.bin
 
+tst_all: all
+
 $(DIST_DIR)/l-loader.bin: $(DIST_DIR)/fip.bin
 	cd $(ANDROID_BUILD_TOP)/device/linaro/l-loader && \
 	ln -sf $(EDK2_DIR)/Build/HiKey960/$(TARGET)_GCC5/FV/bl1.bin && \
