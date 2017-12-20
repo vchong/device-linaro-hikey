@@ -19,7 +19,7 @@ CMD_RM_FIP_BIN = true
 ifeq ($(TARGET_TEE_IS_OPTEE), true)
 	UEFI_BUILD_EXTRA_ARGS+=-s $(OPTEE_OS_DIR)
 	CMD_RM_OPTEE_OS_OUT = rm -fr $(OPTEE_OS_DIR)/out
-	CMD_RM_FIP_BIN = rm -f $(EDK2_DIR)/Build/HiKey960/$(TARGET)_GCC5/FV/fip.bin $(DIST_DIR)/fip.bin
+	CMD_RM_FIP_BIN = rm -f $(EDK2_DIR)/Build/HiKey960/$(TARGET)_$(AARCH64_TOOLCHAIN)/FV/fip.bin $(DIST_DIR)/fip.bin
 endif
 
 all: $(DIST_DIR)/fip.bin $(DIST_DIR)/l-loader.bin $(DIST_DIR)/prm_ptable.img
@@ -70,8 +70,8 @@ tst_all: all
 
 $(DIST_DIR)/l-loader.bin: $(DIST_DIR)/fip.bin
 	cd $(ANDROID_BUILD_TOP)/device/linaro/l-loader && \
-	ln -sf $(EDK2_DIR)/Build/HiKey960/$(TARGET)_GCC5/FV/bl1.bin && \
-	ln -sf $(EDK2_DIR)/Build/HiKey960/$(TARGET)_GCC5/FV/BL33_AP_UEFI.fd && \
+	ln -sf $(EDK2_DIR)/Build/HiKey960/$(TARGET)_$(AARCH64_TOOLCHAIN)/FV/bl1.bin && \
+	ln -sf $(EDK2_DIR)/Build/HiKey960/$(TARGET)_$(AARCH64_TOOLCHAIN)/FV/BL33_AP_UEFI.fd && \
 	make CROSS_COMPILE=arm-linux-androideabi- hikey960 && \
 	cp l-loader.bin $(DIST_DIR)/ && \
 	cp l-loader.bin $(INSTALLER_DIR)/
