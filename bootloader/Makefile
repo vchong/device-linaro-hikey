@@ -78,7 +78,7 @@ $(DIST_DIR)/l-loader.bin: $(DIST_DIR)/fip.bin
 
 $(DIST_DIR)/prm_ptable.img:
 	cd $(ANDROID_BUILD_TOP)/device/linaro/l-loader && \
-	PTABLE=linux-32g SECTOR_SIZE=4096 SGDISK=./sgdisk bash -x generate_ptable.sh && \
+	PTABLE=aosp-32g SECTOR_SIZE=4096 SGDISK=./sgdisk bash -x generate_ptable.sh && \
 	cp prm_ptable.img $(DIST_DIR)/ && \
 	cp prm_ptable.img $(INSTALLER_DIR)/
 
