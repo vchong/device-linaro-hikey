@@ -73,12 +73,14 @@ $(DIST_DIR)/l-loader.bin: $(DIST_DIR)/fip.bin
 	ln -sf $(EDK2_DIR)/Build/HiKey960/$(TARGET)_$(AARCH64_TOOLCHAIN)/FV/bl1.bin && \
 	ln -sf $(EDK2_DIR)/Build/HiKey960/$(TARGET)_$(AARCH64_TOOLCHAIN)/FV/BL33_AP_UEFI.fd && \
 	make CROSS_COMPILE=arm-linux-androideabi- hikey960 && \
+	mkdir -p $(DIST_DIR) && \
 	cp l-loader.bin $(DIST_DIR)/ && \
 	cp l-loader.bin $(INSTALLER_DIR)/
 
 $(DIST_DIR)/prm_ptable.img:
 	cd $(ANDROID_BUILD_TOP)/device/linaro/l-loader && \
 	PTABLE=aosp-32g SECTOR_SIZE=4096 SGDISK=./sgdisk bash -x generate_ptable.sh && \
+	mkdir -p $(DIST_DIR) && \
 	cp prm_ptable.img $(DIST_DIR)/ && \
 	cp prm_ptable.img $(INSTALLER_DIR)/
 
