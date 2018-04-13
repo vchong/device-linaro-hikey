@@ -105,6 +105,7 @@
         <interface>
             <name>IKeymasterDevice</name>
             <instance>default</instance>
+            <instance>optee</instance>
         </interface>
     </hal>
     <hal format="hidl">
