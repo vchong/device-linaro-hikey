@@ -11,6 +11,9 @@ TARGET_NO_DTIMAGE := false
 BOARD_KERNEL_CMDLINE := androidboot.hardware=hikey960
 BOARD_KERNEL_CMDLINE += firmware_class.path=/vendor/firmware loglevel=15 efi=noruntime
 
+BOARD_KERNEL_CMDLINE += printk.devkmsg=on buildvariant=userdebug
+BOARD_KERNEL_CMDLINE += androidboot.selinux=permissive
+
 ifneq ($(TARGET_ANDROID_VERITY),)
 # Enable dtb fstab for treble, with verity and system-as-root
 # NOTE: Disabled by default until b/111829702 is fixed
