@@ -124,9 +124,39 @@ PRODUCT_PACKAGES += \
 
 # Keymaster HAL
 PRODUCT_PACKAGES += \
-    android.hardware.keymaster@3.0-impl \
-    android.hardware.keymaster@3.0-service
+    android.hardware.keymaster@3.0-service.optee \
+    VtsHalKeymasterV3_0TargetTest
 
+#PRODUCT_PACKAGES += \
+#    android.hardware.keymaster@3.0-impl.optee \
+#    android.hardware.keymaster@3.0-service.optee
+
+#PRODUCT_PACKAGES += \
+#    android.hardware.keymaster@3.0-impl \
+#    android.hardware.keymaster@3.0-service
+
+# Gatekeeper HAL
+PRODUCT_PACKAGES += \
+    android.hardware.gatekeeper@1.0-service.optee \
+    VtsHalGatekeeperV1_0TargetTest
+
+#PRODUCT_PACKAGES += \
+#    android.hardware.gatekeeper@1.0-impl.optee \
+#    android.hardware.gatekeeper@1.0-service.optee
+
+#PRODUCT_PACKAGES += \
+#    android.hardware.gatekeeper@1.0-impl \
+#    android.hardware.gatekeeper@1.0-service
+
+PRODUCT_PROPERTY_OVERRIDES += \
+	ro.hardware.keystore=optee \
+	ro.hardware.keystore_desede=true
+#	ro.hardware.gatekeeper=optee
+
+# Simphw HAL
+#PRODUCT_PACKAGES += \
+#    android.hardware.simple@2.0-impl \
+#    android.hardware.simple@2.0-service
 
 # Sensor HAL
 ifneq ($(TARGET_SENSOR_MEZZANINE),)
