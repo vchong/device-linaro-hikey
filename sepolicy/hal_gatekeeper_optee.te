@@ -1,0 +1,11 @@
+type hal_gatekeeper_optee, domain;
+hal_server_domain(hal_gatekeeper_optee, hal_gatekeeper)
+
+type hal_gatekeeper_optee_exec, exec_type, vendor_file_type, file_type;
+init_daemon_domain(hal_gatekeeper_optee)
+
+# Allow access to keymaster.optee and gatekeeper.optee properties
+get_prop(hal_keymaster_optee, km_optee_prop)
+set_prop(hal_keymaster_optee, km_optee_prop)
+get_prop(hal_keymaster_optee, gk_optee_prop)
+set_prop(hal_keymaster_optee, gk_optee_prop)
