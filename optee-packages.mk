@@ -59,3 +59,9 @@ PRODUCT_PACKAGES += optee_example_acipher
 PRODUCT_PACKAGES += a734eed9-d6a1-4244-aa50-7c99719e7b7b.ta
 PRODUCT_PACKAGES += optee_example_secure_storage
 PRODUCT_PACKAGES += f4e750bb-1437-4fbf-8785-8d3580c34994.ta
+
+# kmgk
+PRODUCT_PACKAGES += dba51a17-0563-11e7-93b1-6fa7b0071a51.ta
+PRODUCT_PACKAGES += 4d573443-6a56-4272-ac6f-2425af9ef9bb.ta
+PRODUCT_PACKAGES += wait_for_keymaster_optee
+PRODUCT_PACKAGES += KMGK_gtest

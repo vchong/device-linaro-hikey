@@ -55,10 +55,10 @@ case ${PTABLE} in
     fakeroot ${SGDISK} -n 2:0:+1M -t 2:0700 -u 2:61A36FC1-8EFB-4899-84D8-B61642EFA723 -c 2:"vrl_backup" ${TEMP_FILE}
     #[3: mcuimage: 3M-4M]
     fakeroot ${SGDISK} -n 3:0:+1M -t 3:0700 -u 3:65007411-962D-4781-9B2C-51DD7DF22CC3 -c 3:"mcuimage" ${TEMP_FILE}
-    #[4: fastboot: 4M-12M]
-    fakeroot ${SGDISK} -n 4:0:+8M -t 4:EF02 -u 4:496847AB-56A1-4CD5-A1AD-47F4ACF055C9 -c 4:"fastboot" ${TEMP_FILE}
-    #[5: nvme: 12M-14M]
-    fakeroot ${SGDISK} -n 5:0:+2M -t 5:0700 -u 5:00354BCD-BBCB-4CB3-B5AE-CDEFCB5DAC43 -c 5:"nvme" ${TEMP_FILE}
+    #[4: fastboot: 4M-8M]
+    fakeroot ${SGDISK} -n 4:0:+4M -t 4:EF02 -u 4:496847AB-56A1-4CD5-A1AD-47F4ACF055C9 -c 4:"fastboot" ${TEMP_FILE}
+    #[5: nvme: 8M-14M]
+    fakeroot ${SGDISK} -n 5:0:+6M -t 5:0700 -u 5:00354BCD-BBCB-4CB3-B5AE-CDEFCB5DAC43 -c 5:"nvme" ${TEMP_FILE}
     #[6: boot: 14M-78M]
     fakeroot ${SGDISK} -n 6:0:+64M -t 6:EF00 -u 6:5C0F213C-17E1-4149-88C8-8B50FB4EC70E -c 6:"boot" ${TEMP_FILE}
     #[7: vendor: 78M-334M]
