@@ -23,6 +23,7 @@ allow tee mmc_rpmb_char_device:chr_file { ioctl open read write rw_file_perms };
 allow tee console_device:chr_file {  getattr read write ioctl };
 allow tee shell:fd { use };
 allow tee system_data_file:dir { getattr };
+#allow tee system_data_file:file { write open };
 allow tee tee_data_file:dir { create rmdir rename create_dir_perms };
 allow tee vendor_data_file:dir { write add_name remove_name rmdir };
 allow tee vendor_data_file:file { create read write open unlink };

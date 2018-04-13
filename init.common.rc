@@ -114,6 +114,32 @@ service bugreport /system/bin/dumpstate -d -p -B -z \
     class main
     disabled
 
+on early-init
+    setprop ro.hardware.keystore optee
+    #setprop ro.hardware.gatekeeper optee
+
+on post-fs
+    #chown system system /persist
+    #chmod 0771 /persist
+    #restorecon /persist
+    #mkdir /persist/tee 0770 shell shell
+    # optee_client before sha 5602227e8acbffc0b9939a8be17740024e7ceb90
+    # will create its log file under /persist/tee/logs so we need
+    # to mkdir it else teec.log will not be created
+    #mkdir /persist/tee/logs 0770 shell shell
+    #restorecon_recursive /persist/tee
+
+    # optional for debugging
+    # default 5s
+    #wait /persist/tee
+
+    #start tee-supplicant
+    #start vendor.keymaster-3-0-optee
+
+on late-fs
+    #wait_for_prop keymaster.optee.status ready
+    #exec_start wait_for_keymaster_optee
+
 on post-fs-data
     # create for OP-TEE test
     mkdir /data/vendor/tee 0770 shell shell
@@ -122,6 +148,12 @@ on post-fs-data
     # to mkdir it else teec.log will not be created
     mkdir /data/vendor/tee/logs 0770 shell shell
     restorecon_recursive /data/vendor/tee
+
+    start tee-supplicant
+
+    # Keep this at the end of on post-fs-data
+    # Set indication (checked by vold) that we have finished this action
+    #setprop vold.post_fs_data_done 1
 
 service tee-supplicant /vendor/bin/tee-supplicant -d
     class main
