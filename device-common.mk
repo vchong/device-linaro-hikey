@@ -96,6 +96,11 @@ PRODUCT_PACKAGES += \
 #    android.hardware.gatekeeper@1.0-impl.optee \
 #    android.hardware.gatekeeper@1.0-service.optee
 
+# Simphw HAL
+PRODUCT_PACKAGES += \
+    android.hardware.simple@2.0-impl \
+    android.hardware.simple@2.0-service
+
 # Copy hardware config file(s)
 PRODUCT_COPY_FILES +=  \
         device/linaro/hikey/etc/permissions/android.hardware.screen.xml:system/etc/permissions/android.hardware.screen.xml \
