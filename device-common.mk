@@ -81,8 +81,8 @@ PRODUCT_PACKAGES += \
     android.hardware.gnss@1.0-impl
 
 # Keymaster HAL
-#PRODUCT_PACKAGES += \
-#    android.hardware.keymaster@3.0-service.optee
+PRODUCT_PACKAGES += \
+    android.hardware.keymaster@3.0-service.optee
 
 #PRODUCT_PACKAGES += \
 #    android.hardware.keymaster@3.0-impl.optee \
@@ -93,8 +93,8 @@ PRODUCT_PACKAGES += \
     android.hardware.keymaster@3.0-service
 
 # Gatekeeper HAL
-#PRODUCT_PACKAGES += \
-#    android.hardware.gatekeeper@1.0-service.optee
+PRODUCT_PACKAGES += \
+    android.hardware.gatekeeper@1.0-service.optee
 
 #PRODUCT_PACKAGES += \
 #    android.hardware.gatekeeper@1.0-impl.optee \
