@@ -57,4 +57,5 @@ PRODUCT_PACKAGES += fd02c9da-306c-48c7-a49c-bbd827ae86ee.ta
 
 # km & gk
 PRODUCT_PACKAGES += keystore0_2.hikey keymaster_test keymaster_tests
-PRODUCT_PACKAGES += keystore2_0.hikey
+#PRODUCT_PACKAGES += keystore2_0.hikey
+PRODUCT_PACKAGES += keystore.hikey
