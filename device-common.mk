@@ -90,7 +90,8 @@ PRODUCT_PACKAGES += \
 
 PRODUCT_PACKAGES += \
     android.hardware.keymaster@3.0-impl \
-    android.hardware.keymaster@3.0-service
+    android.hardware.keymaster@3.0-service \
+    VtsHalKeymasterV3_0TargetTest
 
 # Gatekeeper HAL
 PRODUCT_PACKAGES += \
@@ -102,7 +103,8 @@ PRODUCT_PACKAGES += \
 
 PRODUCT_PACKAGES += \
     android.hardware.gatekeeper@1.0-impl \
-    android.hardware.gatekeeper@1.0-service
+    android.hardware.gatekeeper@1.0-service \
+    VtsHalGatekeeperV1_0TargetTest
 
 # Simphw HAL
 PRODUCT_PACKAGES += \
