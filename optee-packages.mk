@@ -8,8 +8,8 @@ BUILD_OPTEE_MK := $(OPTEE_OS_DIR)/mk/aosp_optee.mk
 
 # OP TEE client library and service
 PRODUCT_PACKAGES += libteec \
-                    tee-supplicant \
-                    liboptee_cryptoki
+                    tee-supplicant
+#                    liboptee_cryptoki
 
 # optee_test and TA
 PRODUCT_PACKAGES += xtest
@@ -53,7 +53,7 @@ PRODUCT_PACKAGES += hotp
 PRODUCT_PACKAGES += 484d4143-2d53-4841-3120-4a6f636b6542.ta
 
 # sks
-PRODUCT_PACKAGES += fd02c9da-306c-48c7-a49c-bbd827ae86ee.ta
+#PRODUCT_PACKAGES += fd02c9da-306c-48c7-a49c-bbd827ae86ee.ta
 
 # km & gk
 PRODUCT_PACKAGES += keystore0_2.hikey keymaster_test keymaster_tests
