@@ -107,9 +107,9 @@ PRODUCT_PACKAGES += \
     VtsHalGatekeeperV1_0TargetTest
 
 # Simphw HAL
-PRODUCT_PACKAGES += \
-    android.hardware.simple@2.0-impl \
-    android.hardware.simple@2.0-service
+#PRODUCT_PACKAGES += \
+#    android.hardware.simple@2.0-impl \
+#    android.hardware.simple@2.0-service
 
 # Copy hardware config file(s)
 PRODUCT_COPY_FILES +=  \
