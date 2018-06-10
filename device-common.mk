@@ -81,8 +81,8 @@ PRODUCT_PACKAGES += \
     android.hardware.gnss@1.0-impl
 
 # Keymaster HAL
-PRODUCT_PACKAGES += \
-    android.hardware.keymaster@3.0-service.optee
+#PRODUCT_PACKAGES += \
+#    android.hardware.keymaster@3.0-service.optee
 
 #PRODUCT_PACKAGES += \
 #    android.hardware.keymaster@3.0-impl.optee \
@@ -94,8 +94,8 @@ PRODUCT_PACKAGES += \
     VtsHalKeymasterV3_0TargetTest
 
 # Gatekeeper HAL
-PRODUCT_PACKAGES += \
-    android.hardware.gatekeeper@1.0-service.optee
+#PRODUCT_PACKAGES += \
+#    android.hardware.gatekeeper@1.0-service.optee
 
 #PRODUCT_PACKAGES += \
 #    android.hardware.gatekeeper@1.0-impl.optee \
@@ -107,9 +107,9 @@ PRODUCT_PACKAGES += \
     VtsHalGatekeeperV1_0TargetTest
 
 # Simphw HAL
-#PRODUCT_PACKAGES += \
-#    android.hardware.simple@2.0-impl \
-#    android.hardware.simple@2.0-service
+PRODUCT_PACKAGES += \
+    android.hardware.simple@2.0-impl \
+    android.hardware.simple@2.0-service
 
 # Copy hardware config file(s)
 PRODUCT_COPY_FILES +=  \

@@ -55,6 +55,9 @@ PRODUCT_PACKAGES += 484d4143-2d53-4841-3120-4a6f636b6542.ta
 # sks
 #PRODUCT_PACKAGES += fd02c9da-306c-48c7-a49c-bbd827ae86ee.ta
 
+# gl
+PRODUCT_PACKAGES += dba51a17-0563-11e7-93b16fa7b0071a51.ta
+
 # km & gk
 PRODUCT_PACKAGES += d36b30c7-5a5f-472c-af97-7f38a2edab7d.ta
 PRODUCT_PACKAGES += keystore0_2.hikey keymaster_test keymaster_tests
