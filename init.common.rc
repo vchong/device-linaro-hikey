@@ -129,10 +129,10 @@ service bugreport /system/bin/dumpstate -d -p -B -z \
 
 on post-fs-data
     # create for OP-TEE test
-    mkdir /data/tee 0770 shell shell
-    restorecon_recursive /data/tee
+    mkdir /data/vendor/tee 0770 shell shell
+    restorecon_recursive /data/vendor/tee
 
-service tee-supplicant /system/bin/tee-supplicant -d
+service tee-supplicant /vendor/bin/tee-supplicant -d
     class main
     user shell
     # When tee-supplicant is launched manually after boot, it

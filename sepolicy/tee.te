@@ -12,8 +12,10 @@ allow tee ion_device:chr_file write;
 
 allow tee console_device:chr_file {  getattr read write ioctl };
 allow tee shell:fd { use };
+allow tee system_data_file:dir { getattr };
 allow tee tee_data_file:dir { create rmdir rename };
-allow tee system_data_file:dir { write remove_name };
+allow tee vendor_data_file:dir { write add_name remove_name rmdir };
+allow tee vendor_data_file:file { create read write open unlink };
 
 # For xtest 200x tests
 allow tee node:tcp_socket node_bind;
@@ -33,4 +35,3 @@ allow netd tee:fd { use };
 allow tee netd:unix_stream_socket { connectto };
 
 typeattribute tee socket_between_core_and_vendor_violators;
-typeattribute tee_data_file core_data_file_type;
