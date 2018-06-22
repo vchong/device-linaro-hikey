@@ -13,6 +13,8 @@ PRODUCT_PACKAGES += libteec \
 
 # optee_test and TA
 PRODUCT_PACKAGES += xtest
+# os_test_lib
+PRODUCT_PACKAGES += ffd2bded-ab7d-4988-95ee-e4962fff7154.ta
 # os_test
 PRODUCT_PACKAGES += 5b9e0e40-2636-11e1-ad9e-0002a5d5c51b.ta
 # concurrent_large
@@ -49,7 +51,7 @@ PRODUCT_PACKAGES += optee_example_random
 PRODUCT_PACKAGES += b6c53aba-9669-4668-a7f2-205629d00f86.ta
 PRODUCT_PACKAGES += optee_example_aes
 PRODUCT_PACKAGES += 5dbac793-f574-4871-8ad3-04331ec17f24.ta
-PRODUCT_PACKAGES += hotp
+PRODUCT_PACKAGES += optee_example_hotp
 PRODUCT_PACKAGES += 484d4143-2d53-4841-3120-4a6f636b6542.ta
 
 # sks
