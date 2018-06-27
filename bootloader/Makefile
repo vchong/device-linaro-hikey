@@ -1,5 +1,4 @@
-#AARCH64_TOOLCHAIN=GCC49
-AARCH64_TOOLCHAIN=GCC5
+AARCH64_TOOLCHAIN=GCC49
 EDK2_DIR=$(ANDROID_BUILD_TOP)/device/linaro/bootloader/edk2
 UEFI_TOOLS_DIR=$(ANDROID_BUILD_TOP)/device/linaro/hikey/uefi-tools
 ATF_DIR=$(ANDROID_BUILD_TOP)/device/linaro/bootloader/arm-trusted-firmware
@@ -18,7 +17,7 @@ CMD_RM_FIP_BIN = true
 ifeq ($(TARGET_TEE_IS_OPTEE), true)
        UEFI_BUILD_EXTRA_ARGS+=-s $(OPTEE_OS_DIR)
        CMD_RM_OPTEE_OS_OUT = rm -fr $(OPTEE_OS_DIR)/out
-       CMD_RM_FIP_BIN = rm -f $(EDK2_DIR)/Build/HiKey/$(TARGET)_$(AARCH64_TOOLCHAIN)/FV/fip.bin $(DIST_DIR)/fip.bin
+       CMD_RM_FIP_BIN = rm -f $(EDK2_DIR)/Build/HiKey/$(TARGET)_GCC49/FV/fip.bin $(DIST_DIR)/fip.bin
 endif
 
 all: $(DIST_DIR)/fip.bin $(DIST_DIR)/l-loader.bin
@@ -26,10 +25,8 @@ all: $(DIST_DIR)/fip.bin $(DIST_DIR)/l-loader.bin
 $(DIST_DIR)/fip.bin:
 	cd $(EDK2_DIR) && \
 	rm -rf Conf/tools_def.txt Conf/BuildEnv.sh  Conf/build_rule.txt Conf/target.txt  Conf/tools_def.txt && \
-	export CROSS_COMPILE_32=arm-linux-gnueabihf- && \
-	export CROSS_COMPILE_64=aarch64-linux-gnu- && \
-	arm-linux-gnueabihf-gcc --version && \
-	aarch64-linux-gnu-gcc --version && \
+	export CROSS_COMPILE_32=arm-linux-androideabi- && \
+	export CROSS_COMPILE_64=aarch64-linux-android- && \
 	rm -rf OpenPlatformPkg && \
 	ln -sf  $(EDK2_DIR)/../OpenPlatformPkg OpenPlatformPkg && \
 	rm -rf $(EDK2_DIR)/Build/  && \
@@ -40,11 +37,11 @@ $(DIST_DIR)/fip.bin:
 	mkdir -p $(ANDROID_BUILD_TOP)/$(PRODUCT_OUT)/obj/uefi && \
 	ln -sf $(ANDROID_BUILD_TOP)/$(PRODUCT_OUT)/obj/uefi $(EDK2_DIR)/Build/HiKey && \
 	$(UEFI_TOOLS_DIR)/uefi-build.sh -b $(TARGET) -D EDK2_OUT_DIR=$(ANDROID_BUILD_TOP)/$(PRODUCT_OUT)/obj/uefi -a $(ATF_DIR) $(UEFI_BUILD_EXTRA_ARGS) hikey && \
-	cp $(EDK2_DIR)/Build/HiKey/$(TARGET)_$(AARCH64_TOOLCHAIN)/FV/fip.bin $(DIST_DIR)/
+	cp $(EDK2_DIR)/Build/HiKey/$(TARGET)_GCC49/FV/fip.bin $(DIST_DIR)/
 
 $(DIST_DIR)/l-loader.bin: $(DIST_DIR)/fip.bin
 	cd $(ANDROID_BUILD_TOP)/device/linaro/hikey/l-loader && \
-	ln -sf $(EDK2_DIR)/Build/HiKey/$(TARGET)_$(AARCH64_TOOLCHAIN)/FV//bl1.bin && \
+	ln -sf $(EDK2_DIR)/Build/HiKey/$(TARGET)_GCC49/FV//bl1.bin && \
 	make CROSS_COMPILE=arm-linux-androideabi- l-loader.bin && \
 	mv l-loader.bin $(DIST_DIR)/
 
