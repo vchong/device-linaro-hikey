@@ -83,7 +83,12 @@ PRODUCT_PACKAGES += \
 # Keymaster HAL
 PRODUCT_PACKAGES += \
     android.hardware.keymaster@3.0-service.optee \
-    VtsHalKeymasterV3_0TargetTest
+    VtsHalKeymasterV3_0TargetTest \
+    VtsHalKeymasterV3_0FuncFuzzer \
+    VtsHalKeymasterV3_0IfaceFuzzer \
+    VtsHalKeymasterV3_0Target \
+    VtsHalKeymasterV3_0TargetProfiling \
+    VtsHalKeymasterV3_0TargetReplay
 
 #PRODUCT_PACKAGES += \
 #    android.hardware.keymaster@3.0-impl.optee \
@@ -96,7 +101,12 @@ PRODUCT_PACKAGES += \
 # Gatekeeper HAL
 PRODUCT_PACKAGES += \
     android.hardware.gatekeeper@1.0-service.optee \
-    VtsHalGatekeeperV1_0TargetTest
+    VtsHalGatekeeperV1_0TargetTest \
+    VtsHalGatekeeperV1_0FuncFuzzer \
+    VtsHalGatekeeperV1_0IfaceFuzzer \
+    VtsHalGatekeeperV1_0Target \
+    VtsHalGatekeeperV1_0TargetProfiling \
+    VtsHalGatekeeperV1_0TargetReplay
 
 #PRODUCT_PACKAGES += \
 #    android.hardware.gatekeeper@1.0-impl.optee \
