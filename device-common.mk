@@ -89,9 +89,9 @@ PRODUCT_PACKAGES += \
 #    android.hardware.keymaster@3.0-impl.optee \
 #    android.hardware.keymaster@3.0-service.optee
 
-#PRODUCT_PACKAGES += \
-#    android.hardware.keymaster@3.0-impl \
-#    android.hardware.keymaster@3.0-service
+PRODUCT_PACKAGES += \
+    android.hardware.keymaster@3.0-impl \
+    android.hardware.keymaster@3.0-service
 
 # Gatekeeper HAL
 PRODUCT_PACKAGES += \
@@ -102,9 +102,9 @@ PRODUCT_PACKAGES += \
 #    android.hardware.gatekeeper@1.0-impl.optee \
 #    android.hardware.gatekeeper@1.0-service.optee
 
-#PRODUCT_PACKAGES += \
-#    android.hardware.gatekeeper@1.0-impl \
-#    android.hardware.gatekeeper@1.0-service
+PRODUCT_PACKAGES += \
+    android.hardware.gatekeeper@1.0-impl \
+    android.hardware.gatekeeper@1.0-service
 
 # Simphw HAL
 #PRODUCT_PACKAGES += \
