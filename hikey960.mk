@@ -1,3 +1,4 @@
+ifneq ($(TARGET_BUILD_KERNEL), true)
 ifndef TARGET_KERNEL_USE
 TARGET_KERNEL_USE=4.9
 endif
@@ -10,6 +11,11 @@ else
   HIKEY_USE_LEGACY_TI_BLUETOOTH := false
 endif
 
+else # TARGET_BUILD_KERNEL == true for following
+TARGET_PREBUILT_KERNEL :=
+TARGET_PREBUILT_DTB :=
+TARGET_FSTAB := fstab.hikey
+endif # end of TARGET_BUILD_KERNEL
 #
 # Inherit the full_base and device configurations
 $(call inherit-product, $(SRC_TARGET_DIR)/product/core_64_bit.mk)
