@@ -1,0 +1,1 @@
+allow netdomain self:{ icmp_socket } { create write getattr read connect };
