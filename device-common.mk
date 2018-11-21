@@ -92,7 +92,9 @@ PRODUCT_PACKAGES += android.hardware.bluetooth@1.0-service.btlinux
 endif
 
 # PowerHAL
-PRODUCT_PACKAGES += android.hardware.power@1.0-impl
+PRODUCT_PACKAGES += \
+	android.hardware.power@1.1-impl \
+	android.hardware.power@1.1-service.hikey-common
 
 #GNSS HAL
 PRODUCT_PACKAGES += \
