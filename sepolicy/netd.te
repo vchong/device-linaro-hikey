@@ -1,3 +1,8 @@
+# https://android-review.googlesource.com/c/platform/system/sepolicy/+/712265
+allow netd netdomain:{
+  icmp_socket
+} { read write getattr setattr getopt setopt };
+
 # Triggers a sys_module denial, but kernel has CONFIG_MODULES=n.
 dontaudit netd self:capability sys_module;
 dontaudit netd kernel:system module_request;
