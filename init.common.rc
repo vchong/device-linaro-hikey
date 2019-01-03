@@ -150,3 +150,25 @@ service tee-supplicant /vendor/bin/tee-supplicant -d
     # groups to add.
     group shell inet
     oneshot
+
+# need to run as root, else 'permission denied'
+# most references use full path to cmd, i.e. chown in this case
+# '/system/bin/chown system system' doesn't work
+# '/system/bin/chown system:system' does
+# wildcards don't work, e.g.
+# 'system/bin/chown system:system /data/nativetest*'
+# will return an error in the boot log
+# 'on property:dev.bootcomplete=1' and 'on property:sys.boot_completed=1'
+# both don't work, i.e. don't seem to get executed
+# try 'on property:sys.logbootcomplete'?
+on post-fs-data
+    exec u:r:su:s0 root root log readproc -- /system/bin/chown system:system /data/nativetest
+    exec u:r:su:s0 root root log readproc -- /system/bin/chown system:system /data/nativetest/VtsHalGatekeeperV1_0TargetTest
+    exec u:r:su:s0 root root log readproc -- /system/bin/chown system:system /data/nativetest/VtsHalGatekeeperV1_0TargetTest/VtsHalGatekeeperV1_0TargetTest
+    exec u:r:su:s0 root root log readproc -- /system/bin/chown system:system /data/nativetest/VtsHalKeymasterV3_0TargetTest
+    exec u:r:su:s0 root root log readproc -- /system/bin/chown system:system /data/nativetest/VtsHalKeymasterV3_0TargetTest/VtsHalKeymasterV3_0TargetTest
+    exec u:r:su:s0 root root log readproc -- /system/bin/chown system:system /data/nativetest64
+    exec u:r:su:s0 root root log readproc -- /system/bin/chown system:system /data/nativetest64/VtsHalGatekeeperV1_0TargetTest
+    exec u:r:su:s0 root root log readproc -- /system/bin/chown system:system /data/nativetest64/VtsHalGatekeeperV1_0TargetTest/VtsHalGatekeeperV1_0TargetTest
+    exec u:r:su:s0 root root log readproc -- /system/bin/chown system:system /data/nativetest64/VtsHalKeymasterV3_0TargetTest
+    exec u:r:su:s0 root root log readproc -- /system/bin/chown system:system /data/nativetest64/VtsHalKeymasterV3_0TargetTest/VtsHalKeymasterV3_0TargetTest
