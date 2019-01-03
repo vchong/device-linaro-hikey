@@ -1,0 +1,5 @@
+type hal_gatekeeper_hikey, domain;
+hal_server_domain(hal_gatekeeper_hikey, hal_gatekeeper)
+
+type hal_gatekeeper_hikey_exec, exec_type, vendor_file_type, file_type;
+init_daemon_domain(hal_gatekeeper_hikey);
