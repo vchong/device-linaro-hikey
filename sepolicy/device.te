@@ -1,0 +1,2 @@
+# mmc rpmb partition block device
+type mmc_rpmb_block_device, dev_type;

@@ -134,6 +134,8 @@ on post-fs-data
 
 service tee-supplicant /vendor/bin/tee-supplicant -d
     class main
+    #https://stackoverflow.com/questions/10255881/ice-cream-sandwich-init-rc-documentation
+    #class late_start
     user shell
     # When tee-supplicant is launched manually after boot, it
     # belongs to a list of groups as shown by the 'id' console
@@ -148,7 +150,7 @@ service tee-supplicant /vendor/bin/tee-supplicant -d
     # belong other groups for permission to access other
     # devices, run 'id' console command for list of possible
     # groups to add.
-    group shell inet
+    group shell inet system drmrpc
     oneshot
 
 # need to run as root, else 'permission denied'
