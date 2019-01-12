@@ -19,3 +19,4 @@ subsystem usbmisc
 
 /dev/tee0        0660   shell     shell
 /dev/teepriv0    0660   shell     shell
+/dev/block/mmcblk0rpmb 0660 shell  shell
