@@ -10,10 +10,15 @@ allow tee adbd:fd use;
 allow tee devpts:chr_file { getattr ioctl read write };
 allow tee ion_device:chr_file write;
 
+# rpmb operations
+allow tee self:capability { setuid setgid sys_rawio };
+allow tee block_device:dir { search };
+allow tee mmc_rpmb_block_device:blk_file rw_file_perms;
+
 allow tee console_device:chr_file {  getattr read write ioctl };
 allow tee shell:fd { use };
 allow tee system_data_file:dir { getattr };
-allow tee tee_data_file:dir { create rmdir rename };
+allow tee tee_data_file:dir { create rmdir rename create_dir_perms };
 allow tee vendor_data_file:dir { write add_name remove_name rmdir };
 allow tee vendor_data_file:file { create read write open unlink };
 
