@@ -85,7 +85,8 @@ PRODUCT_PACKAGES += vndk_package
 
 PRODUCT_PACKAGES += \
     android.hardware.drm@1.0-impl \
-    android.hardware.drm@1.0-service
+    android.hardware.drm@1.0-service \
+    android.hardware.drm@1.1-service.clearkey
 
 PRODUCT_PACKAGES += libGLES_android
 
@@ -251,6 +252,7 @@ $(call inherit-product, device/linaro/hikey/wpan/ti-wpan-products.mk)
 
 # Include OP-TEE packages
 $(call inherit-product-if-exists, device/linaro/hikey/optee-packages.mk)
+$(call inherit-product-if-exists, external/optee-widevine-ref/AOSP/aosp-optee-wv.mk)
 
 PRODUCT_COPY_FILES += \
         frameworks/native/data/etc/android.hardware.wifi.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.wifi.xml \
