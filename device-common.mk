@@ -206,6 +206,7 @@ $(call inherit-product-if-exists, device/linaro/hikey/wpan/ti-wpan-products.mk)
 
 # Include OP-TEE packages
 $(call inherit-product-if-exists, device/linaro/hikey/optee-packages.mk)
+$(call inherit-product-if-exists, external/optee-widevine-ref/optee-wv.mk)
 
 PRODUCT_COPY_FILES += \
         frameworks/native/data/etc/android.hardware.wifi.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.wifi.xml \
