@@ -1,0 +1,24 @@
+type move-widevine-data-sh, domain, coredomain;
+
+#system_file_type not defined yet in this ver
+#https://android.googlesource.com/platform/system/sepolicy/+/5e37271df876e5334586cb1ffc923f375eb736cb%5E%21/
+#https://android.googlesource.com/device/google/marlin/+/2a31ce5e0686fad9e633a38f2c077b19b7e1a0fa%5E%21/#F0
+#type move-widevine-data-sh_exec, system_file_type, exec_type, file_type;
+type move-widevine-data-sh_exec, exec_type, file_type;
+
+init_daemon_domain(move-widevine-data-sh);
+
+typeattribute move-widevine-data-sh data_between_core_and_vendor_violators;
+
+allow move-widevine-data-sh shell_exec:file rx_file_perms;
+allow move-widevine-data-sh toolbox_exec:file rx_file_perms;
+
+allow move-widevine-data-sh file_contexts_file:file { read getattr open };
+
+allow move-widevine-data-sh media_data_file:file { getattr setattr relabelfrom rename };
+allow move-widevine-data-sh media_data_file:dir  { create reparent rename rmdir setattr rw_dir_perms relabelfrom };
+
+allow move-widevine-data-sh mediadrm_vendor_data_file:dir { create_dir_perms relabelto };
+
+# for writing files_moved so we only execute the move once
+allow move-widevine-data-sh mediadrm_vendor_data_file:file { create open write getattr relabelto };
