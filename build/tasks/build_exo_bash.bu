@@ -1,0 +1,14 @@
+ifneq ($(filter hikey%, $(TARGET_DEVICE)),)
+
+.PHONY: wv
+wv:
+	if [ -d "external/optee-widevine-ref" ]; then \
+		echo "##################"; \
+		echo "Building ExoPlayer"; \
+		echo "##################"; \
+		external/optee-widevine-ref/build_exo.sh; \
+	fi
+
+droidcore: wv
+
+endif
