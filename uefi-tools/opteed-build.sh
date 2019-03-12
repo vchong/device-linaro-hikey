@@ -98,7 +98,9 @@ function build_platform
 	if [ $VERBOSE -eq 1 ]; then
 		echo "Calling OP-TEE build:"
 	fi
-	make -j$NUM_THREADS ${PLATFORM_BUILDFLAGS}
+	make -j$NUM_THREADS ${PLATFORM_BUILDFLAGS} \
+	EARLY_TA_PATHS="../../out/target/product/hikey/optee/ta/device_linaro_kmgk_keymaster_ta/dba51a17-0563-11e7-93b1-6fa7b0071a51.elf \
+			../../out/target/product/hikey/optee/ta/device_linaro_kmgk_gatekeeper_ta/4d573443-6a56-4272-ac6f-2425af9ef9bb.elf"
 	if [ $? -eq 0 ]; then
 		#
 		# Copy resulting images to UEFI image dir
