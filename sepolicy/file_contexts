@@ -11,6 +11,7 @@
 /dev/teepriv[0-9]*     u:object_r:tee_device:s0
 /dev/tee[0-9]*         u:object_r:tee_device:s0
 /data/vendor/tee(/.*)?        u:object_r:tee_data_file:s0
+/cache/data/vendor/tee(/.*)?        u:object_r:tee_data_file:s0
 
 /(vendor|system/vendor)/bin/hw/android\.hardware\.gatekeeper@1\.0-service\.optee     u:object_r:hal_gatekeeper_default_exec:s0
 /(vendor|system/vendor)/bin/hw/android\.hardware\.keymaster@3\.0-service\.optee      u:object_r:hal_keymaster_default_exec:s0

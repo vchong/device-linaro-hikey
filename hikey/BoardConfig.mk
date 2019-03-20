@@ -8,6 +8,12 @@ TARGET_2ND_CPU_VARIANT := cortex-a53
 
 BOARD_KERNEL_CMDLINE := console=ttyAMA3,115200 androidboot.console=ttyAMA3 androidboot.hardware=hikey firmware_class.path=/vendor/firmware efi=noruntime
 
+# if we dont do this, then need to duplicate ALL permissions allowed
+# for userdata_block_device to cache_block_device
+# http://androidxref.com/9.0.0_r3/search?q=cache_block_device&defs=&refs=&path=&hist=&project=art&project=bionic&project=bootable&project=build&project=compatibility&project=cts&project=dalvik&project=developers&project=development&project=device&project=external&project=frameworks&project=hardware&project=kernel&project=libcore&project=libnativehelper&project=packages&project=pdk&project=platform_testing&project=prebuilts&project=sdk&project=system&project=test&project=toolchain&project=tools
+# http://aosp.opersys.com/xref/android-9.0.0_r30/search?q=userdata_block_device&defs=&refs=&path=&hist=&type=&project=art&project=bionic&project=bootable&project=build&project=compatibility&project=cts&project=dalvik&project=developers&project=development&project=device&project=external&project=frameworks&project=hardware&project=kernel&project=libcore&project=libnativehelper&project=packages&project=pdk&project=platform_testing&project=sdk&project=system&project=test&project=toolchain&project=tools
+BOARD_KERNEL_CMDLINE += androidboot.selinux=permissive
+
 ifneq ($(TARGET_ANDROID_VERITY),)
 # Enable dtb fstab for treble, with verity and system-as-root
 # NOTE: Disabled by default until b/111829702 is fixed
