@@ -132,14 +132,21 @@ service bugreport /system/bin/dumpstate -d -p -B -z \
 
 on post-fs-data
     # create for OP-TEE test
-    mkdir /data/vendor/tee 0770 shell shell
-    restorecon_recursive /data/vendor/tee
+    # mkdir -p option not supported here
+    mkdir /data/unencrypted 0770 shell shell
+    mkdir /data/unencrypted/tee 0770 shell shell
+    restorecon_recursive /data/unencrypted/tee
 
+#do NOT have any other class <type> statement below, even IF commented
+#or else svc will FAIL to start!
 service tee-supplicant /vendor/bin/tee-supplicant -d
-    class main
+    #since keymaster service is early_hal and
+    #requires tee-supplicant to be up
+    class early_hal
     #https://stackoverflow.com/questions/10255881/ice-cream-sandwich-init-rc-documentation
     #class late_start
-    user shell
+    #early_hal needs to start as system
+    user system
     # When tee-supplicant is launched manually after boot, it
     # belongs to a list of groups as shown by the 'id' console
     # command. One of the groups is 'inet', so tee-supplicant
