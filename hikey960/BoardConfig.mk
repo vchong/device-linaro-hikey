@@ -56,3 +56,14 @@ BOARD_VENDORIMAGE_JOURNAL_SIZE := 0
 BOARD_VENDORIMAGE_EXTFS_INODE_COUNT := 2048
 
 TARGET_RECOVERY_FSTAB := device/linaro/hikey/hikey960/fstab.hikey960
+
+ifeq ($(TARGET_BUILD_KERNEL), true)
+# Kernel Config
+KERNEL_CONFIG := hikey960_defconfig
+ANDROID_64 := true
+# Kernel Source and Device Tree
+TARGET_KERNEL_SOURCE ?= kernel/linaro/hisilicon-4.14
+DEVICE_TREES := hi3660-hikey960:hi3660-hikey960.dtb
+BUILD_KERNEL_MODULES := false
+KERNEL_TARGET := Image-dtb
+endif
