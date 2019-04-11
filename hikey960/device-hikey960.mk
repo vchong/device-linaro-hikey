@@ -14,8 +14,10 @@
 # limitations under the License.
 #
 
+ifneq ($(TARGET_BUILD_KERNEL), true)
 PRODUCT_COPY_FILES +=	$(TARGET_PREBUILT_KERNEL):kernel \
 			$(TARGET_PREBUILT_DTB):hi3660-hikey960.dtb
+endif
 
 PRODUCT_COPY_FILES +=	$(LOCAL_PATH)/fstab.hikey960:$(TARGET_COPY_OUT_VENDOR)/etc/fstab.hikey960 \
 			device/linaro/hikey/init.common.rc:$(TARGET_COPY_OUT_VENDOR)/etc/init/init.hikey960.rc \
