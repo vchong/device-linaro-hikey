@@ -1,6 +1,10 @@
 import init.${ro.hardware}.usb.rc
 import init.${ro.hardware}.power.rc
 
+on early-init
+    # this should preferably be in system init
+    loglevel 7
+
 on init
     # mount debugfs
     mount debugfs /sys/kernel/debug /sys/kernel/debug mode=755
