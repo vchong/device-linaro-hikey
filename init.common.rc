@@ -135,6 +135,20 @@ service bugreport /system/bin/dumpstate -d -p -B -z \
     disabled
 
 on post-fs
+    # We chown/chmod /data again so because mount is run as root + defaults
+    chown system system /data
+    chmod 0771 /data
+    # We restorecon /data in case the userdata partition has been reset.
+    restorecon /data
+
+    mkdir /data/vendor 0771 root root
+    mkdir /data/vendor_ce 0771 root root
+    mkdir /data/vendor_de 0771 root root
+    mkdir /data/vendor/hardware 0771 root root
+
+    # default 5s
+    wait /data/vendor_de
+
     # create for OP-TEE test
     mkdir /data/vendor_de/tee 0770 shell shell
     restorecon_recursive /data/vendor_de/tee
@@ -151,6 +165,13 @@ on late-fs
 
 on post-fs-data
     setprop vold.post_fs_data_done 1
+
+    chown system:system /data/nativetest
+    chown system:system /data/nativetest/VtsHalGatekeeperV1_0TargetTest
+    chown system:system /data/nativetest/VtsHalGatekeeperV1_0TargetTest/VtsHalGatekeeperV1_0TargetTest
+    chown system:system /data/nativetest64
+    chown system:system /data/nativetest64/VtsHalGatekeeperV1_0TargetTest
+    chown system:system /data/nativetest64/VtsHalGatekeeperV1_0TargetTest/VtsHalGatekeeperV1_0TargetTest
 
 service tee-supplicant /vendor/bin/tee-supplicant -d
     class early_hal
