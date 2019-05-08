@@ -144,25 +144,14 @@ on post-fs
     mkdir /dev/fscklogs/tee 0771 shell shell
     restorecon_recursive /dev/fscklogs/tee
 
-    mkdir /dev/socket/tee 0771 shell shell
-    restorecon_recursive /dev/socket/tee
     mkdir /dev/socket/pdx/tee 0771 shell shell
     restorecon_recursive /dev/socket/pdx/tee
     mkdir /dev/socket/pdx/system/tee 0771 shell shell
     restorecon_recursive /dev/socket/pdx/system/tee
 
-    mkdir /persist/tee 0771 shell shell
-    restorecon_recursive /persist/tee
-
-    # logs says ok but dir is NOT there!
     mkdir /config/sdcardfs/tee 0771 shell shell
     restorecon_recursive /config/sdcardfs/tee
 
-    mkdir /config/sdcardfs/extensions/tee 0771 shell shell
-    restorecon_recursive /config/sdcardfs/extensions/tee
-
-
-    # nok w selinux
     mkdir /cache/tee 0771 shell shell
     restorecon_recursive /cache/tee
     mkdir /cache/lost+found/tee 0771 shell shell
@@ -176,13 +165,7 @@ on post-fs
     mkdir /sys/fs/bpf/tee 0771 shell shell
     restorecon_recursive /sys/fs/bpf/tee
 
-
-    # nok w selinux - din try w/o selinux
-    #mkdir /dev/pts/tee 0771 shell shell
-    #restorecon_recursive /dev/pts/tee
-
-
-    # nok w/o selinux
+    # nok
     #mkdir /dev/usb-ffs/tee 0771 shell shell
     #restorecon_recursive /dev/usb-ffs/tee
 

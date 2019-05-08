@@ -135,78 +135,14 @@ service bugreport /system/bin/dumpstate -d -p -B -z \
     disabled
 
 on post-fs
-    # chk path is mounted rw n at least rwxrwx
-    # console:/ # find / -type d -perm -770
+    # create for OP-TEE test
+    mkdir /sdcard/.tee 0771 shell shell
+    restorecon_recursive /sdcard/.tee
+    mkdir /sdcard/.tee/tee 0771 shell shell
+    restorecon_recursive /sdcard/.tee/tee
 
-    # ok
-    mkdir /dev/cpuset/system-background/tee 0771 shell shell
-    restorecon_recursive /dev/cpuset/system-background/tee
-    mkdir /dev/fscklogs/tee 0771 shell shell
-    restorecon_recursive /dev/fscklogs/tee
-
-    mkdir /dev/socket/tee 0771 shell shell
-    restorecon_recursive /dev/socket/tee
-    mkdir /dev/socket/pdx/tee 0771 shell shell
-    restorecon_recursive /dev/socket/pdx/tee
-    mkdir /dev/socket/pdx/system/tee 0771 shell shell
-    restorecon_recursive /dev/socket/pdx/system/tee
-
-    mkdir /persist/tee 0771 shell shell
-    restorecon_recursive /persist/tee
-
-    # logs says ok but dir is NOT there!
-    mkdir /config/sdcardfs/tee 0771 shell shell
-    restorecon_recursive /config/sdcardfs/tee
-
-    mkdir /config/sdcardfs/extensions/tee 0771 shell shell
-    restorecon_recursive /config/sdcardfs/extensions/tee
-
-
-    # nok w selinux
-    mkdir /cache/tee 0771 shell shell
-    restorecon_recursive /cache/tee
-    mkdir /cache/lost+found/tee 0771 shell shell
-    restorecon_recursive /cache/lost+found/tee
-    mkdir /cache/recovery/tee 0771 shell shell
-    restorecon_recursive /cache/recovery/tee
-
-    mkdir /mnt/expand/tee 0771 shell shell
-    restorecon_recursive /mnt/expand/tee
-
-    mkdir /sys/fs/bpf/tee 0771 shell shell
-    restorecon_recursive /sys/fs/bpf/tee
-
-
-    # nok w selinux - din try w/o selinux
-    #mkdir /dev/pts/tee 0771 shell shell
-    #restorecon_recursive /dev/pts/tee
-
-
-    # nok w/o selinux
-    #mkdir /dev/usb-ffs/tee 0771 shell shell
-    #restorecon_recursive /dev/usb-ffs/tee
-
-    #mkdir /storage/emulated/0/tee 0771 shell shell
-    #restorecon_recursive /storage/emulated/0/tee
-    #mkdir /storage/emulated/obb/tee 0771 shell shell
-    #restorecon_recursive /storage/emulated/obb/tee
-
-    #mkdir /mnt/runtime/write/emulated/0/tee 0771 shell shell
-    #restorecon_recursive /mnt/runtime/write/emulated/0/tee
-    #mkdir /mnt/runtime/write/emulated/obb/tee 0771 shell shell
-    #restorecon_recursive /mnt/runtime/write/emulated/obb/tee
-
-    #mkdir /mnt/runtime/default/emulated/0/tee 0771 shell shell
-    #restorecon_recursive /mnt/runtime/default/emulated/0/tee
-    #mkdir /mnt/runtime/default/emulated/obb/tee 0771 shell shell
-    #restorecon_recursive /mnt/runtime/default/emulated/obb/tee
-
-    #mkdir /sdcard/tee 0771 shell shell
-    #restorecon_recursive /sdcard/tee
-
-    # template
-    #mkdir //tee 0771 shell shell
-    #restorecon_recursive //tee
+    # default 5s
+    wait /sdcard/.tee/tee
 
     # Do NOT use 'on init' based on below - OP-TEE KM fails to come up on boot
     # https://android.googlesource.com/device/google/crosshatch/+/master/init.hardware.rc

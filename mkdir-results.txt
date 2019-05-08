@@ -1,0 +1,48 @@
+[   13.424453] init: Command 'mkdir /dev/cpuset/system-background/tee 0771 shell shell' action=post-fs (/vendor/etc/init/init.hikey.rc:141) took 1ms and succeeded
+[   13.439860] type=1400 audit(18.927:8): avc: denied { write } for pid=1425 comm="init" path="/dev/stune/top-app/schedtune.boost" dev="tmpfs" ino=14422 scontext=u:r:vendor_init:s0 tcontext=u:object_r:device:s0 tclass=file permissive=1
+[   13.444576] init: Command 'restorecon_recursive /dev/cpuset/system-background/tee' action=post-fs (/vendor/etc/init/init.hikey.rc:142) took 5ms and succeeded
+[   13.460728] type=1400 audit(19.379:9): avc: denied { dac_read_search } for pid=1425 comm="init" capability=2 scontext=u:r:vendor_init:s0 tcontext=u:r:vendor_init:s0 tclass=capability permissive=1
+[   13.475388] init: Command 'mkdir /dev/fscklogs/tee 0771 shell shell' action=post-fs (/vendor/etc/init/init.hikey.rc:143) took 0ms and succeeded
+[   13.492114] type=1400 audit(19.379:9): avc: denied { dac_read_search } for pid=1425 comm="init" capability=2 scontext=u:r:vendor_init:s0 tcontext=u:r:vendor_init:s0 tclass=capability permissive=1
+[   13.505538] init: Command 'restorecon_recursive /dev/fscklogs/tee' action=post-fs (/vendor/etc/init/init.hikey.rc:144) took 0ms and succeeded
+[   13.522349] type=1400 audit(19.379:10): avc: denied { getattr } for pid=1425 comm="init" path="/dev/cpuset/system-background/tee/memory_spread_slab" dev="cgroup" ino=129 scontext=u:r:vendor_init:s0 tcontext=u:object_r:cgroup:s0 tclass=file permissive=1
+[   13.535699] init: Command 'mkdir /dev/usb-ffs/tee 0771 shell shell' action=post-fs (/vendor/etc/init/init.hikey.rc:145) took 0ms and failed: mkdir() failed: No such file or directory
+[   13.573881] init: Command 'restorecon_recursive /dev/usb-ffs/tee' action=post-fs (/vendor/etc/init/init.hikey.rc:146) took 0ms and failed: selinux_android_restorecon() failed: No such file or directory
+[   13.592514] init: Command 'mkdir /dev/socket/pdx/tee 0771 shell shell' action=post-fs (/vendor/etc/init/init.hikey.rc:147) took 0ms and succeeded
+[   13.606225] init: Command 'restorecon_recursive /dev/socket/pdx/tee' action=post-fs (/vendor/etc/init/init.hikey.rc:148) took 0ms and succeeded
+[   13.619962] init: Command 'mkdir /dev/socket/pdx/system/tee 0771 shell shell' action=post-fs (/vendor/etc/init/init.hikey.rc:149) took 0ms and succeeded
+[   13.634383] init: Command 'restorecon_recursive /dev/socket/pdx/system/tee' action=post-fs (/vendor/etc/init/init.hikey.rc:150) took 0ms and succeeded
+[   13.648679] init: Command 'mkdir /config/sdcardfs/tee 0771 shell shell' action=post-fs (/vendor/etc/init/init.hikey.rc:152) took 0ms and succeeded
+[   13.662978] init: Command 'restorecon_recursive /config/sdcardfs/tee' action=post-fs (/vendor/etc/init/init.hikey.rc:153) took 1ms and succeeded
+[   13.676713] init: Command 'mkdir /storage/emulated/0/tee 0771 shell shell' action=post-fs (/vendor/etc/init/init.hikey.rc:155) took 0ms and failed: mkdir() failed: No such file or directory
+[   13.693920] init: Command 'restorecon_recursive /storage/emulated/0/tee' action=post-fs (/vendor/etc/init/init.hikey.rc:156) took 0ms and failed: selinux_android_restorecon() failed: No such file or directory
+[   13.713157] init: Command 'mkdir /storage/emulated/obb/tee 0771 shell shell' action=post-fs (/vendor/etc/init/init.hikey.rc:157) took 0ms and failed: mkdir() failed: No such file or directory
+[   13.730501] init: Command 'restorecon_recursive /storage/emulated/obb/tee' action=post-fs (/vendor/etc/init/init.hikey.rc:158) took 0ms and failed: selinux_android_restorecon() failed: No such file or directory
+[   13.750606] type=1400 audit(19.379:10): avc: denied { getattr } for pid=1425 comm="init" path="/dev/cpuset/system-background/tee/memory_spread_slab" dev="cgroup" ino=129 scontext=u:r:vendor_init:s0 tcontext=u:object_r:cgroup:s0 tclass=file permissive=1
+[   13.750658] audit: audit_lost=1 audit_rate_limit=5 audit_backlog_limit=64
+[   13.773091] type=1400 audit(19.687:11): avc: denied { write } for pid=1425 comm="init" name="/" dev="mmcblk0p8" ino=2 scontext=u:r:vendor_init:s0 tcontext=u:object_r:cache_file:s0 tclass=dir permissive=1
+[   13.779830] audit: rate limit exceeded
+[   13.798047] type=1400 audit(19.687:11): avc: denied { write } for pid=1425 comm="init" name="/" dev="mmcblk0p8" ino=2 scontext=u:r:vendor_init:s0 tcontext=u:object_r:cache_file:s0 tclass=dir permissive=1
+[   13.801977] init: Command 'mkdir /cache/tee 0771 shell shell' action=post-fs (/vendor/etc/init/init.hikey.rc:160) took 52ms and succeeded
+[   13.819781] type=1400 audit(19.687:12): avc: denied { add_name } for pid=1425 comm="init" name="tee" scontext=u:r:vendor_init:s0 tcontext=u:object_r:cache_file:s0 tclass=dir permissive=1
+[   13.833219] init: Command 'restorecon_recursive /cache/tee' action=post-fs (/vendor/etc/init/init.hikey.rc:161) took 0ms and succeeded
+[   13.848861] type=1400 audit(19.687:12): avc: denied { add_name } for pid=1425 comm="init" name="tee" scontext=u:r:vendor_init:s0 tcontext=u:object_r:cache_file:s0 tclass=dir permissive=1
+[   13.862080] init: Command 'mkdir /cache/lost+found/tee 0771 shell shell' action=post-fs (/vendor/etc/init/init.hikey.rc:162) took 1ms and succeeded
+[   13.877492] type=1400 audit(19.687:13): avc: denied { create } for pid=1425 comm="init" name="tee" scontext=u:r:vendor_init:s0 tcontext=u:object_r:cache_file:s0 tclass=dir permissive=1
+[   13.891688] init: Command 'restorecon_recursive /cache/lost+found/tee' action=post-fs (/vendor/etc/init/init.hikey.rc:163) took 0ms and succeeded
+[   13.921514] init: Command 'mkdir /cache/recovery/tee 0771 shell shell' action=post-fs (/vendor/etc/init/init.hikey.rc:164) took 1ms and succeeded
+[   13.935653] init: Command 'restorecon_recursive /cache/recovery/tee' action=post-fs (/vendor/etc/init/init.hikey.rc:165) took 0ms and succeeded
+[   13.949714] init: Command 'mkdir /mnt/expand/tee 0771 shell shell' action=post-fs (/vendor/etc/init/init.hikey.rc:167) took 1ms and succeeded
+[   13.963102] init: Command 'restorecon_recursive /mnt/expand/tee' action=post-fs (/vendor/etc/init/init.hikey.rc:168) took 0ms and succeeded
+[   13.976339] init: Command 'mkdir /mnt/runtime/write/emulated/0/tee 0771 shell shell' action=post-fs (/vendor/etc/init/init.hikey.rc:170) took 0ms and failed: mkdir() failed: No such file or directory
+[   13.994443] init: Command 'restorecon_recursive /mnt/runtime/write/emulated/0/tee' action=post-fs (/vendor/etc/init/init.hikey.rc:171) took 0ms and failed: selinux_android_restorecon() failed: No such file or directory
+[   14.014435] init: Command 'mkdir /mnt/runtime/write/emulated/obb/tee 0771 shell shell' action=post-fs (/vendor/etc/init/init.hikey.rc:172) took 0ms and failed: mkdir() failed: No such file or directory
+[   14.032799] init: Command 'restorecon_recursive /mnt/runtime/write/emulated/obb/tee' action=post-fs (/vendor/etc/init/init.hikey.rc:173) took 0ms and failed: selinux_android_restorecon() failed: No such file or directory
+[   14.052939] init: Command 'mkdir /mnt/runtime/default/emulated/0/tee 0771 shell shell' action=post-fs (/vendor/etc/init/init.hikey.rc:175) took 0ms and failed: mkdir() failed: No such file or directory
+[   14.071286] init: Command 'restorecon_recursive /mnt/runtime/default/emulated/0/tee' action=post-fs (/vendor/etc/init/init.hikey.rc:176) took 0ms and failed: selinux_android_restorecon() failed: No such file or directory
+[   14.091457] init: Command 'mkdir /mnt/runtime/default/emulated/obb/tee 0771 shell shell' action=post-fs (/vendor/etc/init/init.hikey.rc:177) took 0ms and failed: mkdir() failed: No such file or directory
+[   14.110299] init: Command 'restorecon_recursive /mnt/runtime/default/emulated/obb/tee' action=post-fs (/vendor/etc/init/init.hikey.rc:178) took 0ms and failed: selinux_android_restorecon() failed: No such file or directory
+[   14.130869] init: Command 'mkdir /sys/fs/bpf/tee 0771 shell shell' action=post-fs (/vendor/etc/init/init.hikey.rc:180) took 0ms and succeeded
+[   14.144217] init: Command 'restorecon_recursive /sys/fs/bpf/tee' action=post-fs (/vendor/etc/init/init.hikey.rc:181) took 0ms and succeeded
+[   14.157477] init: Command 'mkdir /sdcard/tee 0771 shell shell' action=post-fs (/vendor/etc/init/init.hikey.rc:188) took 0ms and failed: mkdir() failed: No such file or directory
+[   14.174129] init: Command 'restorecon_recursive /sdcard/tee' action=post-fs (/vendor/etc/init/init.hikey.rc:189) took 0ms and failed: selinux_android_restorecon() failed: No such file or directory
