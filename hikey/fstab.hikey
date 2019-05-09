@@ -3,9 +3,21 @@
 # The filesystem that contains the filesystem checker binary (typically /system) cannot
 # specify MF_CHECK, and must come before any filesystems that do specify MF_CHECK
 
+#dd if=/dev/zero of=nvme_ext4.img bs=4K count=512
+# this will generate a 2mb nvme_ext4.img file
+#mkfs.ext4 nvme_ext4.img
+#img2simg nvme_ext4.img nvme_ext4_sparse.img
+#fastboot flash nvme nvme_ext4_sparse.img fastboot format nvme
+# this still says 'formatting is not supported for filesystem with type 'raw'
+# need to fix in https://github.com/96boards-hikey/OpenPlatformPkg/blob/testing/hikey960_v1.3.4/Platforms/Hisilicon/HiKey/HiKeyFastbootDxe/HiKeyFastbootDxe.c#L540
+# go ahead and boot board
+#> mount | grep persist
+#/dev/block/mmcblk0p5 on /persist type ext4 (rw,seclabel,nosuid,nodev,noatime,discard,noauto_da_alloc,data=ordered)
+
 /dev/block/platform/soc/f723d000.dwmmc0/by-name/cache       /cache              ext4      discard,noatime,noauto_da_alloc,data=ordered,user_xattr,barrier=1    wait
 /dev/block/platform/soc/f723d000.dwmmc0/by-name/userdata    /data               f2fs      discard,noatime,nosuid,nodev                                 wait,check,fileencryption=software,quota
 /dev/block/platform/soc/f723d000.dwmmc0/by-name/userdata    /data               ext4      discard,noatime,noauto_da_alloc,nosuid,nodev,data=ordered,user_xattr,barrier=1    wait,formattable
 #/dev/block/platform/soc/f723d000.dwmmc0/by-name/userdata    /data               ext4      discard,noatime,noauto_da_alloc,nosuid,nodev,data=ordered,user_xattr,barrier=1    wait,formattable,fileencryption=software
+/dev/block/platform/soc/f723d000.dwmmc0/by-name/nvme        /persist            ext4      discard,noatime,noauto_da_alloc,nosuid,nodev,data=ordered,user_xattr,barrier=1    wait,formattable
 /devices/platform/soc/f723e000.dwmmc1/mmc_host/mmc*                   auto               auto      defaults  voldmanaged=sdcard1:auto,encryptable=userdata
 /devices/platform/soc/f72c0000.usb/usb*               auto               auto      defaults  voldmanaged=usbdisk:auto,encryptable=userdata

@@ -135,6 +135,10 @@ service bugreport /system/bin/dumpstate -d -p -B -z \
     disabled
 
 on post-fs
+    chown system system /persist
+    chmod 0771 /persist
+    restorecon /persist
+
     # chk path is mounted rw n at least rwxrwx
     # console:/ # find / -type d -perm -770
 

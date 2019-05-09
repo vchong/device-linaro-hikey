@@ -25,4 +25,7 @@ allow vendor_init serialno_prop:file { map };
 # NOT allowed - build error
 #allow init self:capability dac_read_search;
 
-allow vendor_init storage_file:lnk_file { read write create getattr setattr execute };
+allow vendor_init cgroup:file getattr;
+allow vendor_init tee_data_file:file { create write open getattr setattr unlink read };
+allow vendor_init tee_data_file:dir { write add_name remove_name rename search open getattr setattr };
+allow vendor_init tee_data_file:chr_file { read write open ioctl };
