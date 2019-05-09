@@ -8,8 +8,6 @@ TARGET_2ND_CPU_VARIANT := cortex-a53
 
 BOARD_KERNEL_CMDLINE := console=ttyAMA3,115200 androidboot.console=ttyAMA3 androidboot.hardware=hikey firmware_class.path=/vendor/firmware efi=noruntime
 
-BOARD_KERNEL_CMDLINE += androidboot.selinux=permissive
-
 ifneq ($(TARGET_ANDROID_VERITY),)
 # Enable dtb fstab for treble, with verity and system-as-root
 # NOTE: Disabled by default until b/111829702 is fixed
