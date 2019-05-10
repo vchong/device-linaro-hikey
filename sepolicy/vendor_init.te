@@ -29,11 +29,3 @@ allow vendor_init cgroup:file getattr;
 allow vendor_init tee_data_file:file { create write open getattr setattr unlink read };
 allow vendor_init tee_data_file:dir { write add_name remove_name rename search open getattr setattr };
 allow vendor_init tee_data_file:chr_file { read write open ioctl };
-
-allow vendor_init tmpfs:lnk_file { getattr read relabelfrom };
-allow init {
-  metadata_block_device
-  misc_block_device
-  recovery_block_device
-  userdata_block_device
-}:{ blk_file lnk_file } relabelto;
