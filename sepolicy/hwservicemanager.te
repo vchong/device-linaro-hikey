@@ -1,0 +1,5 @@
+allow hwservicemanager dumpstate:unix_stream_socket { read write };
+#allow hwservicemanager debugfs_tracing_debug:file rw_file_perms;
+allow hwservicemanager init:dir { search };
+allow hwservicemanager init:file { read open };
+allow hwservicemanager init:process { getattr };

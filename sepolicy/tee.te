@@ -18,6 +18,7 @@ allow tee mmc_rpmb_block_device:blk_file rw_file_perms;
 allow tee console_device:chr_file {  getattr read write ioctl };
 allow tee shell:fd { use };
 allow tee system_data_file:dir { getattr };
+#allow tee system_data_file:file { write open };
 allow tee tee_data_file:dir { create rmdir rename create_dir_perms };
 allow tee vendor_data_file:dir { write add_name remove_name rmdir };
 allow tee vendor_data_file:file { create read write open unlink };
@@ -30,7 +31,7 @@ allow tee self:udp_socket { read write create getattr setattr bind connect liste
 
 allow tee tee:tcp_socket { create connect read write getopt setopt };
 allow tee tee:udp_socket { create connect read write getopt getattr };
-allow tee tee:capability { net_raw };
+allow tee tee:capability { setuid setgid sys_rawio net_raw };
 allow tee fwmarkd_socket:sock_file { write };
 allow tee port:tcp_socket { name_connect };
 
@@ -39,6 +40,8 @@ allow netd tee:tcp_socket { read write getopt setopt };
 allow netd tee:udp_socket { read write getopt setopt };
 allow netd tee:fd { use };
 
-allow tee netd:unix_stream_socket { connectto };
+#allow tee netd:unix_stream_socket { connectto };
 
-typeattribute tee socket_between_core_and_vendor_violators;
+#typeattribute tee socket_between_core_and_vendor_violators;
+#typeattribute tee_data_file core_data_file_type;
+#typeattribute tee coredomain;

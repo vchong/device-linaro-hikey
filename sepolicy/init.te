@@ -9,4 +9,10 @@ allow init configfs:lnk_file create;
 dontaudit init kernel:system module_request;
 
 allow init vendor_file:file { execute };
-#allow init su:process { transition };
+allow init su:process { transition };
+
+allow init device:blk_file { create setattr getattr unlink };
+allow init boot_block_device:lnk_file relabelto;
+allow toolbox property_socket:sock_file write;
+allow init hwservicemanager:binder { call transfer };
+allow init tee_device:chr_file { read write ioctl };
