@@ -8,6 +8,7 @@
 # link to files in system partition when no vendor partition
 /(vendor|system/vendor)/bin/tee-supplicant  u:object_r:tee_exec:s0
 /(vendor|system/vendor)/bin/xtest  u:object_r:tee_exec:s0
+/(vendor|system/vendor)/bin/hw/wait_for_keymaster_optee u:object_r:wait_for_keymaster_optee_exec:s0
 /dev/teepriv[0-9]*     u:object_r:tee_device:s0
 /dev/tee[0-9]*         u:object_r:tee_device:s0
 /data/vendor/tee(/.*)?        u:object_r:tee_data_file:s0

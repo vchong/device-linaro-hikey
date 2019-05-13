@@ -64,3 +64,5 @@ PRODUCT_PACKAGES += 4d573443-6a56-4272-ac6f-2425af9ef9bb.ta
 #PRODUCT_PACKAGES += d36b30c7-5a5f-472c-af97-7f38a2edab7d.ta
 #PRODUCT_PACKAGES += keystore0_2.hikey keymaster_test keymaster_tests
 #PRODUCT_PACKAGES += keystore2_0.hikey
+
+PRODUCT_PACKAGES += wait_for_keymaster_optee
