@@ -132,6 +132,12 @@ service bugreport /system/bin/dumpstate -d -p -B -z \
 
 on post-fs
     # TODO: create dir for OP-TEE secure storage
+    mkdir /dev/socket/tee 0771 shell shell
+    restorecon_recursive /dev/socket/tee
+
+    # optional for debugging
+    # default 5s
+    wait /dev/socket/tee
 
     start tee-supplicant
     start hal_keymaster_optee
