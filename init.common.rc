@@ -131,7 +131,15 @@ service bugreport /system/bin/dumpstate -d -p -B -z \
     disabled
 
 on post-fs
-    # TODO: create dir for OP-TEE secure storage
+    chown system system /persist
+    chmod 0771 /persist
+    restorecon /persist
+    mkdir /persist/tee 0770 shell shell
+    restorecon_recursive /persist/tee
+
+    # optional for debugging
+    # default 5s
+    wait /persist/tee
 
     start tee-supplicant
     start hal_keymaster_optee
