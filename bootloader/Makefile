@@ -26,6 +26,16 @@ endif
 
 all: $(DIST_DIR)/fip.bin $(DIST_DIR)/l-loader.bin
 
+# does NOT work since fip.bin target in build_uefi.mk is called 1st and
+# it only depends on this file n nothing on optee_os?
+# or does NOT work cos OPTEE_OS_BIN is NOT a real make tgt unlike
+# OPTEE_BIN in optee_os/mk/aosp_optee.mk?
+# watever da reason, put the optee_os dependency in build_uefi.mk
+# that seems to work
+#OPTEE_OS_BIN := $(OPTEE_OS_DIR)/out/arm-plat-hikey/core/tee.bin
+#$(OPTEE_OS_BIN) : $(sort $(shell find -L $(OPTEE_OS_DIR)))
+#$(DIST_DIR)/fip.bin: $(OPTEE_OS_BIN)
+
 $(DIST_DIR)/fip.bin:
 	cd $(EDK2_DIR) && \
 	rm -rf Conf/tools_def.txt Conf/BuildEnv.sh  Conf/build_rule.txt Conf/target.txt  Conf/tools_def.txt && \
