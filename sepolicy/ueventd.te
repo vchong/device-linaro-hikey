@@ -1,0 +1,5 @@
+# https://android-review.googlesource.com/c/platform/system/sepolicy/+/724072
+# ueventd loads modules in response to modalias events.
+allow ueventd self:global_capability_class_set sys_module;
+allow ueventd vendor_file:system module_load;
+allow ueventd kernel:key search;
