@@ -142,7 +142,7 @@ on post-fs
     wait /persist/tee
 
     start tee-supplicant
-    start hal_keymaster_optee
+    start vendor.keymaster-3-0-optee
 
 on late-fs
     exec_start wait_for_keymaster_optee
