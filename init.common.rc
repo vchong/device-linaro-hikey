@@ -130,6 +130,10 @@ service bugreport /system/bin/dumpstate -d -p -B -z \
     class main
     disabled
 
+on early-init
+    setprop ro.hardware.keystore optee
+    #setprop ro.hardware.gatekeeper optee
+
 on post-fs
     chown system system /persist
     chmod 0771 /persist

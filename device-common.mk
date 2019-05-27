@@ -127,6 +127,11 @@ PRODUCT_PACKAGES += \
 #    android.hardware.gatekeeper@1.0-impl \
 #    android.hardware.gatekeeper@1.0-service
 
+PRODUCT_PROPERTY_OVERRIDES += \
+	ro.hardware.keystore=optee \
+	ro.hardware.keystore_desede=true
+#	ro.hardware.gatekeeper=optee
+
 # Simphw HAL
 #PRODUCT_PACKAGES += \
 #    android.hardware.simple@2.0-impl \
