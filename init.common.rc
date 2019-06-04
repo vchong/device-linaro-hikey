@@ -165,5 +165,6 @@ on post-fs-data
 service tee-supplicant /vendor/bin/tee-supplicant -d
     class early_hal
     user shell
+    capabilities SYS_RAWIO BLOCK_SUSPEND NET_ADMIN NET_BIND_SERVICE
     group shell inet system drmrpc
     oneshot
