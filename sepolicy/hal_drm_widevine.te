@@ -1,0 +1,32 @@
+# policy for /vendor/bin/hw/android.hardware.drm@1.1-service.widevine
+type hal_drm_widevine, domain;
+type hal_drm_widevine_exec, exec_type, vendor_file_type, file_type;
+
+init_daemon_domain(hal_drm_widevine)
+
+hal_server_domain(hal_drm_widevine, hal_drm)
+
+vndbinder_use(hal_drm_widevine);
+allow hal_drm_widevine vndbinder_device:chr_file rw_file_perms;
+
+# The QC DRM-HAL implementation uses a vendor-binder service provided
+# by the HWC HAL.
+#allow hal_drm_widevine qdisplay_service:service_manager { find };
+#binder_call(hal_drm_widevine, hal_graphics_composer)
+
+# TODO(b/71584763): Remove perfd use once QC implements a better method
+#typeattribute hal_drm_widevine data_between_core_and_vendor_violators;
+#allow hal_drm_widevine perfd:unix_stream_socket connectto;
+#allow hal_drm_widevine perfd_data_file:dir search;
+#allow hal_drm_widevine perfd_data_file:sock_file write;
+
+allow hal_drm mediacodec:fd use;
+allow hal_drm { appdomain -isolated_app }:fd use;
+
+allow hal_drm_widevine hal_allocator_server:fd use;
+
+allow hal_drm_widevine mediadrm_vendor_data_file:dir create_dir_perms;
+allow hal_drm_widevine mediadrm_vendor_data_file:file create_file_perms;
+# unknown type hal_display_config_hwservice in P
+#allow hal_drm_widevine hal_display_config_hwservice:hwservice_manager find;
+binder_call(hal_drm_widevine, hal_graphics_composer_default)
