@@ -15,9 +15,9 @@
 /persist(/.*)?         u:object_r:vendor_data_file:s0
 /persist/tee(/.*)?     u:object_r:tee_data_file:s0
 
-/(vendor|system/vendor)/bin/hw/android\.hardware\.gatekeeper@1\.0-service\.optee     u:object_r:hal_gatekeeper_default_exec:s0
-/(vendor|system/vendor)/bin/hw/android\.hardware\.keymaster@3\.0-service\.optee      u:object_r:hal_keymaster_default_exec:s0
 /(vendor|system/vendor)/bin/hw/android\.hardware\.drm@1\.1-service\.widevine      u:object_r:hal_drm_default_exec:s0
+/(vendor|system/vendor)/bin/hw/android\.hardware\.gatekeeper@1\.0-service\.optee     u:object_r:hal_gatekeeper_optee_exec:s0
+/(vendor|system/vendor)/bin/hw/android\.hardware\.keymaster@3\.0-service\.optee      u:object_r:hal_keymaster_optee_exec:s0
 /system/bin/move_widevine_data\.sh      u:object_r:move-widevine-data-sh_exec:s0
 
 # mmc rpmb
