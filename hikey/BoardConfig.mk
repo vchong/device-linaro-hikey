@@ -27,7 +27,6 @@ endif
 ## printk.devkmsg only has meaning for kernel 4.9 and later
 ## it would be ignored by kernel 3.18 and kernel 4.4
 BOARD_KERNEL_CMDLINE += printk.devkmsg=on
-BOARD_KERNEL_CMDLINE += androidboot.selinux=permissive
 BOARD_KERNEL_CMDLINE += ftrace=function ftrace_filter=dwmmc_k3
 
 TARGET_NO_DTIMAGE := true
