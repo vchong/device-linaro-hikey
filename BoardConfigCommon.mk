@@ -63,3 +63,10 @@ ifeq ($(TARGET_SYSTEMIMAGES_USE_SQUASHFS), true)
 BOARD_SYSTEMIMAGE_FILE_SYSTEM_TYPE := squashfs
 endif
 endif
+
+ifneq ($(filter hikey_auto hikey960_auto, $(TARGET_PRODUCT)),)
+BOARD_SEPOLICY_DIRS += \
+    packages/services/Car/car_product/sepolicy
+
+DEVICE_MANIFEST_FILE += device/linaro/hikey/auto/manifest.xml
+endif
