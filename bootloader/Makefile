@@ -19,8 +19,10 @@ else
 	ATF_DIR=$(TOP_ROOT_ABS)/device/linaro/bootloader/arm-trusted-firmware
 	LLOADER_DIR=$(TOP_ROOT_ABS)/device/linaro/hikey/l-loader
 	PTABLE_LST="aosp-4g aosp-8g"
-	CROSS_COMPILE_32 ?= arm-linux-androideabi-
-	CROSS_COMPILE_64 ?= aarch64-linux-android-
+	#CROSS_COMPILE_32 ?= arm-linux-androideabi-
+	#CROSS_COMPILE_64 ?= aarch64-linux-android-
+	CROSS_COMPILE_32 ?= $(TOP_ROOT_ABS)/../pie960/optee/aarch32/bin/arm-linux-gnueabihf-
+	CROSS_COMPILE_64 ?= $(TOP_ROOT_ABS)/../pie960/optee/aarch64/bin/aarch64-linux-gnu-
 endif
 OPTEE_OS_DIR=$(TOP_ROOT_ABS)/optee/optee_os
 PRODUCT_OUT?=out/target/product/$(TARGET_OUT_DIR)
@@ -52,12 +54,10 @@ all: $(FIP_BIN3) $(DIST_DIR)/l-loader.bin
 
 $(FIP_BIN3):
 	cd $(EDK2_DIR) && \
-	rm -rf Conf/tools_def.txt Conf/BuildEnv.sh  Conf/build_rule.txt Conf/target.txt  Conf/tools_def.txt && \
 	export CROSS_COMPILE_32=$(CROSS_COMPILE_32) && \
 	export CROSS_COMPILE_64=$(CROSS_COMPILE_64) && \
-	rm -rf OpenPlatformPkg && \
-	ln -sf  $(EDK2_DIR)/../OpenPlatformPkg OpenPlatformPkg && \
-	rm -rf $(EDK2_DIR)/Build/  && \
+	echo "CROSS_COMPILE_32=$(CROSS_COMPILE_32)" && \
+	echo "CROSS_COMPILE_64=$(CROSS_COMPILE_64)" && \
 	$(CMD_RM_OPTEE_OS_OUT) && \
 	$(CMD_RM_FIP_BIN) && \
 	mkdir -p $(EDK2_DIR)/Build/ && \

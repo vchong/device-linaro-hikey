@@ -91,6 +91,7 @@ function build_platform
 	echo "PLATFORM_FLAVOR=$PLATFORM_FLAVOR"
 	echo "CFG_TEE_CORE_LOG_LEVEL=$CFG_TEE_CORE_LOG_LEVEL"
 	echo "CFG_TEE_TA_LOG_LEVEL=$CFG_TEE_TA_LOG_LEVEL"
+	echo "DEBUG=$DEBUG"
 
 	#
 	# Build OP-TEE
@@ -98,7 +99,8 @@ function build_platform
 	if [ $VERBOSE -eq 1 ]; then
 		echo "Calling OP-TEE build:"
 	fi
-	make -j$NUM_THREADS ${PLATFORM_BUILDFLAGS}
+	#make -j$NUM_THREADS ${PLATFORM_BUILDFLAGS}
+	make -j1 ${PLATFORM_BUILDFLAGS}
 	if [ $? -eq 0 ]; then
 		#
 		# Copy resulting images to UEFI image dir

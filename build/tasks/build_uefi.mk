@@ -26,9 +26,11 @@ else
 
 # assume hikey
 TOP_ROOT_ABS := $(realpath $(TOP))
-CROSS_COMPILE64 := $(TOP_ROOT_ABS)/$(TARGET_TOOLS_PREFIX)
+#CROSS_COMPILE64 := $(TOP_ROOT_ABS)/$(TARGET_TOOLS_PREFIX)
+CROSS_COMPILE64 := $(TOP_ROOT_ABS)/../pie960/optee/aarch64/bin/aarch64-linux-gnu-
 ifneq ($(strip $($(combo_2nd_arch_prefix)TARGET_TOOLS_PREFIX)),)
-CROSS_COMPILE32 := $(TOP_ROOT_ABS)/$($(combo_2nd_arch_prefix)TARGET_TOOLS_PREFIX)
+CROSS_COMPILE32 := $(TOP_ROOT_ABS)/../pie960/optee/aarch32/bin/arm-linux-gnueabihf-
+#CROSS_COMPILE32 := $(TOP_ROOT_ABS)/$($(combo_2nd_arch_prefix)TARGET_TOOLS_PREFIX)
 else
 CROSS_COMPILE32 := arm-linux-androideabi-
 endif
