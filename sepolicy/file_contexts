@@ -13,7 +13,7 @@
 /dev/hifi_misc         u:object_r:audio_device:s0
 /dev/hi_vdec	       u:object_r:video_device:s0
 /dev/hi_venc	       u:object_r:video_device:s0
-
+/dev/dma_heap(/.*)? u:object_r:graphics_device:s0
 /dev/graphics/fb0      u:object_r:graphics_device:s0
 
 # files in /vendor
