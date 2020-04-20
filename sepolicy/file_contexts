@@ -30,8 +30,13 @@
 /sys/devices/platform/ddr_devfreq/devfreq/ddr_devfreq/min_freq		u:object_r:sysfs_power:s0
 /sys/devices/platform/e82c0000\.mali/devfreq/e82c0000\.mali/min_freq	u:object_r:sysfs_power:s0
 
+# for HiKey Board
 /dev/block/platform/soc/f723d000\.dwmmc0/by-name/cache u:object_r:cache_block_device:s0
 /dev/block/platform/soc/f723d000\.dwmmc0/by-name/userdata u:object_r:userdata_block_device:s0
+
+# for HiKey960 Board
+/dev/block/platform/soc/ff3b0000\.ufs/by-name/cache u:object_r:cache_block_device:s0
+/dev/block/platform/soc/ff3b0000\.ufs/by-name/userdata u:object_r:userdata_block_device:s0
 
 
 /vendor/bin/hw/android\.hardware\.gatekeeper@1\.0-service\.software         u:object_r:hal_gatekeeper_default_exec:s0
