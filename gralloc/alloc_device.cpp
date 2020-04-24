@@ -45,6 +45,9 @@
 #define ION_SYSTEM	(char*)"ion_system_heap"
 #define ION_CMA		(char*)"linux,cma"
 
+static int system_heap_id;
+static int cma_heap_id;
+static bool gralloc_legacy_ion;
 #endif
 
 #if GRALLOC_SIMULATE_FAILURES
@@ -119,12 +122,28 @@ static int fb_get_framebuffer_dmabuf(private_module_t *m, private_handle_t *hnd)
 }
 #endif
 
+#if GRALLOC_ARM_DMA_BUF_MODULE
+static int alloc_ion_fd(int ion_fd, size_t size, unsigned int heap_mask, unsigned int flags, int *shared_fd)
+{
+	int heap;
+
+	if (!gralloc_legacy_ion) {
+		/* We only support two heaps, so mapping between CMA/System is simple */
+		heap = 1 << system_heap_id;
+		if (heap_mask == ION_HEAP_TYPE_DMA_MASK)
+			heap = 1 << cma_heap_id;
+	} else {
+		heap = heap_mask;
+	}
+	return ion_alloc_fd(ion_fd, size, 0, heap, flags, shared_fd);
+}
+#endif
+
 static int gralloc_alloc_buffer(alloc_device_t *dev, size_t size, int usage, buffer_handle_t *pHandle)
 {
 #if GRALLOC_ARM_DMA_BUF_MODULE
 	{
 		private_module_t *m = reinterpret_cast<private_module_t *>(dev->common.module);
-		ion_user_handle_t ion_hnd;
 		void *cpu_ptr = MAP_FAILED;
 		int shared_fd;
 		int ret;
@@ -132,8 +151,7 @@ static int gralloc_alloc_buffer(alloc_device_t *dev, size_t size, int usage, buf
 		int lock_state = 0;
 		int map_mask = 0;
 
-		if (usage & GRALLOC_USAGE_PROTECTED)
-		{
+		if (usage & GRALLOC_USAGE_PROTECTED) {
 #if defined(ION_HEAP_SECURE_MASK)
 			heap_mask = ION_HEAP_SECURE_MASK;
 #else
@@ -141,57 +159,17 @@ static int gralloc_alloc_buffer(alloc_device_t *dev, size_t size, int usage, buf
 			return -1;
 #endif
 		}
-		else
-		{
+		else if (usage & GRALLOC_USAGE_HW_FB) {
+			heap_mask = ION_HEAP_TYPE_DMA_MASK;
+		}
+		else {
 			heap_mask = ION_HEAP_SYSTEM_MASK;
 		}
 
-		if (m->gralloc_legacy_ion)
-		{
-			if (usage & GRALLOC_USAGE_HW_FB)
-				ret = ion_alloc(m->ion_client, size, 0, ION_HEAP_TYPE_DMA_MASK, 0, &(ion_hnd));
-			else
-				ret = ion_alloc(m->ion_client, size, 0, ION_HEAP_SYSTEM_MASK, 0, &(ion_hnd));
-
-			if (ret != 0)
-			{
-				AERR("Failed to ion_alloc from ion_client:%d", m->ion_client);
-				return -1;
-			}
-
-			ret = ion_share(m->ion_client, ion_hnd, &shared_fd);
-
-			if (ret != 0)
-			{
-				AERR("ion_share( %d ) failed", m->ion_client);
-
-				if (0 != ion_free(m->ion_client, ion_hnd))
-				{
-					AERR("ion_free( %d ) failed", m->ion_client);
-				}
-
-				return -1;
-			}
-
-			// we do not need ion_hnd once we have shared_fd
-			if (0 != ion_free(m->ion_client, ion_hnd))
-			{
-				AWAR("ion_free( %d ) failed", m->ion_client);
-			}
-			ion_hnd = ION_INVALID_HANDLE;
-		}
-		else
-		{
-			if (usage & GRALLOC_USAGE_HW_FB)
-				ret = ion_alloc_fd(m->ion_client, size, 0, 1 << m->cma_heap_id, 0, &(shared_fd));
-			else
-				ret = ion_alloc_fd(m->ion_client, size, 0, 1 << m->system_heap_id, 0, &(shared_fd));
-
-			if (ret != 0)
-			{
-				AERR("Failed to ion_alloc_fd from ion_client:%d", m->ion_client);
-				return -1;
-			}
+		ret = alloc_ion_fd(m->ion_client, size, heap_mask, 0, &shared_fd);
+		if (ret != 0) {
+			AERR("Failed to ion_alloc_fd from ion_client:%d", m->ion_client);
+			return -1;
 		}
 
 		if (!(usage & GRALLOC_USAGE_PROTECTED))
@@ -786,13 +764,13 @@ int alloc_device_open(hw_module_t const *module, const char *name, hw_device_t *
 		return -1;
 	}
 
-	m->gralloc_legacy_ion = ion_is_legacy(m->ion_client);
+	gralloc_legacy_ion = ion_is_legacy(m->ion_client);
 
-	if (!m->gralloc_legacy_ion)
+	if (!gralloc_legacy_ion)
 	{
-		m->system_heap_id = find_ion_heap_id(m->ion_client, ION_SYSTEM);
-		m->cma_heap_id = find_ion_heap_id(m->ion_client, ION_CMA);
-		if (m->system_heap_id < 0 || m->cma_heap_id < 0)
+		system_heap_id = find_ion_heap_id(m->ion_client, ION_SYSTEM);
+		cma_heap_id = find_ion_heap_id(m->ion_client, ION_CMA);
+		if (system_heap_id < 0 || cma_heap_id < 0)
 		{
 			delete dev;
 			ion_close(m->ion_client);
