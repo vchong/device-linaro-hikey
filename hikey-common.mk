@@ -1,4 +1,3 @@
-ifneq ($(TARGET_BUILD_KERNEL), true)
 ifndef TARGET_KERNEL_USE
 TARGET_KERNEL_USE=4.19
 endif
@@ -17,13 +16,6 @@ else
   HIKEY_USE_DRM_HWCOMPOSER := true
 endif
 TARGET_FSTAB := fstab.hikey
-
-else # TARGET_BUILD_KERNEL == true for following
-TARGET_PREBUILT_KERNEL :=
-TARGET_PREBUILT_DTB :=
-TARGET_FSTAB := fstab.hikey
-endif # end of TARGET_BUILD_KERNEL
-
 
 $(call inherit-product, device/linaro/hikey/hikey/device-hikey.mk)
 $(call inherit-product, device/linaro/hikey/device-common.mk)

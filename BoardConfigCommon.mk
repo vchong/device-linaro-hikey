@@ -57,3 +57,22 @@ endif
 
 TARGET_RECOVERY_PIXEL_FORMAT := BGRA_8888
 TARGET_RECOVERY_UI_LIB := librecovery_ui_hikey
+
+# out/target/product/hikey960/obj/PACKAGING/persist_intermediates/persist_image_info.txt
+# has fs_type=ext4 so no need blo which generates persist_fs_type=ext4
+# based on userdata stuffs
+#BOARD_PERSISTIMAGE_FILE_SYSTEM_TYPE := ext4
+#INSTALLED_PERSISTIMAGE_TARGET := $(PRODUCT_OUT)/persist.img
+
+# similar build errors to BOARD_ROOT_EXTRA_FOLDERS
+# but need to rm out totally to fix?!
+#BOARD_ROOT_EXTRA_SYMLINKS += /mnt/vendor/persist:/persist
+
+# https://source.android.com/devices/bootloader/system-as-root#device-specific-folders
+# BOARD_ROOT_EXTRA_FOLDERS is obsolete! User /mnt/vendor/persist
+#BOARD_ROOT_EXTRA_FOLDERS := persist nvme
+# !!!!!!
+# factory not only doesn't build, but corrupts da buildsys even after
+# removing it! 2 fix, rm out/target/product/<board> before rebuilding
+# !!!!!!
+#BOARD_ROOT_EXTRA_FOLDERS := persist nvme factory

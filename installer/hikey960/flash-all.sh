@@ -11,7 +11,7 @@ if [ ! -e "${1}" ]
     exit
 fi
 DEVICE_PORT="${1}"
-PTABLE=prm_ptable.img
+PTABLE=ptable-aosp-32g.img
 
 INSTALLER_DIR="`dirname ${0}`"
 FIRMWARE_DIR="${INSTALLER_DIR}"
@@ -95,33 +95,36 @@ function check_partition_table_version () {
 
 function flashing_atf_uefi () {
 	echo "flashing_atf_uefi ()"
-	fastboot flash ptable "${INSTALLER_DIR}"/prm_ptable.img
+	fastboot flash ptable "${INSTALLER_DIR}"/"${PTABLE}"
 	fastboot flash xloader "${INSTALLER_DIR}"/hisi-sec_xloader.img
-	fastboot reboot-bootloader
+	#fastboot reboot-bootloader
 
 	fastboot flash fastboot "${INSTALLER_DIR}"/l-loader.bin
 	fastboot flash fip "${INSTALLER_DIR}"/fip.bin
-	fastboot flash nvme "${INSTALLER_DIR}"/hisi-nvme.img
-	fastboot flash fw_lpm3   "${INSTALLER_DIR}"/hisi-lpm3.img
-	fastboot flash trustfirmware   "${INSTALLER_DIR}"/hisi-bl31.bin
-	fastboot reboot-bootloader
+	#fastboot flash nvme "${INSTALLER_DIR}"/hisi-nvme.img
+	fastboot flash nvme "${INSTALLER_DIR}"/nvme_bs4096_js_raw.img
+	#fastboot flash fw_lpm3   "${INSTALLER_DIR}"/hisi-lpm3.img
+	#fastboot flash trustfirmware   "${INSTALLER_DIR}"/hisi-bl31.bin
+	#fastboot reboot-bootloader
 
-	fastboot flash ptable "${INSTALLER_DIR}"/prm_ptable.img
-	fastboot flash xloader "${INSTALLER_DIR}"/hisi-sec_xloader.img
-	fastboot flash fastboot "${INSTALLER_DIR}"/l-loader.bin
-	fastboot flash fip "${INSTALLER_DIR}"/fip.bin
+	#fastboot flash ptable "${INSTALLER_DIR}"/"${PTABLE}"
+	#fastboot flash xloader "${INSTALLER_DIR}"/hisi-sec_xloader.img
+	#fastboot flash fastboot "${INSTALLER_DIR}"/l-loader.bin
+	#fastboot flash fip "${INSTALLER_DIR}"/fip.bin
 
 	fastboot flash boot "${OUT_IMGDIR}"/boot.img
 	fastboot flash system "${OUT_IMGDIR}"/system.img
 	fastboot flash vendor "${OUT_IMGDIR}"/vendor.img
-	fastboot flash cache "${OUT_IMGDIR}"/cache.img
+	# no cached.img on master
+	#fastboot flash cache "${OUT_IMGDIR}"/cache.img
 	fastboot flash userdata "${OUT_IMGDIR}"/userdata.img
 }
 
+# NOT USED
 function upgrading_ptable_1mb_aligned () {
 	echo "upgrading_ptable_1mb_aligned ()"
 	fastboot flash xloader "${INSTALLER_DIR}"/hisi-sec_xloader.img
-	fastboot flash ptable "${INSTALLER_DIR}"/hisi-ptable.img
+	fastboot flash ptable "${INSTALLER_DIR}"/"${PTABLE}"
 	fastboot flash fastboot "${INSTALLER_DIR}"/hisi-fastboot.img
 	fastboot reboot-bootloader
 }
@@ -136,7 +139,7 @@ then
 else
 	echo ${ECHO_PREFIX}"Partition table is 512KB aligned."
 	echo ${ECHO_PREFIX}"Upgrading to 1MB aligned version..."
-	upgrading_ptable_1mb_aligned
+	#upgrading_ptable_1mb_aligned
 	echo ${ECHO_PREFIX}"Flasing ATF/UEFI..."
 	flashing_atf_uefi
 	echo ${ECHO_PREFIX}"Done"

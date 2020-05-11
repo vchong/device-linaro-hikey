@@ -3,11 +3,21 @@ OPTEE_PLATFORM_FLAVOR ?= $(TARGET_DEVICE)
 OPTEE_CFG_ARM64_CORE ?= y
 OPTEE_TA_TARGETS ?= ta_arm64
 OPTEE_OS_DIR ?= optee/optee_os
+OPTEE_EXTRA_FLAGS ?= CFG_TEE_CORE_LOG_LEVEL=3 CFG_TEE_TA_LOG_LEVEL=3
+OPTEE_EXTRA_FLAGS += PLATFORM_VERSION=$(PLATFORM_VERSION)
+# done in optee_os/android_flags.mk
+#OPTEE_EXTRA_FLAGS += CFG_CORE_HEAP_SIZE=196608
 BUILD_OPTEE_MK := $(OPTEE_OS_DIR)/mk/aosp_optee.mk
+CLANG_PATH ?= $(TOP_ROOT_ABS)/$(LLVM_PREBUILTS_PATH)/
+
+# This causes build error
+# Failed to parse make line: "$CLANG_PATH is [//]"
+#$(info $$CLANG_PATH is [${CLANG_PATH}])
 
 # OP TEE client library and service
 PRODUCT_PACKAGES += libteec \
-                    tee-supplicant
+                    tee-supplicant \
+                    libckteec
 
 # optee_test and TA
 PRODUCT_PACKAGES += xtest

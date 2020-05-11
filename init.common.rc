@@ -18,6 +18,17 @@ on init
 
 on fs
     mount_all /vendor/etc/fstab.${ro.hardware}
+    ####################################################################
+    # NO NO NO NO NO NO
+    # THIS WILL CAUSE is_file_crypto() TO RETURN false WHEN CALLED BY
+    # do_installkey() IN system/core/init/builtins.cpp, WHICH IS CALLED
+    # BY installkey IN SYSTEM'S init.rc FILE, CAUSING BOOT TO HALT!!!!!!
+    #
+    # DURING do_mount_all(), IF 'early', queue_event = false, WHICH
+    # SKIPS queue_fs_event() THAT SETS ro.crypto.state TO 'file' THAT'S
+    # NECESSARY FOR is_file_crypto() TO RETURN true
+    ####################################################################
+    #mount_all /vendor/etc/fstab.${ro.hardware} --early
     setprop ro.crypto.fuse_sdcard false
 
 on post-fs
@@ -52,6 +63,9 @@ on post-fs
 
 # enable test harness
     setprop ro.test_harness true
+
+# configure DRM HAL to search for 64-bit DRM plugins
+    setprop drm.64bit.enabled true
 
 on post-fs-data
     mkdir /data/media 0770 media_rw media_rw
@@ -114,50 +128,57 @@ service bugreport /system/bin/dumpstate -d -p -z
     disabled
 
 on early-init
-    setprop ro.hardware.keystore optee
+    loglevel 7
+    #setprop ro.hardware.keystore optee
     #setprop ro.hardware.gatekeeper optee
+    mount_all /vendor/etc/fstab.persist --early
 
-on post-fs
-    chown system system /persist
-    chmod 0771 /persist
-    restorecon /persist
-    mkdir /persist/tee 0770 shell shell
+on init
+    chown system system /mnt/vendor/persist
+    chmod 0771 /mnt/vendor/persist
+    mkdir /mnt/vendor/persist/tee 0770 shell shell
     # optee_client before sha 5602227e8acbffc0b9939a8be17740024e7ceb90
-    # will create its log file under /persist/tee/logs so we need
+    # will create its log file under /mnt/vendor/persist/tee/logs so we need
     # to mkdir it else teec.log will not be created
-    mkdir /persist/tee/logs 0770 shell shell
-    restorecon_recursive /persist/tee
+    mkdir /mnt/vendor/persist/tee/logs 0770 shell shell
+    restorecon_recursive /mnt/vendor/persist
 
     # optional for debugging
     # default 5s
-    #wait /persist/tee
+    # failed! y?
+    #wait /mnt/vendor/persist/tee
 
-    #start tee-supplicant
-    #start vendor.keymaster-3-0-optee
+    # Let this start at default stage, i.e. late-fs
+    start tee-supplicant
+    start vendor.keymaster-3-0-optee
 
-on late-fs
+    # can b on late-init?
     #wait_for_prop keymaster.optee.status ready
-    #exec_start wait_for_keymaster_optee
+    exec_start wait_for_keymaster_optee
 
 on post-fs-data
     # create for OP-TEE test
-    mkdir /data/vendor/tee 0770 shell shell
+    #mkdir /data/vendor/tee 0770 shell shell
     # optee_client before sha 5602227e8acbffc0b9939a8be17740024e7ceb90
     # will create its log file under /data/vendor/tee/logs so we need
     # to mkdir it else teec.log will not be created
-    mkdir /data/vendor/tee/logs 0770 shell shell
-    restorecon_recursive /data/vendor/tee
+    #mkdir /data/vendor/tee/logs 0770 shell shell
+    #restorecon_recursive /data/vendor/tee
 
-    start tee-supplicant
+    #start tee-supplicant
 
     # Keep this at the end of on post-fs-data
     # Set indication (checked by vold) that we have finished this action
-    #setprop vold.post_fs_data_done 1
+    setprop vold.post_fs_data_done 1
 
-service tee-supplicant /vendor/bin/tee-supplicant -d
-    class main
+# -d is passed to tee-supplicant to run it as a daemon
+# i.e. fork after successful initialization
+# Do NOT use. Seem to cause svc not to stay up
+service tee-supplicant /vendor/bin/tee-supplicant
+    class core
     user shell
-    capabilities SYS_RAWIO BLOCK_SUSPEND NET_ADMIN NET_BIND_SERVICE
     group shell inet system drmrpc
-    # MUST use oneshot else fail to start
+    #user root
+    #group root shell inet system drmrpc
+    capabilities SYS_RAWIO BLOCK_SUSPEND NET_ADMIN NET_BIND_SERVICE
     oneshot

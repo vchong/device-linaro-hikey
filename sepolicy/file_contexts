@@ -12,8 +12,10 @@
 /dev/teepriv[0-9]*     u:object_r:tee_device:s0
 /dev/tee[0-9]*         u:object_r:tee_device:s0
 /data/vendor/tee(/.*)? u:object_r:tee_data_file:s0
-/persist(/.*)?         u:object_r:vendor_data_file:s0
-/persist/tee(/.*)?     u:object_r:tee_data_file:s0
+/mnt/vendor/persist(/.*)?         u:object_r:persist_file:s0
+/mnt/vendor/persist/tee(/.*)?     u:object_r:persist_data_file:s0
+#/mnt/vendor/persist(/.*)?         u:object_r:vendor_data_file:s0
+#/mnt/vendor/persist/tee(/.*)?     u:object_r:tee_data_file:s0
 
 # mmc rpmb
 /dev/block/mmcblk[0-9]rpmb     u:object_r:mmc_rpmb_block_device:s0
@@ -22,6 +24,14 @@
 
 /(vendor|system/vendor)/bin/hw/android\.hardware\.gatekeeper@1\.0-service\.optee     u:object_r:hal_gatekeeper_optee_exec:s0
 /(vendor|system/vendor)/bin/hw/android\.hardware\.keymaster@3\.0-service\.optee      u:object_r:hal_keymaster_optee_exec:s0
+
+/data/vendor/mediadrm(/.*)?  u:object_r:mediadrm_vendor_data_file:s0
+/vendor/bin/hw/android\.hardware\.drm@[0-9]+\.[0-9]+-service\.widevine  u:object_r:hal_drm_widevine_exec:s0
+# can't find android.hardware.drm@1.1-service-lazy code in widevine/android.git
+# https://android.googlesource.com/device/google/marlin/+/2eee0cedb55cc709c907ac122a62005d75867484%5E2
+#/vendor/bin/hw/android\.hardware\.drm@[0-9]+\.[0-9]+-service-lazy\.widevine  u:object_r:hal_drm_widevine_exec:s0
+# build error
+#/system/bin/move_widevine_data\.sh      u:object_r:move-widevine-data-sh_exec:s0
 
 /dev/mali              u:object_r:gpu_device:s0
 /dev/mali0             u:object_r:gpu_device:s0
@@ -60,6 +70,12 @@
 /dev/block/platform/soc/ff3b0000\.ufs/by-name/cache u:object_r:cache_block_device:s0
 /dev/block/platform/soc/ff3b0000\.ufs/by-name/userdata u:object_r:userdata_block_device:s0
 /dev/block/platform/soc/ff3b0000\.ufs/by-name/nvme u:object_r:vendordata_block_device:s0
+/dev/block/by-name/cache u:object_r:cache_block_device:s0
+/dev/block/by-name/userdata u:object_r:userdata_block_device:s0
+/dev/block/by-name/nvme u:object_r:vendordata_block_device:s0
+/dev/block/sdd5 u:object_r:cache_block_device:s0
+/dev/block/sdd13 u:object_r:userdata_block_device:s0
+/dev/block/sdd3 u:object_r:vendordata_block_device:s0
 
 /vendor/bin/hw/android\.hardware\.gatekeeper@1\.0-service\.software         u:object_r:hal_gatekeeper_default_exec:s0
 /vendor/bin/hw/android\.hardware\.power@1\.1-service\.hikey-common          u:object_r:hal_power_default_exec:s0

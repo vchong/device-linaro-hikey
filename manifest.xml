@@ -61,6 +61,10 @@
             <name>IDrmFactory</name>
             <instance>default</instance>
         </interface>
+        <fqname>@1.1::ICryptoFactory/clearkey</fqname>
+        <fqname>@1.1::IDrmFactory/clearkey</fqname>
+        <fqname>@1.1::ICryptoFactory/widevine</fqname>
+        <fqname>@1.1::IDrmFactory/widevine</fqname>
     </hal>
     <hal format="hidl">
         <name>android.hardware.gnss</name>
@@ -114,7 +118,6 @@
         <interface>
             <name>IKeymasterDevice</name>
             <instance>default</instance>
-            <instance>optee</instance>
         </interface>
     </hal>
     <hal format="hidl">
@@ -124,7 +127,6 @@
         <interface>
             <name>IGatekeeper</name>
             <instance>default</instance>
-            <instance>optee</instance>
         </interface>
     </hal>
     <hal format="hidl">
