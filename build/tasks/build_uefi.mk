@@ -19,21 +19,16 @@ ABS_DIST_DIR_PRODUCT ?= $(realpath $(OUT_DIR))/dist
 
 TARGET_TEE_IS_OPTEE ?= false
 
-ifneq ($(filter hikey960%, $(TARGET_DEVICE)),)
-CROSS_COMPILE64 := $(TOP_ROOT_ABS)/optee/aarch64/bin/aarch64-linux-gnu-
-CROSS_COMPILE32 := $(TOP_ROOT_ABS)/optee/aarch32/bin/arm-linux-gnueabihf-
-else
-
-# assume hikey
+# CLANG is provided as a RO env var by soong
+# and CANNOT be overwritten
 TOP_ROOT_ABS := $(realpath $(TOP))
-CROSS_COMPILE64 := $(TOP_ROOT_ABS)/$(TARGET_TOOLS_PREFIX)
-ifneq ($(strip $($(combo_2nd_arch_prefix)TARGET_TOOLS_PREFIX)),)
-CROSS_COMPILE32 := $(TOP_ROOT_ABS)/$($(combo_2nd_arch_prefix)TARGET_TOOLS_PREFIX)
-else
-CROSS_COMPILE32 := arm-linux-androideabi-
-endif
 
-endif
+# WARNING: MUST HAVE / AT THE END!
+CLANG_PATH := $(TOP_ROOT_ABS)/$(LLVM_PREBUILTS_PATH)/
+
+#CROSS_COMPILERS := COMPILER=clang
+CROSS_COMPILERS += CROSS_COMPILE64=aarch64-linux-android-
+CROSS_COMPILERS += CROSS_COMPILE32=arm-linux-androideabi-
 
 HOST_PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 
@@ -45,8 +40,8 @@ OPTEE_OS_DIR=optee/optee_os
 # rebuild fip.bin whenever optee_os is modified
 $(DIST_DIR_PRODUCT)/fip.bin: $(BOOTLOADER_DIR)/Makefile $(sort $(shell find -L $(OPTEE_OS_DIR)))
 	rm -fr $(DIST_DIR_PRODUCT) $(OPTEE_OS_DIR)/out $(PRODUCT_OUT)/obj/optee
-	PATH=$(HOST_PATH):$$PATH CROSS_COMPILE_32=$(CROSS_COMPILE32) CROSS_COMPILE_64=$(CROSS_COMPILE64) $(HOST_MAKE) -C $(BOOTLOADER_DIR) DIST_DIR=$(ABS_DIST_DIR_PRODUCT) TARGET_TEE_IS_OPTEE=$(TARGET_TEE_IS_OPTEE) -j1 clean
-	PATH=$(HOST_PATH):$$PATH CROSS_COMPILE_32=$(CROSS_COMPILE32) CROSS_COMPILE_64=$(CROSS_COMPILE64) $(HOST_MAKE) -C $(BOOTLOADER_DIR) DIST_DIR=$(ABS_DIST_DIR_PRODUCT) TARGET_TEE_IS_OPTEE=$(TARGET_TEE_IS_OPTEE) all
+	PATH=$(HOST_PATH):$$PATH $(CROSS_COMPILERS) $(HOST_MAKE) -C $(BOOTLOADER_DIR) DIST_DIR=$(ABS_DIST_DIR_PRODUCT) TARGET_TEE_IS_OPTEE=$(TARGET_TEE_IS_OPTEE) -j1 clean
+	PATH=$(HOST_PATH):$$PATH $(CROSS_COMPILERS) $(HOST_MAKE) -C $(BOOTLOADER_DIR) DIST_DIR=$(ABS_DIST_DIR_PRODUCT) TARGET_TEE_IS_OPTEE=$(TARGET_TEE_IS_OPTEE) all
 	cp $@ device/linaro/hikey/installer/$(TARGET_DEVICE)/
 
 $(DIST_DIR_PRODUCT)/l-loader.bin: $(DIST_DIR_PRODUCT)/fip.bin
