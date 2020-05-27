@@ -41,6 +41,12 @@ HOST_PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 # from optee_os/mk/aosp_optee.mk when building.
 OPTEE_OS_DIR=optee/optee_os
 
+# for debugging, add as dep to target, i.e. $(FIP_BIN): out/dist/foo
+out/dist/foo:
+	find -L $(OPTEE_OS_DIR) | grep -v -e "$(OPTEE_OS_DIR)/out" -e "$(OPTEE_OS_DIR)/.git"
+	mkdir -p $(OUT_DIR)/dist
+	touch $(OUT_DIR)/dist/foo
+
 # build_uefi.sh will always clean before build by default
 # rebuild fip.bin whenever optee/optee_os or optee/l-loader is modified
 #$(FIP_BIN): $(sort $(shell find -L $(OPTEE_OS_DIR) | grep -v -e "$(OPTEE_OS_DIR)/out" -e "$(OPTEE_OS_DIR)/.git" )) $(sort $(shell find -L $(LLOADER_DIR)))
