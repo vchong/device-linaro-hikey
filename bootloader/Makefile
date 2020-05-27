@@ -5,7 +5,7 @@ OPTEE_DIR=$(TOP_ROOT_ABS)/optee
 LLOADER_DIR=$(TOP_ROOT_ABS)/optee/l-loader
 TOOLS_DIR=$(TOP_ROOT_ABS)/optee/tools-images-hikey960
 
-INSTALLER_DIR?=$(TOP_ROOT_ABS)/device/linaro/hikey/installer/$(TARGET_OUT_DIR)
+INSTALLER_DIR ?= $(TOP_ROOT_ABS)/device/linaro/hikey/installer/$(TARGET_OUT_DIR)
 
 # CLANG is provided as a RO env var by soong
 # Note the trailing forward slash!
@@ -13,6 +13,15 @@ INSTALLER_DIR?=$(TOP_ROOT_ABS)/device/linaro/hikey/installer/$(TARGET_OUT_DIR)
 
 # Please use DEBUG=1 (default) in build_uefi.sh due to
 # https://bugs.96boards.org/show_bug.cgi?id=806
+
+# Do NOT double quote SCRIPT_ARGS, i.e. "CLANG=CLANG_5_0 CLANG_PATH=$(CLANG_PATH)"
+# else get build error below
+# /bin/sh: line 1: CLANG=CLANG_5_0 CLANG_PATH=/home/victor.chong/work/swg/aosp/master/prebuilts/clang/host/linux-x86/clang-r383902/bin/: No such file or directory
+SCRIPT_ARGS ?= CLANG=CLANG_5_0 CLANG_PATH=$(CLANG_PATH)
+
+ifeq ($(TARGET_TEE_IS_OPTEE),false)
+	SCRIPT_ARGS+=OPTEE=0
+endif
 
 #FIP_BIN ?= $(OUT_DIR)/dist/fip.bin
 
@@ -27,8 +36,9 @@ all:
 	echo "TARGET_OUT = $(TARGET_OUT)"
 	echo "TARGET_OUT_VENDOR = $(TARGET_OUT_VENDOR)"
 	echo "TARGET_OUT_DIR = $(TARGET_OUT_DIR)"
+	echo "SCRIPT_ARGS = $(SCRIPT_ARGS)"
 	cd $(OPTEE_DIR) && \
-		CLANG=CLANG_5_0 CLANG_PATH=$(CLANG_PATH) $(LLOADER_DIR)/build_uefi.sh $(TARGET_OUT_DIR) && \
+		$(SCRIPT_ARGS) $(LLOADER_DIR)/build_uefi.sh $(TARGET_OUT_DIR) && \
 		cp $(LLOADER_DIR)/fip.bin $(INSTALLER_DIR)/ && \
 		cp $(LLOADER_DIR)/l-loader.bin $(INSTALLER_DIR)/ && \
 		cp $(LLOADER_DIR)/recovery.bin $(INSTALLER_DIR)/ && \
