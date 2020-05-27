@@ -48,8 +48,11 @@ out/dist/foo:
 	touch $(OUT_DIR)/dist/foo
 
 # build_uefi.sh will always clean before build by default
+
+# SHOULD REBUILD WHENEVER ANY fip.bin RELATED SRCS ARE CHANGED, I.E ALSO TF-A, edk2, OpenPlatformPkg, atf-fastboot (620 only)
 # rebuild fip.bin whenever optee/optee_os or optee/l-loader is modified
 #$(FIP_BIN): $(sort $(shell find -L $(OPTEE_OS_DIR) | grep -v -e "$(OPTEE_OS_DIR)/out" -e "$(OPTEE_OS_DIR)/.git" )) $(sort $(shell find -L $(LLOADER_DIR)))
+
 # rebuild fip.bin whenever optee/optee_os is modified
 $(FIP_BIN): $(sort $(shell find -L $(OPTEE_OS_DIR) | grep -v -e "$(OPTEE_OS_DIR)/out" -e "$(OPTEE_OS_DIR)/.git" ))
 	echo "## TOP = $(TOP)"
