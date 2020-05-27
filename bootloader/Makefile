@@ -30,9 +30,9 @@ all:
 		CLANG=CLANG_5_0 CLANG_PATH=$(CLANG_PATH) $(LLOADER_DIR)/build_uefi.sh && \
 		cp $(LLOADER_DIR)/fip.bin $(INSTALLER_DIR)/ && \
 		cp $(LLOADER_DIR)/l-loader.bin $(INSTALLER_DIR)/ && \
+		cp $(LLOADER_DIR)/recovery.bin $(INSTALLER_DIR)/ && \
 		cp $(LLOADER_DIR)/ptable-*.img $(INSTALLER_DIR)/
 ifneq ($(filter hikey960%, $(TARGET_OUT_DIR)),)
-	cp $(LLOADER_DIR)/recovery.bin $(INSTALLER_DIR)/
 	cp $(TOOLS_DIR)/hikey_idt $(INSTALLER_DIR)/
 	cp $(TOOLS_DIR)/hisi*.img $(INSTALLER_DIR)/
 endif
