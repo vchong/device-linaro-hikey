@@ -26,6 +26,7 @@ all:
 	echo "TOP_ROOT_ABS = $(TOP_ROOT_ABS)"
 	echo "TARGET_OUT = $(TARGET_OUT)"
 	echo "TARGET_OUT_VENDOR = $(TARGET_OUT_VENDOR)"
+	echo "TARGET_OUT_DIR = $(TARGET_OUT_DIR)"
 	cd $(OPTEE_DIR) && \
 		CLANG=CLANG_5_0 CLANG_PATH=$(CLANG_PATH) $(LLOADER_DIR)/build_uefi.sh $(TARGET_OUT_DIR) && \
 		cp $(LLOADER_DIR)/fip.bin $(INSTALLER_DIR)/ && \
