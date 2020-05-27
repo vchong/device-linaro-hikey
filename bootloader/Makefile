@@ -27,7 +27,7 @@ all:
 	echo "TARGET_OUT = $(TARGET_OUT)"
 	echo "TARGET_OUT_VENDOR = $(TARGET_OUT_VENDOR)"
 	cd $(OPTEE_DIR) && \
-		CLANG=CLANG_5_0 CLANG_PATH=$(CLANG_PATH) $(LLOADER_DIR)/build_uefi.sh && \
+		CLANG=CLANG_5_0 CLANG_PATH=$(CLANG_PATH) $(LLOADER_DIR)/build_uefi.sh $(TARGET_OUT_DIR) && \
 		cp $(LLOADER_DIR)/fip.bin $(INSTALLER_DIR)/ && \
 		cp $(LLOADER_DIR)/l-loader.bin $(INSTALLER_DIR)/ && \
 		cp $(LLOADER_DIR)/recovery.bin $(INSTALLER_DIR)/ && \
