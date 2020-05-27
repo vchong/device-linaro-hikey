@@ -41,17 +41,17 @@ HOST_PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 # from optee_os/mk/aosp_optee.mk when building.
 OPTEE_OS_DIR=optee/optee_os
 
-# rebuild fip.bin whenever optee_os is modified
+# rebuild fip.bin whenever optee/optee_os is modified
 # build_uefi.sh will always clean before build by default
 $(FIP_BIN): $(sort $(shell find -L $(OPTEE_OS_DIR)))
-	@# Should we really rm $(PRODUCT_OUT)/optee built by optee_os/aosp_optee.mk and NOT by this file?
 	echo "## TOP = $(TOP)"
 	echo "## TOP_ROOT_ABS = $(TOP_ROOT_ABS)"
 	echo "## TARGET_OUT_DIR = $(TARGET_OUT_DIR)"
 	echo "## TARGET_OUT = $(TARGET_OUT)"
 	echo "## TARGET_OUT_VENDOR = $(TARGET_OUT_VENDOR)"
-	mkdir -p $(OUT_DIR)
-	rm -rf $@ $(PRODUCT_OUT)/optee
+	mkdir -p $(OUT_DIR)/dist
+	@# Should we really rm $(PRODUCT_OUT)/optee built by optee_os/aosp_optee.mk and NOT by this file?
+	@#rm -rf $(PRODUCT_OUT)/optee
 	@# Does NOT build without '-j1'!
 	PATH=$(HOST_PATH):$$PATH $(HOST_MAKE) -j1 -C $(BOOTLOADER_DIR) TOP_ROOT_ABS=$(TOP_ROOT_ABS) CLANG_PATH=$(CLANG_PATH)
 	cp $(LLOADER_DIR)/fip.bin $@
