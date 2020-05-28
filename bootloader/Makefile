@@ -23,6 +23,8 @@ ifeq ($(TARGET_TEE_IS_OPTEE),false)
 	SCRIPT_ARGS+=OPTEE=0
 endif
 
+OPTEE_EXTRA_ARGS ?= CFG_CORE_ASLR=n CFG_CORE_HEAP_SIZE=196608
+
 #FIP_BIN ?= $(OUT_DIR)/dist/fip.bin
 
 #all: $(FIP_BIN)
@@ -38,7 +40,7 @@ all:
 	echo "TARGET_OUT_DIR = $(TARGET_OUT_DIR)"
 	echo "SCRIPT_ARGS = $(SCRIPT_ARGS)"
 	cd $(OPTEE_DIR) && \
-		$(SCRIPT_ARGS) $(LLOADER_DIR)/build_uefi.sh $(TARGET_OUT_DIR) && \
+		$(SCRIPT_ARGS) OPTEE_EXTRA_ARGS="${OPTEE_EXTRA_ARGS}" $(LLOADER_DIR)/build_uefi.sh $(TARGET_OUT_DIR) && \
 		cp $(LLOADER_DIR)/fip.bin $(INSTALLER_DIR)/ && \
 		cp $(LLOADER_DIR)/l-loader.bin $(INSTALLER_DIR)/ && \
 		cp $(LLOADER_DIR)/recovery.bin $(INSTALLER_DIR)/ && \
