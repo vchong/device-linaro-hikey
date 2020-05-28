@@ -15,13 +15,9 @@ endif
 
 TOP_ROOT_ABS := $(realpath $(TOP))
 
-OPTEE_DIR=$(TOP_ROOT_ABS)/optee
 LLOADER_DIR=$(TOP_ROOT_ABS)/optee/l-loader
-TOOLS_DIR=$(TOP_ROOT_ABS)/optee/tools-images-hikey960
 
 BOOTLOADER_DIR ?= device/linaro/hikey/bootloader
-
-INSTALLER_DIR?=$(TOP_ROOT_ABS)/device/linaro/hikey/installer/$(TARGET_OUT_DIR)
 
 # CLANG is provided as a RO env var by soong
 # Note the trailing forward slash!
