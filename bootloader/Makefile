@@ -23,7 +23,15 @@ ifeq ($(TARGET_TEE_IS_OPTEE),false)
 	SCRIPT_ARGS+=OPTEE=0
 endif
 
-OPTEE_EXTRA_ARGS ?= CFG_CORE_ASLR=n CFG_CORE_HEAP_SIZE=196608
+OPTEE_EXTRA_ARGS ?= CFG_CORE_HEAP_SIZE=196608
+
+# https://docs.google.com/document/d/1YhXpsmefaMhWE4dIwPViG0lzfCKVkf1WqjvknyPh7Pw
+# core crash (alignment fault) when looking up early TAs (memcmp on UUIDs)
+# https://github.com/OP-TEE/optee_os/issues/3903
+OPTEE_EXTRA_ARGS += CFG_SCTLR_ALIGNMENT_CHECK=n
+
+# Force DEBUG=0 for now else boot will hang (https://pastebin.ubuntu.com/p/jX3yfQ2xYV/)
+OPTEE_EXTRA_ARGS += DEBUG=0
 
 #FIP_BIN ?= $(OUT_DIR)/dist/fip.bin
 
