@@ -22,10 +22,19 @@ BOOTLOADER_DIR ?= device/linaro/hikey/bootloader
 # CLANG is provided as a RO env var by soong
 # Note the trailing forward slash!
 #CLANG_PATH=$(TOP_ROOT_ABS)/$(LLVM_PREBUILTS_PATH)/
-#9.0.3
-CLANG_PATH=$(TOP_ROOT_ABS)/prebuilts/clang/host/linux-x86/./clang-r353983c/bin/
-#9.0.8
-CLANG_PATH=$(TOP_ROOT_ABS)/prebuilts/clang/host/linux-x86/./clang-r365631c/bin/
+
+#8.0.9 - android10-dev branch does NOT build!
+#CLANG_PATH=$(TOP_ROOT_ABS)/prebuilts/clang/host/linux-x86/clang-r349610b/bin/
+#9.0.1 - android-q-preview-1 branch
+#CLANG_PATH=$(TOP_ROOT_ABS)/prebuilts/clang/host/linux-x86/clang-r353983/bin/
+#9.0.2 - android10-dev branch - no boot
+#CLANG_PATH=$(TOP_ROOT_ABS)/prebuilts/clang/host/linux-x86/clang-r353983b/bin/
+#9.0.3 - not tested?
+#CLANG_PATH=$(TOP_ROOT_ABS)/prebuilts/clang/host/linux-x86/clang-r353983c/bin/
+#9.0.8 - no boot
+#CLANG_PATH=$(TOP_ROOT_ABS)/prebuilts/clang/host/linux-x86/clang-r365631c/bin/
+#11.0.1 - no boot
+CLANG_PATH=$(TOP_ROOT_ABS)/prebuilts/clang/host/linux-x86/clang-r383902/bin/
 
 # Please use DEBUG=1 (default) in build_uefi.sh due to
 # https://bugs.96boards.org/show_bug.cgi?id=806

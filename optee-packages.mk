@@ -7,6 +7,9 @@ OPTEE_EXTRA_FLAGS ?= CFG_TEE_CORE_LOG_LEVEL=3 CFG_TEE_TA_LOG_LEVEL=3
 # done in optee_os/android_flags.mk
 #OPTEE_EXTRA_FLAGS += CFG_CORE_HEAP_SIZE=196608
 BUILD_OPTEE_MK := $(OPTEE_OS_DIR)/mk/aosp_optee.mk
+CLANG_PATH ?= $(TOP_ROOT_ABS)/$(LLVM_PREBUILTS_PATH)/
+
+$(info $$CLANG_PATH is [${CLANG_PATH}])
 
 # OP TEE client library and service
 PRODUCT_PACKAGES += libteec \
