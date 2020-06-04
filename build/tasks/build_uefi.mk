@@ -2,37 +2,22 @@ ifneq ($(filter hikey%, $(TARGET_DEVICE)),)
 
 ifeq ($(TARGET_BUILD_UEFI), true)
 
-TOP_ROOT_ABS := $(realpath $(TOP))
-
 # setting value for PREBUILT_MAKE to specify which value to use
 PREBUILT_MAKE ?= prebuilts/build-tools/linux-x86/bin/make
 ifneq (,$(wildcard $(PREBUILT_MAKE)))
-$(info got prebuilt_make)
-HOST_MAKE := $(TOP_ROOT_ABS)/$(PREBUILT_MAKE)
+HOST_MAKE := $(PREBUILT_MAKE)
 ifneq (,$(filter -j%, $(MAKE)))
-$(info get nproc)
 HOST_MAKE += $(filter -j%, $(MAKE))
 endif
 else
-$(info no prebuilt_make)
 HOST_MAKE := $(MAKE)
 endif
 
+TOP_ROOT_ABS := $(realpath $(TOP))
+
 LLOADER_DIR=$(TOP_ROOT_ABS)/optee/l-loader
-OPTEE_BUILDDIR=$(TOP_ROOT_ABS)/optee/build
-INSTALLER_DIR ?= $(TOP_ROOT_ABS)/device/linaro/hikey/installer/$(TARGET_OUT_DIR)
-TOOLS_DIR=$(TOP_ROOT_ABS)/optee/tools-images-hikey960
 
-#OPTEE_OS_COMMON_EXTRA_FLAGS ?= O=out/arm
-#OPTEE_OS_COMMON_EXTRA_FLAGS += CFG_ARM64_core=y
-#OPTEE_OS_COMMON_EXTRA_FLAGS += CFG_TEE_TA_LOG_LEVEL=3
-OPTEE_OS_COMMON_EXTRA_FLAGS ?= CFG_TEE_TA_LOG_LEVEL=3
-OPTEE_OS_COMMON_EXTRA_FLAGS += CFG_CORE_HEAP_SIZE=196608
-
-# https://docs.google.com/document/d/1YhXpsmefaMhWE4dIwPViG0lzfCKVkf1WqjvknyPh7Pw
-# core crash (alignment fault) when looking up early TAs (memcmp on UUIDs)
-# https://github.com/OP-TEE/optee_os/issues/3903
-OPTEE_OS_COMMON_EXTRA_FLAGS += CFG_SCTLR_ALIGNMENT_CHECK=n
+BOOTLOADER_DIR ?= device/linaro/hikey/bootloader
 
 # CLANG is provided as a RO env var by soong
 # Note the trailing forward slash!
@@ -66,10 +51,10 @@ HOST_PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 OPTEE_OS_DIR=optee/optee_os
 
 # for debugging, add as dep to target, i.e. $(FIP_BIN): out/dist/foo
-$(OUT_DIR)/dist/print_fip_dep:
+out/dist/foo:
 	find -L $(OPTEE_OS_DIR) | grep -v -e "$(OPTEE_OS_DIR)/out" -e "$(OPTEE_OS_DIR)/.git"
 	mkdir -p $(OUT_DIR)/dist
-	touch $(OUT_DIR)/dist/fip_dep_printed
+	touch $(OUT_DIR)/dist/foo
 
 # build_uefi.sh will always clean before build by default
 
@@ -79,55 +64,17 @@ $(OUT_DIR)/dist/print_fip_dep:
 
 # rebuild fip.bin whenever optee/optee_os is modified
 $(FIP_BIN): $(sort $(shell find -L $(OPTEE_OS_DIR) | grep -v -e "$(OPTEE_OS_DIR)/out" -e "$(OPTEE_OS_DIR)/.git" ))
-	@echo "## TOP = $(TOP)"
-	@echo "## TOP_ROOT_ABS = $(TOP_ROOT_ABS)"
-	@echo "## TARGET_OUT_DIR = $(TARGET_OUT_DIR)"
-	@echo "## TARGET_OUT = $(TARGET_OUT)"
-	@echo "## TARGET_OUT_VENDOR = $(TARGET_OUT_VENDOR)"
-	@echo "## OPTEE_OS_COMMON_EXTRA_FLAGS = $(OPTEE_OS_COMMON_EXTRA_FLAGS)"
-	@echo "## HOST_MAKE = $(HOST_MAKE)"
-	@echo "## PREBUILT_MAKE = $(PREBUILT_MAKE)"
-	@echo "## BUILD_ID = $(BUILD_ID)"
+	echo "## TOP = $(TOP)"
+	echo "## TOP_ROOT_ABS = $(TOP_ROOT_ABS)"
+	echo "## TARGET_OUT_DIR = $(TARGET_OUT_DIR)"
+	echo "## TARGET_OUT = $(TARGET_OUT)"
+	echo "## TARGET_OUT_VENDOR = $(TARGET_OUT_VENDOR)"
 	mkdir -p $(OUT_DIR)/dist
-
 	@# Should we really rm $(PRODUCT_OUT)/optee built by optee_os/aosp_optee.mk and NOT by this file?
 	@#rm -rf $(PRODUCT_OUT)/optee
-
-	@# Using l-loader/build_uefi.sh
 	@# Does NOT build without '-j1'! build_uefi.sh will build edk2 in parallel though!
-	@#PATH=$(HOST_PATH):$$PATH $(HOST_MAKE) -C $(BOOTLOADER_DIR) TOP_ROOT_ABS=$(TOP_ROOT_ABS) \
-		TARGET_OUT_DIR=$(TARGET_OUT_DIR) CLANG_PATH=$(CLANG_PATH)
-
-	@# Using build/hikey.mk
-	@# Does NOT build without '-j1' even when build.git/*.mk already specifies -j1 for edk2* target!
-	@# 'build' cmd in edk2 will build in parallel though!
-
-	@# make optee-os-clean-common fails if optee_os/out doesn't exist!
-	@# DO NOT HV AN ENDING BACKSLASH ON LINE BELOW ELSE BUILD WILL FAIL WITH:
-	@# make: hikey.mk: No such file or directory
-	@#make: *** No rule to make target 'hikey.mk'.  Stop.
-	@#cd $(OPTEE_BUILDDIR) && PATH=$(HOST_PATH):$$PATH PATH=$(HOST_PATH):$$PATH $(HOST_MAKE) -j1 -f $(TARGET_OUT_DIR).mk lloader-clean arm-tf-clean atf-fb-clean optee-os-clean edk2-clean
-	cd $(OPTEE_BUILDDIR) && \
-		PATH=$(HOST_PATH):$$PATH CLANG_PATH=$(CLANG_PATH) CFG_AOSP=y \
-		OPTEE_OS_COMMON_EXTRA_FLAGS="$(OPTEE_OS_COMMON_EXTRA_FLAGS)" \
-		$(HOST_MAKE) -j1 -f $(TARGET_OUT_DIR).mk lloader
-	cp $(LLOADER_DIR)/recovery.bin $(INSTALLER_DIR)/
-	cp $(LLOADER_DIR)/l-loader.bin $(INSTALLER_DIR)/
-	cp $(LLOADER_DIR)/ptable-*.img $(INSTALLER_DIR)/
-	cp $(LLOADER_DIR)/fip.bin $(INSTALLER_DIR)/
+	PATH=$(HOST_PATH):$$PATH $(HOST_MAKE) -j1 -C $(BOOTLOADER_DIR) TOP_ROOT_ABS=$(TOP_ROOT_ABS) TARGET_OUT_DIR=$(TARGET_OUT_DIR) CLANG_PATH=$(CLANG_PATH)
 	cp $(LLOADER_DIR)/fip.bin $@
-ifneq ($(filter hikey960%, $(TARGET_OUT_DIR)),)
-	cp $(TOOLS_DIR)/hikey_idt $(INSTALLER_DIR)/
-	cp $(TOOLS_DIR)/hisi*.img $(INSTALLER_DIR)/
-endif
-
-.PHONY: clean
-clean:
-	@# Should we really rm $(PRODUCT_OUT)/optee built by optee_os/aosp_optee.mk and NOT by this file?
-	@#rm -rf $(PRODUCT_OUT)/optee
-	$(HOST_MAKE) -f $(OPTEE_BUILDDIR)/$(TARGET_OUT_DIR).mk lloader-clean arm-tf-clean atf-fb-clean optee-os-clean \
-		edk2-clean
-	@#touch $(OUT_DIR)/dist/optee_cleaned
 
 droidcore: $(FIP_BIN)
 endif #TARGET_BUILD_UEFI
