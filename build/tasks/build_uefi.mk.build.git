@@ -32,7 +32,7 @@ OPTEE_OS_COMMON_EXTRA_FLAGS += CFG_CORE_HEAP_SIZE=196608
 # https://docs.google.com/document/d/1YhXpsmefaMhWE4dIwPViG0lzfCKVkf1WqjvknyPh7Pw
 # core crash (alignment fault) when looking up early TAs (memcmp on UUIDs)
 # https://github.com/OP-TEE/optee_os/issues/3903
-OPTEE_OS_COMMON_EXTRA_FLAGS += CFG_SCTLR_ALIGNMENT_CHECK=n
+OPTEE_OS_COMMON_EXTRA_FLAGS += CFG_SCTLR_ALIGNMENT_CHECK=n DEBUG=1
 
 # CLANG is provided as a RO env var by soong
 # Note the trailing forward slash!
