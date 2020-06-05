@@ -23,6 +23,13 @@ ifeq ($(TARGET_TEE_IS_OPTEE),false)
 	SCRIPT_ARGS+=OPTEE=0
 endif
 
+# atf-fastboot (recovery.bin, l-loader.bin) fails to boot to fastboot in DEBUG build!
+#INFO:    cpacr_el1:0x300000
+#INFO:    Entry point address = 0xf9828000
+#INFO:    SPSR = 0x3c5
+#ASSERT: File lib/aarch64/misc_helpers.S Line 00115
+#SCRIPT_ARGS+=BUILD_OPTION=RELEASE
+
 OPTEE_EXTRA_ARGS ?= CFG_CORE_HEAP_SIZE=196608
 
 # https://docs.google.com/document/d/1YhXpsmefaMhWE4dIwPViG0lzfCKVkf1WqjvknyPh7Pw
