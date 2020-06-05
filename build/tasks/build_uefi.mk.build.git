@@ -68,8 +68,8 @@ OPTEE_OS_DIR=optee/optee_os
 # for debugging, add as dep to target, i.e. $(FIP_BIN): out/dist/foo
 $(OUT_DIR)/dist/print_fip_dep:
 	find -L $(OPTEE_OS_DIR) | grep -v -e out -e .git
-	mkdir -p $(OUT_DIR)/dist
-	touch $(OUT_DIR)/dist/fip_dep_printed
+	@#mkdir -p $(OUT_DIR)/dist
+	@#touch $(OUT_DIR)/dist/fip_dep_printed
 
 # build_uefi.sh will always clean before build by default
 
