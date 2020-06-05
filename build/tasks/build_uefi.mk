@@ -52,9 +52,9 @@ OPTEE_OS_DIR=optee/optee_os
 
 # for debugging, add as dep to target, i.e. $(FIP_BIN): out/dist/foo
 out/dist/foo:
-	find -L $(OPTEE_OS_DIR) | grep -v -e out -e .git"
-	mkdir -p $(OUT_DIR)/dist
-	touch $(OUT_DIR)/dist/foo
+	find -L $(OPTEE_OS_DIR) | grep -v -e out -e .git
+	@#mkdir -p $(OUT_DIR)/dist
+	@#touch $(OUT_DIR)/dist/foo
 
 # build_uefi.sh will always clean before build by default
 
@@ -62,8 +62,12 @@ out/dist/foo:
 # rebuild fip.bin whenever optee/optee_os or optee/l-loader is modified
 #$(FIP_BIN): $(sort $(shell find -L $(OPTEE_OS_DIR) | grep -v -e out -e .git)) $(sort $(shell find -L $(LLOADER_DIR) | grep -v -e .git))
 
+# force build every time since optee_os/out is always built after the fact?
+# not sure if this works, but does NOT work if optee_os remains unchanged for several builds
+#$(FIP_BIN): $(sort $(shell find -L $(OPTEE_OS_DIR)))
+
 # rebuild fip.bin whenever optee/optee_os is modified
-$(FIP_BIN): $(sort $(shell find -L $(OPTEE_OS_DIR) | grep -v -e out -e .git))
+$(FIP_BIN): out/dist/foo $(sort $(shell find -L $(OPTEE_OS_DIR) | grep -v -e out -e .git))
 	echo "## TOP = $(TOP)"
 	echo "## TOP_ROOT_ABS = $(TOP_ROOT_ABS)"
 	echo "## TARGET_OUT_DIR = $(TARGET_OUT_DIR)"
