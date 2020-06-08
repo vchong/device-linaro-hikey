@@ -53,6 +53,8 @@ OPTEE_OS_DIR=optee/optee_os
 # for debugging, add as dep to target, i.e. $(FIP_BIN): out/dist/foo
 out/dist/foo:
 	find -L $(OPTEE_OS_DIR) | grep -v -e out -e .git
+	@# ninja: output file missing after successful execution: out/dist/foo
+	@# but doing below will cause 'no chg/updt required' for $@ and cause 'find -L ..' to not run?
 	@#mkdir -p $(OUT_DIR)/dist
 	@#touch $(OUT_DIR)/dist/foo
 
@@ -62,11 +64,12 @@ out/dist/foo:
 # rebuild fip.bin whenever optee/optee_os or optee/l-loader is modified
 #$(FIP_BIN): $(sort $(shell find -L $(OPTEE_OS_DIR) | grep -v -e out -e .git)) $(sort $(shell find -L $(LLOADER_DIR) | grep -v -e .git))
 
-# force build every time since optee_os/out is always built after the fact?
+# force build every time since optee_os/out is always built after AOSP's *.mk parsing?
 # not sure if this works, but does NOT work if optee_os remains unchanged for several builds
 #$(FIP_BIN): $(sort $(shell find -L $(OPTEE_OS_DIR)))
 
 # rebuild fip.bin whenever optee/optee_os is modified
+# still get `$(shell find -L optee/optee_os) was changed, regenerating...` even after filtering out `out` and `.git`, why?
 $(FIP_BIN): out/dist/foo $(sort $(shell find -L $(OPTEE_OS_DIR) | grep -v -e out -e .git))
 	echo "## TOP = $(TOP)"
 	echo "## TOP_ROOT_ABS = $(TOP_ROOT_ABS)"
