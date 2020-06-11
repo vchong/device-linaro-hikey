@@ -1,8 +1,8 @@
 ifndef TARGET_KERNEL_USE
 TARGET_KERNEL_USE=4.19
 endif
-TARGET_PREBUILT_KERNEL := device/linaro/hikey-kernel/Image.gz-dtb-hikey960-$(TARGET_KERNEL_USE)
-TARGET_PREBUILT_DTB := device/linaro/hikey-kernel/hi3660-hikey960.dtb-$(TARGET_KERNEL_USE)
+TARGET_PREBUILT_KERNEL := device/linaro/hikey-kernel/hikey960/$(TARGET_KERNEL_USE)/Image.gz-dtb
+TARGET_PREBUILT_DTB := device/linaro/hikey-kernel/hikey960/$(TARGET_KERNEL_USE)/hi3660-hikey960.dtb
 
 ifeq ($(TARGET_KERNEL_USE), 4.4)
   HIKEY_USE_DRM_HWCOMPOSER := false

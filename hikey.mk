@@ -15,7 +15,7 @@ PRODUCT_DEVICE := hikey
 PRODUCT_BRAND := Android
 
 ifneq ($(HIKEY_USES_GKI),)
-HIKEY_MOD_DIR := device/linaro/hikey-kernel/hikey/5.4/
+HIKEY_MOD_DIR := device/linaro/hikey-kernel/hikey/$(TARGET_KERNEL_USE)/
 HIKEY_MODS := $(wildcard $(HIKEY_MOD_DIR)/*.ko)
 ifneq ($(HIKEY_MODS),)
   BOARD_VENDOR_KERNEL_MODULES += $(HIKEY_MODS)
