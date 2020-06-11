@@ -1,5 +1,5 @@
 ifndef TARGET_KERNEL_USE
-TARGET_KERNEL_USE=4.19
+TARGET_KERNEL_USE=5.4
 endif
 TARGET_PREBUILT_KERNEL := device/linaro/hikey-kernel/hikey960/$(TARGET_KERNEL_USE)/Image.gz-dtb
 TARGET_PREBUILT_DTB := device/linaro/hikey-kernel/hikey960/$(TARGET_KERNEL_USE)/hi3660-hikey960.dtb
@@ -14,6 +14,12 @@ else
     HIKEY_USE_DRM_HWCOMPOSER := true
   endif
   HIKEY_USE_LEGACY_TI_BLUETOOTH := false
+endif
+
+ifndef HIKEY_USES_GKI
+  ifeq ($(TARGET_KERNEL_USE), 5.4)
+    HIKEY_USES_GKI := true
+  endif
 endif
 
 #
