@@ -57,14 +57,3 @@ BOARD_VENDORIMAGE_JOURNAL_SIZE := 0
 BOARD_VENDORIMAGE_EXTFS_INODE_COUNT := 2048
 
 TARGET_RECOVERY_FSTAB := device/linaro/hikey/hikey/$(TARGET_FSTAB)
-
-ifeq ($(TARGET_BUILD_KERNEL), true)
-# Kernel Config
-KERNEL_CONFIG := hikey_defconfig
-ANDROID_64 := true
-# Kernel Source and Device Tree
-TARGET_KERNEL_SOURCE ?= kernel/linaro/hisilicon-4.14
-DEVICE_TREES := hi6220-hikey:hi6220-hikey.dtb
-BUILD_KERNEL_MODULES := false
-KERNEL_TARGET := Image-dtb
-endif
