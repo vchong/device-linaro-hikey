@@ -25,8 +25,8 @@ allow tee shell:fd { use };
 allow tee system_data_file:dir { getattr };
 #allow tee system_data_file:file { write open };
 allow tee tee_data_file:dir { create rmdir rename create_dir_perms };
-allow tee vendor_data_file:dir { write add_name remove_name rmdir };
-allow tee vendor_data_file:file { create read write open unlink };
+allow tee vendor_data_file:dir { getattr open write add_name create remove_name rmdir };
+allow tee vendor_data_file:file { getattr create read write open append unlink };
 
 # For xtest 200x tests
 allow tee node:tcp_socket node_bind;
