@@ -16,3 +16,6 @@ allow vendor_init vendordata_block_device:blk_file { open read write ioctl rw_fi
 allow vendor_init vendordata_block_device:chr_file { open read write ioctl rw_file_perms };
 allow fsck vendordata_block_device:blk_file { getattr read open write ioctl };
 allow init vendordata_block_device:blk_file { relabelfrom relabelto create setattr };
+
+allow vendor_init vendor_file:system { module_load };
+allow vendor_init self:capability { sys_module };
