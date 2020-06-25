@@ -57,3 +57,10 @@ endif
 
 TARGET_RECOVERY_PIXEL_FORMAT := BGRA_8888
 TARGET_RECOVERY_UI_LIB := librecovery_ui_hikey
+
+BOARD_ROOT_EXTRA_FOLDERS := persist nvme
+# !!!!!!
+# factory not only doesn't build, but corrupts da buildsys even after
+# removing it! 2 fix, rm out/target/product/<board> before rebuilding
+# !!!!!!
+#BOARD_ROOT_EXTRA_FOLDERS := persist nvme factory
