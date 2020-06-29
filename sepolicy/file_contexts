@@ -12,10 +12,8 @@
 /dev/teepriv[0-9]*     u:object_r:tee_device:s0
 /dev/tee[0-9]*         u:object_r:tee_device:s0
 /data/vendor/tee(/.*)? u:object_r:tee_data_file:s0
-/persist(/.*)?         u:object_r:vendor_data_file:s0
-/persist/tee(/.*)?     u:object_r:tee_data_file:s0
-/nvme(/.*)?         u:object_r:vendor_data_file:s0
-/nvme/tee(/.*)?     u:object_r:tee_data_file:s0
+/mnt/vendor/persist(/.*)?         u:object_r:vendor_data_file:s0
+/mnt/vendor/persist/tee(/.*)?     u:object_r:tee_data_file:s0
 
 # mmc rpmb
 /dev/block/mmcblk[0-9]rpmb     u:object_r:mmc_rpmb_block_device:s0
