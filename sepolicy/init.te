@@ -8,6 +8,7 @@ allow init configfs:lnk_file create;
 
 dontaudit init kernel:system module_request;
 
+allow init mnt_vendor_file:dir mounton;
 allow init vendor_file:file { execute };
 allow init su:process { transition };
 

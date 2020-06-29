@@ -58,7 +58,9 @@ endif
 TARGET_RECOVERY_PIXEL_FORMAT := BGRA_8888
 TARGET_RECOVERY_UI_LIB := librecovery_ui_hikey
 
-BOARD_ROOT_EXTRA_FOLDERS := persist nvme
+# https://source.android.com/devices/bootloader/system-as-root#device-specific-folders
+# BOARD_ROOT_EXTRA_FOLDERS is obsolete! User /mnt/vendor/persist
+#BOARD_ROOT_EXTRA_FOLDERS := persist nvme
 # !!!!!!
 # factory not only doesn't build, but corrupts da buildsys even after
 # removing it! 2 fix, rm out/target/product/<board> before rebuilding
