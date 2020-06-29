@@ -63,6 +63,7 @@ KERNEL_CONFIG := hikey960_defconfig
 ANDROID_64 := true
 # Kernel Source and Device Tree
 TARGET_KERNEL_SOURCE ?= kernel/linaro/hisilicon-4.14
+#TARGET_KERNEL_SOURCE ?= kernel/common/mainline
 DEVICE_TREES := hi3660-hikey960:hi3660-hikey960.dtb
 BUILD_KERNEL_MODULES := false
 KERNEL_TARGET := Image-dtb
