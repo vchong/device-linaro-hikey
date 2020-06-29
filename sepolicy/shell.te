@@ -4,5 +4,5 @@ allow shell sysfs:file r_file_perms;
 ')
 
 allow shell rootfs:file { getattr read open };
-allow shell vendor_file:file { execute getattr open read execute_no_trans };
+allow shell vendor_file:file { execute getattr open read execute_no_trans map };
 allow rootfs labeledfs:filesystem associate;

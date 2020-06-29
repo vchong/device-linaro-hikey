@@ -3,7 +3,7 @@ domain_auto_trans(shell, tee_exec, tee);
 allow shell tee_exec:file { getattr execute read open execute_no_trans };
 allow shell tee_data_file:file { create write open getattr unlink read };
 allow shell tee_data_file:dir { write add_name remove_name rename search open getattr setattr };
-allow shell tee_data_file:chr_file { read write open ioctl };
+allow shell tee_data_file:chr_file { ioctl read write open ioctl };
 
 # For xtest 1014 tests
 allow tee adbd:fd use;
@@ -27,6 +27,8 @@ allow tee system_data_file:dir { getattr };
 allow tee tee_data_file:dir { create rmdir rename create_dir_perms };
 allow tee vendor_data_file:dir { getattr open write add_name create remove_name rmdir };
 allow tee vendor_data_file:file { getattr create read write open append unlink };
+allow tee mnt_vendor_file:dir { getattr open write add_name create remove_name rmdir };
+allow tee mnt_vendor_file:file { getattr create read write open append unlink };
 
 # For xtest 200x tests
 allow tee node:tcp_socket node_bind;
