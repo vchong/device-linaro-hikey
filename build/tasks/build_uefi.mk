@@ -71,7 +71,7 @@ out/dist/foo:
 # rebuild fip.bin whenever optee/optee_os is modified
 # still get `$(shell find -L optee/optee_os) was changed, regenerating...` even after filtering out `out` and `.git`, why?
 #$(FIP_BIN): out/dist/foo $(sort $(shell find -L $(OPTEE_OS_DIR) | grep -v -e out -e .git))
-$(FIP_BIN): out/dist/foo $(sort $(shell find -L $(OPTEE_OS_DIR) | grep -v -e out -e .git))
+$(FIP_BIN): $(sort $(shell find -L $(OPTEE_OS_DIR) | grep -v -e out -e .git))
 	echo "## TOP = $(TOP)"
 	echo "## TOP_ROOT_ABS = $(TOP_ROOT_ABS)"
 	echo "## TARGET_OUT_DIR = $(TARGET_OUT_DIR)"
