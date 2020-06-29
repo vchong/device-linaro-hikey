@@ -2,13 +2,13 @@
 domain_auto_trans(shell, tee_exec, tee);
 allow shell tee_exec:file { getattr execute read open execute_no_trans };
 allow shell tee_data_file:file { create write open getattr unlink read };
-allow shell tee_data_file:dir { write add_name remove_name rename search open getattr setattr };
+allow shell tee_data_file:dir { read write add_name remove_name rename search open getattr setattr };
 allow shell tee_data_file:chr_file { ioctl read write open ioctl };
 
 # For xtest 1014 tests
 allow tee adbd:fd use;
 allow tee devpts:chr_file { getattr ioctl read write };
-allow tee ion_device:chr_file write;
+allow tee ion_device:chr_file { read write };
 
 # rpmb operations
 allow tee self:capability { setuid setgid sys_rawio };
@@ -23,11 +23,11 @@ allow tee mmc_rpmb_char_device:chr_file { ioctl open read write rw_file_perms };
 allow tee console_device:chr_file {  getattr read write ioctl };
 allow tee shell:fd { use };
 allow tee system_data_file:dir { getattr };
-#allow tee system_data_file:file { write open };
+#allow tee system_data_file:file { read write open };
 allow tee tee_data_file:dir { create rmdir rename create_dir_perms };
-allow tee vendor_data_file:dir { getattr open write add_name create remove_name rmdir };
+allow tee vendor_data_file:dir { getattr open read write add_name create remove_name rmdir };
 allow tee vendor_data_file:file { getattr create read write open append unlink };
-allow tee mnt_vendor_file:dir { getattr open write add_name create remove_name rmdir };
+allow tee mnt_vendor_file:dir { getattr open read write add_name create remove_name rmdir };
 allow tee mnt_vendor_file:file { getattr create read write open append unlink };
 
 # For xtest 200x tests
@@ -39,7 +39,7 @@ allow tee self:udp_socket { read write create getattr setattr bind connect liste
 allow tee tee:tcp_socket { create connect read write getopt setopt };
 allow tee tee:udp_socket { create connect read write getopt getattr };
 allow tee tee:capability { setuid setgid sys_rawio net_raw };
-allow tee fwmarkd_socket:sock_file { write };
+allow tee fwmarkd_socket:sock_file { read write };
 allow tee port:tcp_socket { name_connect };
 
 # Rules on netd domain for optee xtest 200x tests

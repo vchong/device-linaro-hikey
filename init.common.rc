@@ -119,14 +119,8 @@ on early-init
     #setprop ro.hardware.gatekeeper optee
     loglevel 7
 
-# Does NOT work! No permission to mkdir on / which is RO only!
-#on early-fs
-     #mkdir /persist
-
-     # Do this?
-     #mkdir /mnt/vendor/persist
-
-on post-fs
+#on post-fs
+on late-init
     chown system system /mnt/vendor/persist
     chmod 0771 /mnt/vendor/persist
     restorecon /mnt/vendor/persist
@@ -142,10 +136,9 @@ on post-fs
     wait /mnt/vendor/persist/tee
 
     # Let this start at default stage, i.e. late-fs
-    #start tee-supplicant
-    #start vendor.keymaster-3-0-optee
+    start tee-supplicant
+    start vendor.keymaster-3-0-optee
 
-on late-fs
     #wait_for_prop keymaster.optee.status ready
     #exec_start wait_for_keymaster_optee
 
@@ -166,8 +159,9 @@ on post-fs-data
 
 service tee-supplicant /vendor/bin/tee-supplicant -d
     class early_hal
-    user shell
+    user root
     #class main
+    #user shell
     #user system
     capabilities SYS_RAWIO BLOCK_SUSPEND NET_ADMIN NET_BIND_SERVICE
     group shell inet system drmrpc
