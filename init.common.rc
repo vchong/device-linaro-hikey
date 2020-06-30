@@ -133,7 +133,8 @@ on init
 
     # optional for debugging
     # default 5s
-    wait /mnt/vendor/persist/tee
+    # failed! y?
+    #wait /mnt/vendor/persist/tee
 
     # Let this start at default stage, i.e. late-fs
     start tee-supplicant
