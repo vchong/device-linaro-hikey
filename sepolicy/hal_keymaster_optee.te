@@ -18,3 +18,10 @@ set_prop(hal_keymaster_optee, gk_optee_prop)
 
 allow hal_keymaster_optee tee_device:chr_file rw_file_perms;
 allow hal_keymaster_optee ion_device:chr_file r_file_perms;
+
+allow hal_keymaster_optee persist_data_file:dir { ioctl open read create_dir_perms };
+allow hal_keymaster_optee persist_data_file:file { open read create_file_perms };
+allow hal_keymaster_optee persist_data_file:chr_file { ioctl read write open ioctl };
+allow hal_keymaster_optee persist_file:dir { ioctl open read create_dir_perms };
+allow hal_keymaster_optee persist_file:file { open read create_file_perms };
+allow hal_keymaster_optee persist_file:chr_file { ioctl read write open ioctl };
