@@ -58,6 +58,10 @@ endif
 TARGET_RECOVERY_PIXEL_FORMAT := BGRA_8888
 TARGET_RECOVERY_UI_LIB := librecovery_ui_hikey
 
+# similar build errors to BOARD_ROOT_EXTRA_FOLDERS
+# but need to rm out totally to fix?!
+#BOARD_ROOT_EXTRA_SYMLINKS += /mnt/vendor/persist:/persist
+
 # https://source.android.com/devices/bootloader/system-as-root#device-specific-folders
 # BOARD_ROOT_EXTRA_FOLDERS is obsolete! User /mnt/vendor/persist
 #BOARD_ROOT_EXTRA_FOLDERS := persist nvme

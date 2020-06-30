@@ -118,9 +118,9 @@ on early-init
     setprop ro.hardware.keystore optee
     #setprop ro.hardware.gatekeeper optee
     loglevel 7
+    mount_all /vendor/etc/fstab.persist --early
 
-#on post-fs
-on late-init
+on init
     chown system system /mnt/vendor/persist
     chmod 0771 /mnt/vendor/persist
     restorecon /mnt/vendor/persist
@@ -139,6 +139,7 @@ on late-init
     start tee-supplicant
     start vendor.keymaster-3-0-optee
 
+    # can b on late-init?
     #wait_for_prop keymaster.optee.status ready
     #exec_start wait_for_keymaster_optee
 
@@ -157,14 +158,14 @@ on post-fs-data
     # Set indication (checked by vold) that we have finished this action
     setprop vold.post_fs_data_done 1
 
-service tee-supplicant /vendor/bin/tee-supplicant -d
-    class early_hal
-    user shell
+service tee-supplicant /vendor/bin/tee-supplicant
+    class core
+    user root
     #class main
     #user root
     #user shell
     #user system
     capabilities SYS_RAWIO BLOCK_SUSPEND NET_ADMIN NET_BIND_SERVICE
-    group shell inet system drmrpc
+    group root shell inet system drmrpc
     # MUST use oneshot else fail to start
-    oneshot
+    #oneshot
