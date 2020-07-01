@@ -5,5 +5,5 @@
 
 # 6MB is too small to be mounted with journaling
 # so disable data=ordered, else mount will fail
-/dev/block/by-name/nvme        /mnt/vendor/persist       ext4       nosuid,nodev,noatime,barrier=1    wait,first_stage_mount
-#/dev/block/by-name/nvme        /mnt/vendor/persist       ext4       nosuid,nodev,noatime,data=ordered,barrier=1    wait,first_stage_mount
+/dev/block/by-name/nvme        /mnt/vendor/persist       ext4       nosuid,nodev,noatime,barrier=1    wait
+#/dev/block/by-name/nvme        /mnt/vendor/persist       ext4       nosuid,nodev,noatime,data=ordered,barrier=1    wait

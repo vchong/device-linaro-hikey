@@ -17,7 +17,7 @@ on init
     start watchdogd
 
 on fs
-    mount_all /vendor/etc/fstab.${ro.hardware}
+    mount_all /vendor/etc/fstab.${ro.hardware} --early
     setprop ro.crypto.fuse_sdcard false
 
 on post-fs
@@ -142,7 +142,7 @@ on init
 
     # can b on late-init?
     #wait_for_prop keymaster.optee.status ready
-    #exec_start wait_for_keymaster_optee
+    exec_start wait_for_keymaster_optee
 
 on post-fs-data
     # create for OP-TEE test
