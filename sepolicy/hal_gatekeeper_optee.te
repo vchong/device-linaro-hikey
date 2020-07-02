@@ -9,10 +9,3 @@ get_prop(hal_gatekeeper_optee, km_optee_prop)
 set_prop(hal_gatekeeper_optee, km_optee_prop)
 get_prop(hal_gatekeeper_optee, gk_optee_prop)
 set_prop(hal_gatekeeper_optee, gk_optee_prop)
-
-allow hal_gatekeeper_optee persist_data_file:dir { ioctl open read create_dir_perms };
-allow hal_gatekeeper_optee persist_data_file:file { open read create_file_perms };
-allow hal_gatekeeper_optee persist_data_file:chr_file { ioctl read write open ioctl };
-allow hal_gatekeeper_optee persist_file:dir { ioctl open read create_dir_perms };
-allow hal_gatekeeper_optee persist_file:file { open read create_file_perms };
-allow hal_gatekeeper_optee persist_file:chr_file { ioctl read write open ioctl };

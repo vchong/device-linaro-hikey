@@ -4,12 +4,6 @@ allow shell tee_exec:file { getattr execute read open execute_no_trans };
 allow shell tee_data_file:file { create write open getattr unlink read };
 allow shell tee_data_file:dir { read write add_name remove_name rename search open getattr setattr };
 allow shell tee_data_file:chr_file { ioctl read write open ioctl };
-allow shell persist_data_file:file { create write open getattr unlink read };
-allow shell persist_data_file:dir { read write add_name remove_name rename search open getattr setattr };
-allow shell persist_data_file:chr_file { ioctl read write open ioctl };
-allow shell persist_file:file { create write open getattr unlink read };
-allow shell persist_file:dir { read write add_name remove_name rename search open getattr setattr };
-allow shell persist_file:chr_file { ioctl read write open ioctl };
 
 # For xtest 1014 tests
 allow tee adbd:fd use;
@@ -31,14 +25,10 @@ allow tee shell:fd { use };
 allow tee system_data_file:dir { getattr };
 #allow tee system_data_file:file { read write open };
 allow tee tee_data_file:dir { create rmdir rename create_dir_perms };
-allow tee persist_data_file:dir { create rmdir rename create_dir_perms };
-allow tee persist_file:dir { create rmdir rename create_dir_perms };
 allow tee vendor_data_file:dir { getattr open read write add_name create remove_name rmdir };
 allow tee vendor_data_file:file { getattr create read write open append unlink };
 allow tee mnt_vendor_file:dir { getattr open read write add_name create remove_name rmdir };
 allow tee mnt_vendor_file:file { getattr create read write open append unlink };
-allow tee persist_data_file:dir { ioctl open read create_dir_perms };
-allow tee persist_data_file:file { open read create_file_perms };
 
 # For xtest 200x tests
 allow tee node:tcp_socket node_bind;
