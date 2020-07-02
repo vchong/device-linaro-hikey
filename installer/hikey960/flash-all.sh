@@ -11,7 +11,7 @@ if [ ! -e "${1}" ]
     exit
 fi
 DEVICE_PORT="${1}"
-PTABLE=prm_ptable.img
+PTABLE=ptable-aosp-32g.img
 
 INSTALLER_DIR="`dirname ${0}`"
 FIRMWARE_DIR="${INSTALLER_DIR}"
@@ -95,7 +95,7 @@ function check_partition_table_version () {
 
 function flashing_atf_uefi () {
 	echo "flashing_atf_uefi ()"
-	fastboot flash ptable "${INSTALLER_DIR}"/prm_ptable.img
+	fastboot flash ptable "${INSTALLER_DIR}"/"${PTABLE}"
 	fastboot flash xloader "${INSTALLER_DIR}"/hisi-sec_xloader.img
 	fastboot reboot-bootloader
 
@@ -106,7 +106,7 @@ function flashing_atf_uefi () {
 	fastboot flash trustfirmware   "${INSTALLER_DIR}"/hisi-bl31.bin
 	fastboot reboot-bootloader
 
-	fastboot flash ptable "${INSTALLER_DIR}"/prm_ptable.img
+	fastboot flash ptable "${INSTALLER_DIR}"/"${PTABLE}"
 	fastboot flash xloader "${INSTALLER_DIR}"/hisi-sec_xloader.img
 	fastboot flash fastboot "${INSTALLER_DIR}"/l-loader.bin
 	fastboot flash fip "${INSTALLER_DIR}"/fip.bin
