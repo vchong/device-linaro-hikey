@@ -50,6 +50,20 @@ HOST_PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 # from optee_os/mk/aosp_optee.mk when building.
 OPTEE_OS_DIR=optee/optee_os
 
+FIP_DEP ?= $(sort $(shell find -L $(OPTEE_OS_DIR) | grep -v -e out -e .git))
+FIP_DEP += $(sort $(shell find -L optee/l-loader | grep -v -e .git))
+# causing trouble n almost never change these
+#FIP_DEP += $(sort $(shell find -L optee/edk2 | grep -v -e .git))
+FIP_DEP += $(sort $(shell find -L optee/OpenPlatformPkg | grep -v -e .git))
+FIP_DEP += $(sort $(shell find -L optee/trusted-firmware-a | grep -v -e .git))
+
+ifneq ($(filter hikey960%, $(TARGET_OUT_DIR)),)
+	FIP_DEP += $(sort $(shell find -L optee/tools-images-hikey960 | grep -v -e .git))
+endif
+ifneq ($(filter hikey%, $(TARGET_OUT_DIR)),)
+	FIP_DEP += $(sort $(shell find -L optee/atf-fastboot | grep -v -e .git))
+endif
+
 # for debugging, add as dep to target, i.e. $(FIP_BIN): out/dist/foo
 out/dist/foo:
 	find -L $(OPTEE_OS_DIR) | grep -v -e out -e .git
@@ -71,7 +85,9 @@ out/dist/foo:
 # rebuild fip.bin whenever optee/optee_os is modified
 # still get `$(shell find -L optee/optee_os) was changed, regenerating...` even after filtering out `out` and `.git`, why?
 #$(FIP_BIN): out/dist/foo $(sort $(shell find -L $(OPTEE_OS_DIR) | grep -v -e out -e .git))
-$(FIP_BIN): $(sort $(shell find -L $(OPTEE_OS_DIR) | grep -v -e out -e .git))
+#$(FIP_BIN): $(sort $(shell find -L $(OPTEE_OS_DIR) | grep -v -e out -e .git))
+
+$(FIP_BIN): $(FIP_DEP)
 	echo "## TOP = $(TOP)"
 	echo "## TOP_ROOT_ABS = $(TOP_ROOT_ABS)"
 	echo "## TARGET_OUT_DIR = $(TARGET_OUT_DIR)"
