@@ -158,7 +158,9 @@ on post-fs-data
     # Set indication (checked by vold) that we have finished this action
     setprop vold.post_fs_data_done 1
 
-service tee-supplicant /vendor/bin/tee-supplicant
+# -d is passed to tee-supplicant to run it as a daemon
+# i.e. fork after successful initialization
+service tee-supplicant /vendor/bin/tee-supplicant -d
     class core
     # CHG 2 shell after vryT works!
     user shell
