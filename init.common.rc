@@ -160,16 +160,11 @@ on post-fs-data
 
 # -d is passed to tee-supplicant to run it as a daemon
 # i.e. fork after successful initialization
-service tee-supplicant /vendor/bin/tee-supplicant -d
+# Do NOT use. Seem to cause svc not to stay up
+service tee-supplicant /vendor/bin/tee-supplicant
     class core
-    # CHG 2 shell after vryT works!
-    user shell
-    #class main
-    #user root
-    #user shell
-    #user system
+    # MUST B ROOT for 10 and higher
+    user root
+    group root shell inet system drmrpc
     capabilities SYS_RAWIO BLOCK_SUSPEND NET_ADMIN NET_BIND_SERVICE
-    group shell inet system drmrpc
-    #group root shell inet system drmrpc
-    # MUST use oneshot else fail to start
     oneshot
