@@ -140,7 +140,7 @@ on init
     start vendor.keymaster-3-0-optee
 
     # can b on late-init?
-    #wait_for_prop keymaster.optee.status ready
+    wait_for_prop keymaster.optee.status ready
     exec_start wait_for_keymaster_optee
 
 on post-fs-data
