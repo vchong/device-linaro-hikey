@@ -17,6 +17,17 @@ on init
     start watchdogd
 
 on fs
+    mount_all /vendor/etc/fstab.${ro.hardwarey}
+    ####################################################################
+    # NO NO NO NO NO NO
+    # THIS WILL CAUSE is_file_crypto() TO RETURN false WHEN CALLED BY
+    # do_installkey() IN system/core/init/builtins.cpp, WHICH IS CALLED
+    # BY installkey IN SYSTEM'S init.rc FILE, CAUSING BOOT TO HALT!!!!!!
+    #
+    # DURING do_mount_all(), IF 'early', queue_event = false, WHICH
+    # SKIPS queue_fs_event() THAT SETS ro.crypto.state TO 'file' THAT'S
+    # NECESSARY FOR is_file_crypto() TO RETURN true
+    ####################################################################
     mount_all /vendor/etc/fstab.${ro.hardware} --early
     setprop ro.crypto.fuse_sdcard false
 
@@ -115,7 +126,7 @@ service bugreport /system/bin/dumpstate -d -p -B -z \
     disabled
 
 on early-init
-    #loglevel 7
+    loglevel 7
     #setprop ro.hardware.keystore optee
     #setprop ro.hardware.gatekeeper optee
     mount_all /vendor/etc/fstab.persist --early
