@@ -101,7 +101,8 @@ function flashing_atf_uefi () {
 
 	fastboot flash fastboot "${INSTALLER_DIR}"/l-loader.bin
 	fastboot flash fip "${INSTALLER_DIR}"/fip.bin
-	fastboot flash nvme "${INSTALLER_DIR}"/hisi-nvme.img
+	#fastboot flash nvme "${INSTALLER_DIR}"/hisi-nvme.img
+	fastboot flash nvme "${INSTALLER_DIR}"/nvme_bs4096_js_raw.img
 	fastboot flash fw_lpm3   "${INSTALLER_DIR}"/hisi-lpm3.img
 	fastboot flash trustfirmware   "${INSTALLER_DIR}"/hisi-bl31.bin
 	fastboot reboot-bootloader

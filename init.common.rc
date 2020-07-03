@@ -115,8 +115,8 @@ service bugreport /system/bin/dumpstate -d -p -B -z \
     disabled
 
 on early-init
-    loglevel 7
-    setprop ro.hardware.keystore optee
+    #loglevel 7
+    #setprop ro.hardware.keystore optee
     #setprop ro.hardware.gatekeeper optee
     mount_all /vendor/etc/fstab.persist --early
 
@@ -140,17 +140,17 @@ on init
     start vendor.keymaster-3-0-optee
 
     # can b on late-init?
-    wait_for_prop keymaster.optee.status ready
+    #wait_for_prop keymaster.optee.status ready
     exec_start wait_for_keymaster_optee
 
 on post-fs-data
     # create for OP-TEE test
-    mkdir /data/vendor/tee 0770 shell shell
+    #mkdir /data/vendor/tee 0770 shell shell
     # optee_client before sha 5602227e8acbffc0b9939a8be17740024e7ceb90
     # will create its log file under /data/vendor/tee/logs so we need
     # to mkdir it else teec.log will not be created
-    mkdir /data/vendor/tee/logs 0770 shell shell
-    restorecon_recursive /data/vendor/tee
+    #mkdir /data/vendor/tee/logs 0770 shell shell
+    #restorecon_recursive /data/vendor/tee
 
     #start tee-supplicant
 
@@ -161,13 +161,13 @@ on post-fs-data
 service tee-supplicant /vendor/bin/tee-supplicant
     class core
     # CHG 2 shell after vryT works!
-    user root
+    user shell
     #class main
     #user root
     #user shell
     #user system
     capabilities SYS_RAWIO BLOCK_SUSPEND NET_ADMIN NET_BIND_SERVICE
-    #group shell inet system drmrpc
-    group root shell inet system drmrpc
+    group shell inet system drmrpc
+    #group root shell inet system drmrpc
     # MUST use oneshot else fail to start
-    #oneshot
+    oneshot
