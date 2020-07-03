@@ -17,7 +17,7 @@ on init
     start watchdogd
 
 on fs
-    mount_all /vendor/etc/fstab.${ro.hardwarey}
+    mount_all /vendor/etc/fstab.${ro.hardware}
     ####################################################################
     # NO NO NO NO NO NO
     # THIS WILL CAUSE is_file_crypto() TO RETURN false WHEN CALLED BY
@@ -28,7 +28,7 @@ on fs
     # SKIPS queue_fs_event() THAT SETS ro.crypto.state TO 'file' THAT'S
     # NECESSARY FOR is_file_crypto() TO RETURN true
     ####################################################################
-    mount_all /vendor/etc/fstab.${ro.hardware} --early
+    #mount_all /vendor/etc/fstab.${ro.hardware} --early
     setprop ro.crypto.fuse_sdcard false
 
 on post-fs
@@ -174,8 +174,9 @@ on post-fs-data
 # Do NOT use. Seem to cause svc not to stay up
 service tee-supplicant /vendor/bin/tee-supplicant
     class core
-    # MUST B ROOT for 10 and higher
-    user root
-    group root shell inet system drmrpc
+    user shell
+    group shell inet system drmrpc
+    #user root
+    #group root shell inet system drmrpc
     capabilities SYS_RAWIO BLOCK_SUSPEND NET_ADMIN NET_BIND_SERVICE
     oneshot
