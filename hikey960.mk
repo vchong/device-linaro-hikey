@@ -52,7 +52,6 @@ ifneq ($(HIKEY_USES_GKI),)
     BOARD_VENDOR_KERNEL_MODULES += $(HIKEY_MODS)
     BOARD_VENDOR_RAMDISK_KERNEL_MODULES += \
 	$(HIKEY_MOD_DIR)/ion_cma_heap.ko \
-	$(HIKEY_MOD_DIR)/sdcardfs.ko \
-	$(HIKEY_MOD_DIR)/ufs-hisi.ko
+	$(HIKEY_MOD_DIR)/sdcardfs.ko
   endif
 endif
