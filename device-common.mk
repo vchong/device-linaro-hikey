@@ -28,6 +28,7 @@ PRODUCT_IS_ATV := true
 else
 # Adjust the dalvik heap to be appropriate for a tablet.
 $(call inherit-product, frameworks/native/build/tablet-10in-xhdpi-2048-dalvik-heap.mk)
+$(call inherit-product, $(SRC_TARGET_DIR)/product/full_base.mk)
 endif
 
 # Set vendor kernel path

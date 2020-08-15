@@ -19,4 +19,3 @@ TARGET_FSTAB := fstab.hikey
 
 $(call inherit-product, device/linaro/hikey/hikey/device-hikey.mk)
 $(call inherit-product, device/linaro/hikey/device-common.mk)
-$(call inherit-product, $(SRC_TARGET_DIR)/product/full_base.mk)

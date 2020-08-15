@@ -23,11 +23,10 @@ ifndef HIKEY_USES_GKI
 endif
 
 #
-# Inherit the full_base and device configurations
+# Inherit the common device configuration
 $(call inherit-product, $(SRC_TARGET_DIR)/product/core_64_bit.mk)
 $(call inherit-product, device/linaro/hikey/hikey960/device-hikey960.mk)
 $(call inherit-product, device/linaro/hikey/device-common.mk)
-$(call inherit-product, $(SRC_TARGET_DIR)/product/full_base.mk)
 
 #setup dm-verity configs
 PRODUCT_SYSTEM_VERITY_PARTITION := /dev/block/platform/soc/ff3b0000.ufs/by-name/system
