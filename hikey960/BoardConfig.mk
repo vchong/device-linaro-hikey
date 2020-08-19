@@ -60,12 +60,20 @@ TARGET_RECOVERY_FSTAB := device/linaro/hikey/hikey960/fstab.hikey960
 
 ifeq ($(TARGET_BUILD_KERNEL), true)
 # Kernel Config
-KERNEL_CONFIG := hikey960_defconfig
+KERNEL_CONFIG := ./arch/arm64/configs/gki_defconfig ./arch/arm64/configs/hikey960_gki.fragment
+#KERNEL_CONFIG := gki_defconfig hikey960_gki.fragment
+#KERNEL_CONFIG := hikey960_defconfig
 ANDROID_64 := true
 # Kernel Source and Device Tree
-TARGET_KERNEL_SOURCE ?= kernel/linaro/hisilicon-4.14
+TARGET_KERNEL_SOURCE ?= kernel/linaro/hisilicon-5.4
 #TARGET_KERNEL_SOURCE ?= kernel/common/mainline
 DEVICE_TREES := hi3660-hikey960:hi3660-hikey960.dtb
-BUILD_KERNEL_MODULES := false
-KERNEL_TARGET := Image-dtb
+# BUILD_KERNEL_MODULES seems not used any more
+BUILD_KERNEL_MODULES := true
+KERNEL_TARGET := Image.gz
+# 'modules' can't be added to KERNEL_TARGET, cause build error
+# add it directly to dlb/tasks/kernel.mk
+#KERNEL_TARGET := Image.gz modules
+#BUILD_KERNEL_MODULES := false
+#KERNEL_TARGET := Image-dtb
 endif
