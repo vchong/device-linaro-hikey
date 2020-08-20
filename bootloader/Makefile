@@ -5,7 +5,7 @@ OPTEE_DIR=$(TOP_ROOT_ABS)/optee
 LLOADER_DIR=$(TOP_ROOT_ABS)/optee/l-loader
 TOOLS_DIR=$(TOP_ROOT_ABS)/optee/tools-images-hikey960
 
-INSTALLER_DIR ?= $(TOP_ROOT_ABS)/device/linaro/hikey/installer/$(TARGET_OUT_DIR)
+INSTALLER_DIR ?= $(TOP_ROOT_ABS)/device/linaro/hikey/installer/$(OPTEE_PLATFORM_FLAVOR)
 
 # CLANG is provided as a RO env var by soong
 # Note the trailing forward slash!
@@ -55,14 +55,15 @@ all:
 	echo "TARGET_OUT = $(TARGET_OUT)"
 	echo "TARGET_OUT_VENDOR = $(TARGET_OUT_VENDOR)"
 	echo "TARGET_OUT_DIR = $(TARGET_OUT_DIR)"
+	echo "## OPTEE_PLATFORM_FLAVOR = $(OPTEE_PLATFORM_FLAVOR)"
 	echo "SCRIPT_ARGS = $(SCRIPT_ARGS)"
 	cd $(OPTEE_DIR) && \
-		$(SCRIPT_ARGS) OPTEE_EXTRA_ARGS="${OPTEE_EXTRA_ARGS}" $(LLOADER_DIR)/build_uefi.sh $(TARGET_OUT_DIR) && \
+		$(SCRIPT_ARGS) OPTEE_EXTRA_ARGS="${OPTEE_EXTRA_ARGS}" $(LLOADER_DIR)/build_uefi.sh $(OPTEE_PLATFORM_FLAVOR) && \
 		cp $(LLOADER_DIR)/fip.bin $(INSTALLER_DIR)/ && \
 		cp $(LLOADER_DIR)/l-loader.bin $(INSTALLER_DIR)/ && \
 		cp $(LLOADER_DIR)/recovery.bin $(INSTALLER_DIR)/ && \
 		cp $(LLOADER_DIR)/ptable-*.img $(INSTALLER_DIR)/
-ifneq ($(filter hikey960%, $(TARGET_OUT_DIR)),)
+ifneq ($(filter hikey960%, $(OPTEE_PLATFORM_FLAVOR)),)
 	cp $(TOOLS_DIR)/hikey_idt $(INSTALLER_DIR)/
 	cp $(TOOLS_DIR)/hisi*.img $(INSTALLER_DIR)/
 endif

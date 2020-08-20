@@ -91,13 +91,14 @@ $(FIP_BIN): $(FIP_DEP)
 	echo "## TOP = $(TOP)"
 	echo "## TOP_ROOT_ABS = $(TOP_ROOT_ABS)"
 	echo "## TARGET_OUT_DIR = $(TARGET_OUT_DIR)"
+	echo "## OPTEE_PLATFORM_FLAVOR = $(OPTEE_PLATFORM_FLAVOR)"
 	echo "## TARGET_OUT = $(TARGET_OUT)"
 	echo "## TARGET_OUT_VENDOR = $(TARGET_OUT_VENDOR)"
 	mkdir -p $(OUT_DIR)/dist
 	@# Should we really rm $(PRODUCT_OUT)/optee built by optee_os/aosp_optee.mk and NOT by this file?
 	@#rm -rf $(PRODUCT_OUT)/optee
 	@# Does NOT build without '-j1'! build_uefi.sh will build edk2 in parallel though!
-	PATH=$(HOST_PATH):$$PATH $(HOST_MAKE) -j1 -C $(BOOTLOADER_DIR) TOP_ROOT_ABS=$(TOP_ROOT_ABS) TARGET_OUT_DIR=$(TARGET_OUT_DIR) CLANG_PATH=$(CLANG_PATH)
+	PATH=$(HOST_PATH):$$PATH $(HOST_MAKE) -j1 -C $(BOOTLOADER_DIR) TOP_ROOT_ABS=$(TOP_ROOT_ABS) OPTEE_PLATFORM_FLAVOR=$(OPTEE_PLATFORM_FLAVOR) CLANG_PATH=$(CLANG_PATH)
 	cp $(LLOADER_DIR)/fip.bin $@
 
 droidcore: $(FIP_BIN)
