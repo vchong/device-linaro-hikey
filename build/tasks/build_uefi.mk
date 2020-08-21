@@ -51,7 +51,7 @@ HOST_PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 OPTEE_OS_DIR=optee/optee_os
 
 FIP_DEP ?= $(sort $(shell find -L $(OPTEE_OS_DIR) | grep -v -e out -e .git))
-FIP_DEP += $(sort $(shell find -L optee/l-loader | grep -v -e .git))
+FIP_DEP += $(sort $(shell find -L optee/l-loader | grep -v -e .git -e .bin))
 # causing trouble n almost never change these
 #FIP_DEP += $(sort $(shell find -L optee/edk2 | grep -v -e .git))
 FIP_DEP += $(sort $(shell find -L optee/OpenPlatformPkg | grep -v -e .git))
