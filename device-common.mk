@@ -76,7 +76,6 @@ PRODUCT_PACKAGES += \
     android.hardware.audio@4.0-impl:32 \
     android.hardware.audio.effect@4.0-impl:32 \
     android.hardware.audio@2.0-service \
-    android.hardware.broadcastradio@1.0-impl \
     android.hardware.soundtrigger@2.0-impl \
     android.hardware.bluetooth.audio@2.0-impl
 
@@ -85,8 +84,6 @@ PRODUCT_PACKAGES += vndk_package
 PRODUCT_PACKAGES += \
     android.hardware.drm@1.0-impl \
     android.hardware.drm@1.0-service
-
-PRODUCT_PACKAGES += libGLES_android
 
 # Graphics HAL
 PRODUCT_PACKAGES += \
