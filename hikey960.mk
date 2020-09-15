@@ -47,10 +47,11 @@ PRODUCT_MODEL := AOSP on hikey960
 ifneq ($(HIKEY_USES_GKI),)
   HIKEY_MOD_DIR := device/linaro/hikey-kernel/hikey960/$(TARGET_KERNEL_USE)
   HIKEY_MODS := $(wildcard $(HIKEY_MOD_DIR)/*.ko)
+  SDCARDFS_KO := $(wildcard $(HIKEY_MOD_DIR)/sdcardfs*.ko)
   ifneq ($(HIKEY_MODS),)
     BOARD_VENDOR_KERNEL_MODULES += $(HIKEY_MODS)
     BOARD_VENDOR_RAMDISK_KERNEL_MODULES += \
 	$(HIKEY_MOD_DIR)/ion_cma_heap.ko \
-	$(HIKEY_MOD_DIR)/sdcardfs.ko
+	$(SDCARDFS_KO)
   endif
 endif
