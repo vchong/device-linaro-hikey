@@ -171,7 +171,7 @@ int dma_heap_open(const char* name)
 		return ret;
 	}
 
-	fd = open(buf, O_RDWR);
+	fd = open(buf, O_RDONLY);
 	if (fd < 0)
 		AERR("open %s failed!\n", buf);
 	return fd;
