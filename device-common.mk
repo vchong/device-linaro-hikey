@@ -38,6 +38,9 @@ PRODUCT_SHIPPING_API_LEVEL := 29
 PRODUCT_OTA_ENFORCE_VINTF_KERNEL_REQUIREMENTS := false
 
 
+# Enable Scoped Storage related
+$(call inherit-product, $(SRC_TARGET_DIR)/product/emulated_storage.mk)
+
 # Set custom settings
 DEVICE_PACKAGE_OVERLAYS := device/linaro/hikey/overlay
 ifneq (,$(filter $(TARGET_PRODUCT),hikey960_tv hikey_tv))
